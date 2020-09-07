@@ -36,7 +36,7 @@ Use command
 
 ## TBD
 ### *Custom Strength Curves
-> By default it is default user can assign custom curve function
+> By default it is linear. User can assign custom curve function if needed
 ### *Joystick Mapping
 > Depends on bevy input support for joystick
 ### *RON based binding config file
