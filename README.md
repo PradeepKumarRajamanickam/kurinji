@@ -1,13 +1,13 @@
 # Bevy Input Mapper
 Input Mapper will convert user input from different input hardware into game specific actions.
 
-eg,
-Keyboard "Space" or Joystick "A" can be mapped "Jump" Action.
+Like
+>*Keyboard "Space" or Joystick "A" can be mapped "Jump" Action.*
 
 This allows game code to not be tightly coupled with a particular device event.
 
 ## Usage
-```
+```rust
 fn main() {
     App::build()
         ...
@@ -26,7 +26,7 @@ fn setup(
 
 ```
 
-> Check out [example/input_map.rs]
+> Check out [example/input_map.rs](https://github.com/PradeepKumarRajamanickam/bevy_input_map/blob/master/example/input_map.rs)
 
 ## Features
 - Keyboard Key Mapping
