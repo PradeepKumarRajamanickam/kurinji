@@ -1,5 +1,5 @@
 # Bevy Input Mapper
-Input Map will convert user inputs from different input hardware into game specific actions, eg. *keyboard "Space" or joystick "A" can be mapped "Jump" Action*. This action is consumed ingame. This allows decoupling of the game code from device specific input api.
+Input Map will convert user inputs from different input hardware into game specific actions, eg. *keyboard "Space" or joystick "A" can be mapped to "Jump" Action*. This action is consumed ingame. This allows decoupling of the game code from device specific input api.
 
 ## Usage
 ```rust
