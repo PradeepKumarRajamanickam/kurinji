@@ -35,13 +35,13 @@ Use command
 - Action Deadzone
 
 ## TBD
-### *Custom Strength Curves
+Custom Strength Curves
 > By default it is linear. User can assign custom curve function if needed
-### *Joystick Mapping
+Joystick Mapping
 > Depends on bevy input support for joystick
-### *RON based binding config file
+RON based binding config file
 >Allow bindings to be loaded from a ron string/file
-### *Context based binding switch
+Context based binding switch
 >Allow multiple binding sets to be defined in the ron config. That can be swapped out based on the context, eg.
 "E" can be mapped to "use" action in game view but
 can be remapped to "equip" action in game inventory ui as shortcut...etc. Based on the view context the bindings will be swapped.
