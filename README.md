@@ -1,7 +1,7 @@
 # Bevy Input Mapper
 Input Mapper will convert user input from different input hardware into game specific actions.
 
-eg,
+>eg,
 Keyboard "Space" or Joystick "A" can be mapped "Jump" Action.
 
 This allows game code to not be tightly coupled with a particular device event.
