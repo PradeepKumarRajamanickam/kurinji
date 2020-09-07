@@ -4,8 +4,12 @@ version = "0.1.0"
 edition = "2018"
 authors = ["Pradeep Kumar Rajamanickam <raj.pradeep.kumar@gmail.com>"]
 description = "Adds support for input mapping"
-example = "https://github.com/PradeepKumarRajamanickam/bevy_input_map"
+readme = "https://github.com/PradeepKumarRajamanickam/bevy_input_map/blob/master/README.md"
+example = "https://github.com/PradeepKumarRajamanickam/bevy_input_map/blob/master/example/input_map.rs"
+repository = "https://github.com/PradeepKumarRajamanickam/bevy_input_map"
 license = "MIT"
+keywords = ["gamedev", "bevy", "inputmap","actionmapping"]
+
 
 [dependencies]
 # bevy
