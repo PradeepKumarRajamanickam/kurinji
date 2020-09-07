@@ -2,7 +2,7 @@ use bevy::prelude::*;
 use bevy_app::AppExit;
 use bevy_app::Events;
 use bevy_ecs::ResMut;
-use bevy_input_map::{inputmap::InputMap, keyboard::KeyboardMap, mouse::MouseMap, InputMapPlugin};
+use bevy_input_map::{inputmap::InputMap, keyboard::KeyboardMap, mouse::MouseMap, InputMapPlugin, axis::Axis};
 
 fn main() {
     App::build()
