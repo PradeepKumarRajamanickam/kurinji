@@ -7,7 +7,26 @@ Keyboard "Space" or Joystick "A" can be mapped "Jump" Action.
 This allows game code to not be tightly coupled with a particular device event.
 
 ## Usage
->Check out "example/input_map.rs"
+```
+fn main() {
+    App::build()
+        ...
+        .add_plugin(InputMapPlugin::default())
+        .add_startup_system(setup.system())
+        ...
+        .run();
+}
+fn setup(
+    mut key_map: ResMut<KeyboardMap>
+) {
+
+    key_map.bind_keyboard_pressed(KeyCode::Space, "JUMP".to_string());
+    ...
+}
+
+```
+
+> Check out [example/input_map.rs]
 
 ## Features
 - Keyboard Key Mapping
