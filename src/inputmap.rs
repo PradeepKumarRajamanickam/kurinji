@@ -14,11 +14,10 @@ impl InputMap {
     // publics
     pub fn get_action_strength(&self, action: String) -> f32 {
         match self.action_raw_strength.get(&action) {
-            Some(raw_strength) => *raw_strength,
-            // Some(raw_strength) => match self.action_deadzone.get(&action) {
-            //     Some(d) => InputMap::get_strength_after_applying_deadzone(*d, *raw_strength),
-            //     None => *raw_strength,
-            // },
+            Some(raw_strength) => match self.action_deadzone.get(&action) {
+                Some(d) => InputMap::get_strength_after_applying_deadzone(*d, *raw_strength),
+                None => *raw_strength,
+            },
             None => 0.,
         }
     }
