@@ -27,7 +27,7 @@ impl InputMap {
         self.get_action_strength(action) > 0.0
     }
 
-    // Note* meaningful only for analog inputs like mouse move, joystick...etc
+    // Note* meaningful only for analog inputs like joystick, mouse move delta...etc
     pub fn set_dead_zone(&mut self, action: String, value: f32) {
         self.action_deadzone.insert(action, value);
     }
