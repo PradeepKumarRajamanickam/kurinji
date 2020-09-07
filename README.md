@@ -1,10 +1,5 @@
 # Bevy Input Mapper
-Input Mapper will convert user input from different input hardware into game specific actions.
-
-Like
->*Keyboard "Space" or Joystick "A" can be mapped "Jump" Action.*
-
-This allows game code to not be tightly coupled with a particular device event.
+Input Map will convert user inputs from different input hardware into game specific actions, eg. *keyboard "Space" or joystick "A" can be mapped "Jump" Action*. This action is consumed ingame. This allows decoupling of the game code from device specific input api.
 
 ## Usage
 ```rust
@@ -36,6 +31,8 @@ fn setup(
 - Action Deadzone
 
 ## TBD
+### *Custom Strength Curves
+> By default it is default user can assign custom curve function
 ### *Joystick Mapping
 > Depends on bevy input support for joystick
 ### *RON based binding config file
