@@ -26,7 +26,7 @@ fn setup(
 
 ```
 
-> Check out [example/input_map.rs]
+> Check out [example/input_map.rs](https://github.com/PradeepKumarRajamanickam/bevy_input_map/blob/master/example/input_map.rs)
 
 ## Features
 - Keyboard Key Mapping
