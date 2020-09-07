@@ -4,7 +4,6 @@ use bevy_input_map::{
     axis::Axis, inputmap::InputMap, keyboard::KeyboardMap, mouse::MouseMap,
 };
 use bevy_app::Events;
-use bevy_ecs::IntoForEachSystem;
 use bevy_ecs::ResMut;
 
 fn main() {
