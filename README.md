@@ -34,7 +34,7 @@ Use command
 - Action Strength
 - Action Deadzone
 
-## TBD
+## Planned
 Custom Strength Curves
 > By default it is linear. User can assign custom curve function if needed
 
