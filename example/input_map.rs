@@ -1,16 +1,14 @@
 use bevy::prelude::*;
 use bevy_app::AppExit;
-use bevy_input_map::{
-    axis::Axis, inputmap::InputMap, keyboard::KeyboardMap, mouse::MouseMap,
-};
 use bevy_app::Events;
 use bevy_ecs::ResMut;
+use bevy_input_map::{inputmap::InputMap, keyboard::KeyboardMap, mouse::MouseMap, InputMapPlugin};
 
 fn main() {
     App::build()
         .add_default_plugins()
         // setup
-        .add_plugin(bevy_input_map::InputMapPlugin::default())
+        .add_plugin(InputMapPlugin::default())
         .add_startup_system(setup.system())
         .add_system(action_system.system())
         .run();
