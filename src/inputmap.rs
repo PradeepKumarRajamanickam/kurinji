@@ -6,6 +6,7 @@ use crate::util;
 pub struct InputMap {
     // crate
     // action data
+    action_strength_curve: HashMap<String, fn(f32) -> f32>,
     action_raw_strength: HashMap<String, f32>,
     action_deadzone: HashMap<String, f32>,
 }
@@ -15,7 +16,15 @@ impl InputMap {
     pub fn get_action_strength(&self, action: String) -> f32 {
         match self.action_raw_strength.get(&action) {
             Some(raw_strength) => match self.action_deadzone.get(&action) {
-                Some(d) => InputMap::get_strength_after_applying_deadzone(*d, *raw_strength),
+                Some(d) => 
+                {
+                    let strength = InputMap::get_strength_after_applying_deadzone(*d, *raw_strength);
+                    if let Some(curve_func) = self.action_strength_curve.get(&action)
+                    {
+                        return curve_func(strength);
+                    }
+                    return strength;
+                },
                 None => *raw_strength,
             },
             None => 0.,
@@ -29,6 +38,10 @@ impl InputMap {
     // Note* meaningful only for analog inputs like joystick, mouse move delta...etc
     pub fn set_dead_zone(&mut self, action: String, value: f32) {
         self.action_deadzone.insert(action, value);
+    }
+
+    pub fn set_strength_curve_function(&mut self, action: String, function: fn(f32) -> f32) {
+        self.action_strength_curve.insert(action, function);
     }
 
     // crates
