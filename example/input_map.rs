@@ -34,6 +34,12 @@ fn setup(
     mouse_map.bind_mouse_motion(Axis::XNegative, "AIM_LEFT".to_string());
     mouse_map.bind_mouse_motion(Axis::XPositive, "AIM_RIGHT".to_string());
 
+    // dead zone
+    input_map.set_dead_zone("AIM_UP".to_string(), 0.1);
+    input_map.set_dead_zone("AIM_DOWN".to_string(), 0.1);
+    input_map.set_dead_zone("AIM_LEFT".to_string(), 0.1);
+    input_map.set_dead_zone("AIM_RIGHT".to_string(), 0.1);
+
     // strength curve function
     input_map.set_strength_curve_function("AIM_UP".to_string(), |x  | -> f32 { x.powi(2)});
     input_map.set_strength_curve_function("AIM_DOWN".to_string(), |x  | -> f32 { x.powi(2) });
