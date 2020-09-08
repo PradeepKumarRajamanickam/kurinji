@@ -8,7 +8,7 @@ fn main() {
         ...
         .add_plugin(InputMapPlugin::default())
         .add_startup_system(setup.system())
-        ...
+        .add_system(system.system())
         .run();
 }
 fn setup(
@@ -16,9 +16,11 @@ fn setup(
 ) {
 
     key_map.bind_keyboard_pressed(KeyCode::Space, "JUMP".to_string());
-    ...
 }
-
+fn system(input_map: Res<InputMap>) {
+    if input_map.is_action_in_progress("JUMP".to_string()) {
+        println!("Jumping...");
+    }
 ```
 
 *Check out [example/input_map.rs](https://github.com/PradeepKumarRajamanickam/bevy_input_map/blob/master/example/input_map.rs)*
