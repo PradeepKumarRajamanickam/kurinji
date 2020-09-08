@@ -28,6 +28,7 @@ Use command
 > cargo run --example input_map
 
 ## Features
+- new* Support to set custom strength curve function
 - Keyboard Key Mapping
 - Mouse Button Mapping
 - Mouse Axis Mapping
@@ -35,9 +36,6 @@ Use command
 - Action Deadzone
 
 ## Planned
-Custom Strength Curves
-> By default it is linear. User can assign custom curve function if needed
-
 Joystick Mapping
 > Depends on bevy input support for joystick
 
