@@ -1,6 +1,14 @@
 # Bevy Input Mapper
 Input Mapper decouples gameplay code from device specific input api. By converting user inputs from different input hardware into game specific actions, eg. *keyboard "Space" or joystick "A" can be mapped to "Jump" Action*. This improves the overall code quality, by keeping the gameplay code separate from input code.
 
+## Features
+- new* Support for custom strength curve function
+- Keyboard Key Mapping
+- Mouse Button Mapping
+- Mouse Axis Mapping
+- Action Strength
+- Action Deadzone
+
 ## Usage
 ```rust
 fn main() {
@@ -28,14 +36,6 @@ fn system(input_map: Res<InputMap>) {
 ## Example
 Use command
 > cargo run --example input_map
-
-## Features
-- new* Support to set custom strength curve function
-- Keyboard Key Mapping
-- Mouse Button Mapping
-- Mouse Axis Mapping
-- Action Strength
-- Action Deadzone
 
 ## Planned
 Joystick Mapping
