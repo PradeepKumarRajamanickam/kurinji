@@ -1,6 +1,7 @@
 # Bevy Input Mapper
 Input Mapper decouples gameplay code from device specific input api. By converting user inputs from different input hardware into game specific actions, eg. *keyboard "Space" or joystick "A" can be mapped to "Jump" Action*. This improves the overall code quality, by keeping the gameplay code separate from input code.
-crate: https://crates.io/crates/bevy_prototype_input_map
+
+crate io: https://crates.io/crates/bevy_prototype_input_map
 
 ## Features
 - new* Support for custom strength curve function
