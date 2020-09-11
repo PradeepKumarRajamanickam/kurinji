@@ -33,7 +33,7 @@ Use command
 - new* Support to set custom strength curve function
 - Keyboard Key Mapping
 - Mouse Button Mapping
-- Mouse Axis Mapping
+- Mouse Move Mapping
 - Action Strength
 - Action Deadzone
 
