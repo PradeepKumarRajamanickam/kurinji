@@ -18,6 +18,16 @@ impl KeyboardMap {
         self.action_binding.remove(&code);
     }
 
+    // crates
+    pub(crate) fn set_bindings(&mut self, binding: HashMap<KeyCode, String>)
+    {
+        self.action_binding = binding;
+    }
+    pub(crate) fn get_bindings(&self) -> HashMap<KeyCode, String>
+    {
+        self.action_binding.clone()
+    }
+
     // system
     pub(crate) fn action_update_system(
         mut input_map: ResMut<InputMap>,
