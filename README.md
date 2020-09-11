@@ -1,8 +1,6 @@
 # Bevy Input Mapper
 Input Mapper decouples gameplay code from device specific input api. By converting user inputs from different input hardware into game specific actions, eg. *keyboard "Space" or joystick "A" can be mapped to "Jump" Action*. This improves the overall code quality, by keeping the gameplay code separate from input code.
 
-crate io: https://crates.io/crates/bevy_prototype_input_map
-
 ## Features
 - new* Support for custom strength curve function
 - Keyboard Key Mapping
@@ -12,6 +10,14 @@ crate io: https://crates.io/crates/bevy_prototype_input_map
 - Action Deadzone
 
 ## Usage
+
+*Add to Cargo.toml dependencies*
+```
+[dependencies]
+bevy_prototype_input_map = "0.1.1"
+```
+
+*In code*
 ```rust
 fn main() {
     App::build()
@@ -21,12 +27,14 @@ fn main() {
         .add_system(system.system())
         .run();
 }
+
 fn setup(
     mut key_map: ResMut<KeyboardMap>
 ) {
 
     key_map.bind_keyboard_pressed(KeyCode::Space, "JUMP".to_string());
 }
+
 fn system(input_map: Res<InputMap>) {
     if input_map.is_action_in_progress("JUMP".to_string()) {
         println!("Jumping...");
