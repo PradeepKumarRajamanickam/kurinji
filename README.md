@@ -1,14 +1,6 @@
 # Bevy Input Mapper
 Input Mapper decouples gameplay code from device specific input api. By converting user inputs from different input hardware into game specific actions, eg. *keyboard "Space" or joystick "A" can be mapped to "Jump" Action*. This improves the overall code quality, by keeping the gameplay code separate from input code.
 
-## Features
-- new* Support for custom strength curve function
-- Keyboard Key Mapping
-- Mouse Button Mapping
-- Mouse Axis Mapping
-- Action Strength
-- Action Deadzone
-
 ## Usage
 
 *Add to Cargo.toml dependencies*
@@ -47,7 +39,6 @@ fn system(input_map: Res<InputMap>) {
 Use command
 > cargo run --example input_map
 
-<<<<<<< HEAD
 ## Features
 - new* Support to set custom strength curve function
 - Keyboard Key Mapping
@@ -56,8 +47,6 @@ Use command
 - Action Strength
 - Action Deadzone
 
-=======
->>>>>>> 6e3b7676291fd91c78f29be1f6330fa4917aadc8
 ## Planned
 Joystick Mapping
 > Depends on bevy input support for joystick
@@ -69,6 +58,26 @@ Context based binding switch
 >Allow multiple binding sets to be defined in the ron config. That can be swapped out based on the context, eg.
 "E" can be mapped to "use" action in game view but
 can be remapped to "equip" action in game inventory ui as shortcut...etc. Based on the view context the bindings will be swapped.
+
+# Release Notes
+
+## v0.1.1 (7 Sept, 2020)
+- minor* Readme changes
+  - Had to bump the version to publish some readme changes
+
+## v0.1.0 (7 Sept, 2020)
+- Keyboard Key Mapping
+  - Key press can now be binded to action
+- Mouse Button Mapping
+  - Mouse button press can now be binded to action
+- Mouse Move Mapping
+  - Mouse move event can now be mapped to action
+- Action Strength
+  - Can now query strength of an action. 
+  - It will be in range of 0.0 - 1.0
+  - Useful for analog inputs like joystick
+- Action Deadzone
+  - For analog inputs sometimes it is meaningful to have a min threshold to avoid small input noise and to reduce sensitivity
 
 ## Author
 PradeepKumar Rajamanickam
