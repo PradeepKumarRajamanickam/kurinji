@@ -1,7 +1,23 @@
 # Bevy Input Mapper
-Input Map will convert user inputs from different input hardware into game specific actions, eg. *keyboard "Space" or joystick "A" can be mapped to "Jump" Action*. This action is consumed ingame. This allows decoupling of the game code from device specific input api.
+Input Mapper decouples gameplay code from device specific input api. By converting user inputs from different input hardware into game specific actions, eg. *keyboard "Space" or joystick "A" can be mapped to "Jump" Action*. This improves the overall code quality, by keeping the gameplay code separate from input code.
+
+## Features
+- new* Support for custom strength curve function
+- Keyboard Key Mapping
+- Mouse Button Mapping
+- Mouse Axis Mapping
+- Action Strength
+- Action Deadzone
 
 ## Usage
+
+*Add to Cargo.toml dependencies*
+```
+[dependencies]
+bevy_prototype_input_map = "0.1.1"
+```
+
+*In code*
 ```rust
 fn main() {
     App::build()
@@ -11,12 +27,14 @@ fn main() {
         .add_system(system.system())
         .run();
 }
+
 fn setup(
     mut key_map: ResMut<KeyboardMap>
 ) {
 
     key_map.bind_keyboard_pressed(KeyCode::Space, "JUMP".to_string());
 }
+
 fn system(input_map: Res<InputMap>) {
     if input_map.is_action_in_progress("JUMP".to_string()) {
         println!("Jumping...");
@@ -29,6 +47,7 @@ fn system(input_map: Res<InputMap>) {
 Use command
 > cargo run --example input_map
 
+<<<<<<< HEAD
 ## Features
 - new* Support to set custom strength curve function
 - Keyboard Key Mapping
@@ -37,6 +56,8 @@ Use command
 - Action Strength
 - Action Deadzone
 
+=======
+>>>>>>> 6e3b7676291fd91c78f29be1f6330fa4917aadc8
 ## Planned
 Joystick Mapping
 > Depends on bevy input support for joystick
