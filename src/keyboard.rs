@@ -5,8 +5,8 @@ use std::collections::HashMap;
 
 impl InputMap {
     // publics
-    pub fn bind_keyboard_pressed(&mut self, code: KeyCode, action: String) {
-        self.keyboard_action_binding.insert(code, action);
+    pub fn bind_keyboard_pressed(&mut self, code: KeyCode, action: &str) {
+        self.keyboard_action_binding.insert(code, action.to_string());
     }
 
     pub fn unbind_keyboard_pressed(&mut self, code: KeyCode) {
@@ -33,8 +33,7 @@ impl InputMap {
 
         for (keycode, action) in bindings_iter.iter() {
             if key_input.pressed(*keycode) {
-                let _action = action.clone();
-                input_map.set_raw_action_strength(_action, 1.0);
+                input_map.set_raw_action_strength(action, 1.0);
             }
         }
     }

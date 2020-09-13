@@ -11,16 +11,16 @@ pub struct MouseMoveState {
 
 impl InputMap {
     // publics
-    pub fn bind_mouse_button_pressed(&mut self, code: MouseButton, action: String) {
-        self.mouse_button_binding.insert(code, action);
+    pub fn bind_mouse_button_pressed(&mut self, code: MouseButton, action: &str) {
+        self.mouse_button_binding.insert(code, action.to_string());
     }
 
     pub fn unbind_mouse_button_pressed(&mut self, button: MouseButton) {
         self.mouse_button_binding.remove(&button);
     }
 
-    pub fn bind_mouse_motion(&mut self, axis: Axis, action: String) {
-        self.mouse_move_binding.insert(axis, action);
+    pub fn bind_mouse_motion(&mut self, axis: Axis, action: &str) {
+        self.mouse_move_binding.insert(axis, action.to_string());
     }
 
     pub fn unbind_mouse_motion(&mut self, axis: Axis) {
@@ -35,7 +35,7 @@ impl InputMap {
         let button_bindings_iter = input_map.mouse_button_binding.clone();
         for (button, action) in button_bindings_iter.iter() {
             if mouse_button_input.pressed(*button) {
-                input_map.set_raw_action_strength(action.clone(), 1.0);
+                input_map.set_raw_action_strength(action, 1.0);
             }
         }
     }
@@ -59,14 +59,14 @@ impl InputMap {
             if x > 0.0 {
                 if let Some(action) = input_map.mouse_move_binding.get(&Axis::XPositive) {
                     let _action = action.clone();
-                    input_map.set_raw_action_strength(_action, x);
+                    input_map.set_raw_action_strength(&_action.to_string(), x);
                 }
             }
 
             if x < 0.0 {
                 if let Some(action) = input_map.mouse_move_binding.get(&Axis::XNegative) {
                     let _action = action.clone();
-                    input_map.set_raw_action_strength(_action, x.abs());
+                    input_map.set_raw_action_strength(&_action.to_string(), x.abs());
                 }
             }
 
@@ -74,14 +74,14 @@ impl InputMap {
             if y > 0.0 {
                 if let Some(action) = input_map.mouse_move_binding.get(&Axis::YPositive) {
                     let _action = action.clone();
-                    input_map.set_raw_action_strength(_action, y);
+                    input_map.set_raw_action_strength(&_action.to_string(), y);
                 }
             }
 
             if y < 0.0 {
                 if let Some(action) = input_map.mouse_move_binding.get(&Axis::YNegative) {
                     let _action = action.clone();
-                    input_map.set_raw_action_strength(_action, y.abs());
+                    input_map.set_raw_action_strength(&_action.to_string(), y.abs());
                 }
             }
         }
