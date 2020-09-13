@@ -46,7 +46,6 @@ fn setup(
     .set_strength_curve_function("AIM_RIGHT", |x  | -> f32 { x.powi(2) });
 }
 
-/// This system prints 'A' key state
 fn action_system(input_map: Res<InputMap>, mut app_exit_events: ResMut<Events<AppExit>>) {
     if input_map.is_action_in_progress("JUMP") {
         println!("Jumping...");
