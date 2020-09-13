@@ -3,43 +3,38 @@ use bevy_ecs::{Res, ResMut};
 use bevy_input::{prelude::KeyCode, Input};
 use std::collections::HashMap;
 
-#[derive(Default)]
-pub struct KeyboardMap {
-    action_binding: HashMap<KeyCode, String>,
-}
-
-impl KeyboardMap {
+impl InputMap {
     // publics
     pub fn bind_keyboard_pressed(&mut self, code: KeyCode, action: String) {
-        self.action_binding.insert(code, action);
+        self.keyboard_action_binding.insert(code, action);
     }
 
     pub fn unbind_keyboard_pressed(&mut self, code: KeyCode) {
-        self.action_binding.remove(&code);
+        self.keyboard_action_binding.remove(&code);
     }
 
     // crates
     pub(crate) fn set_bindings(&mut self, binding: HashMap<KeyCode, String>)
     {
-        self.action_binding = binding;
+        self.keyboard_action_binding = binding;
     }
     pub(crate) fn get_bindings(&self) -> HashMap<KeyCode, String>
     {
-        self.action_binding.clone()
+        self.keyboard_action_binding.clone()
     }
 
     // system
-    pub(crate) fn key_press_input_system(
+    pub(crate) fn kb_key_press_input_system(
         mut input_map: ResMut<InputMap>,
-        key_map: Res<KeyboardMap>,
         key_input: Res<Input<KeyCode>>,
     ) {
-        let map = &mut input_map;
-        let bindings_iter = key_map.action_binding.iter();
+        // let map = &mut input_map;
+        let bindings_iter = input_map.keyboard_action_binding.clone();
 
-        for (keycode, action) in bindings_iter {
+        for (keycode, action) in bindings_iter.iter() {
             if key_input.pressed(*keycode) {
-                map.set_raw_action_strength(action.clone(), 1.0);
+                let _action = action.clone();
+                input_map.set_raw_action_strength(_action, 1.0);
             }
         }
     }

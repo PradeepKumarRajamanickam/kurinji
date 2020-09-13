@@ -3,55 +3,45 @@ use bevy::math::Vec2;
 use bevy_app::{EventReader, Events};
 use bevy_ecs::{Local, Res, ResMut};
 use bevy_input::{mouse::MouseMotion, prelude::MouseButton, Input};
-use std::collections::HashMap;
-
-#[derive(Default)]
-pub struct MouseMap {
-    action_button_binding: HashMap<MouseButton, String>,
-    action_move_binding: HashMap<Axis, String>,
-}
 
 #[derive(Default)]
 pub struct MouseMoveState {
     reader: EventReader<MouseMotion>,
 }
 
-impl MouseMap {
+impl InputMap {
     // publics
     pub fn bind_mouse_button_pressed(&mut self, code: MouseButton, action: String) {
-        self.action_button_binding.insert(code, action);
+        self.mouse_button_binding.insert(code, action);
     }
 
     pub fn unbind_mouse_button_pressed(&mut self, button: MouseButton) {
-        self.action_button_binding.remove(&button);
+        self.mouse_button_binding.remove(&button);
     }
 
     pub fn bind_mouse_motion(&mut self, axis: Axis, action: String) {
-        self.action_move_binding.insert(axis, action);
+        self.mouse_move_binding.insert(axis, action);
     }
 
     pub fn unbind_mouse_motion(&mut self, axis: Axis) {
-        self.action_move_binding.remove(&axis);
+        self.mouse_move_binding.remove(&axis);
     }
 
     // systems
-    pub(crate) fn button_press_input_system(
+    pub(crate) fn mouse_button_press_input_system(
         mut input_map: ResMut<InputMap>,
-        mouse_map: Res<MouseMap>,
         mouse_button_input: Res<Input<MouseButton>>,
     ) {
-        let button_bindings_iter = mouse_map.action_button_binding.iter();
-        for (button, action) in button_bindings_iter {
+        let button_bindings_iter = input_map.mouse_button_binding.clone();
+        for (button, action) in button_bindings_iter.iter() {
             if mouse_button_input.pressed(*button) {
                 input_map.set_raw_action_strength(action.clone(), 1.0);
             }
         }
     }
 
-    pub fn mouse_move_event_system(
+    pub(crate) fn mouse_move_event_system(
         mut input_map: ResMut<InputMap>,
-        mouse_map: Res<MouseMap>,
-
         mut state: Local<MouseMoveState>,
         move_events: Res<Events<MouseMotion>>,
     ) {
@@ -67,27 +57,31 @@ impl MouseMap {
 
             // horizontal
             if x > 0.0 {
-                if let Some(action) = mouse_map.action_move_binding.get(&Axis::XPositive) {
-                    input_map.set_raw_action_strength(action.clone(), x);
+                if let Some(action) = input_map.mouse_move_binding.get(&Axis::XPositive) {
+                    let _action = action.clone();
+                    input_map.set_raw_action_strength(_action, x);
                 }
             }
 
             if x < 0.0 {
-                if let Some(action) = mouse_map.action_move_binding.get(&Axis::XNegative) {
-                    input_map.set_raw_action_strength(action.clone(), x.abs());
+                if let Some(action) = input_map.mouse_move_binding.get(&Axis::XNegative) {
+                    let _action = action.clone();
+                    input_map.set_raw_action_strength(_action, x.abs());
                 }
             }
 
             // vertical
             if y > 0.0 {
-                if let Some(action) = mouse_map.action_move_binding.get(&Axis::YPositive) {
-                    input_map.set_raw_action_strength(action.clone(), y);
+                if let Some(action) = input_map.mouse_move_binding.get(&Axis::YPositive) {
+                    let _action = action.clone();
+                    input_map.set_raw_action_strength(_action, y);
                 }
             }
 
             if y < 0.0 {
-                if let Some(action) = mouse_map.action_move_binding.get(&Axis::YNegative) {
-                    input_map.set_raw_action_strength(action.clone(), y.abs());
+                if let Some(action) = input_map.mouse_move_binding.get(&Axis::YNegative) {
+                    let _action = action.clone();
+                    input_map.set_raw_action_strength(_action, y.abs());
                 }
             }
         }

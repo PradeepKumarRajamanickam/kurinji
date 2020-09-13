@@ -2,7 +2,7 @@ use bevy::prelude::*;
 use bevy_app::AppExit;
 use bevy_app::Events;
 use bevy_ecs::ResMut;
-use bevy_prototype_input_map::{inputmap::InputMap, keyboard::KeyboardMap, mouse::MouseMap, InputMapPlugin, axis::Axis};
+use bevy_prototype_input_map::{inputmap::InputMap, InputMapPlugin, axis::Axis};
 
 fn main() {
     App::build()
@@ -15,24 +15,22 @@ fn main() {
 }
 
 fn setup(
-    mut key_map: ResMut<KeyboardMap>,
-    mut mouse_map: ResMut<MouseMap>,
     mut input_map: ResMut<InputMap>,
 ) {
     // keyboard
-    key_map.bind_keyboard_pressed(KeyCode::Space, "JUMP".to_string());
-    key_map.bind_keyboard_pressed(KeyCode::Return, "SHOOT".to_string());
+    input_map.bind_keyboard_pressed(KeyCode::Space, "JUMP".to_string());
+    input_map.bind_keyboard_pressed(KeyCode::Return, "SHOOT".to_string());
 
-    key_map.bind_keyboard_pressed(KeyCode::Escape, "QUIT_APP".to_string());
+    input_map.bind_keyboard_pressed(KeyCode::Escape, "QUIT_APP".to_string());
 
-    // mouse
-    mouse_map.bind_mouse_button_pressed(MouseButton::Left, "SHOOT".to_string());
-    mouse_map.bind_mouse_button_pressed(MouseButton::Right, "JUMP".to_string());
+    // // mouse
+    input_map.bind_mouse_button_pressed(MouseButton::Left, "SHOOT".to_string());
+    input_map.bind_mouse_button_pressed(MouseButton::Right, "JUMP".to_string());
 
-    mouse_map.bind_mouse_motion(Axis::YNegative, "AIM_UP".to_string());
-    mouse_map.bind_mouse_motion(Axis::YPositive, "AIM_DOWN".to_string());
-    mouse_map.bind_mouse_motion(Axis::XNegative, "AIM_LEFT".to_string());
-    mouse_map.bind_mouse_motion(Axis::XPositive, "AIM_RIGHT".to_string());
+    input_map.bind_mouse_motion(Axis::YNegative, "AIM_UP".to_string());
+    input_map.bind_mouse_motion(Axis::YPositive, "AIM_DOWN".to_string());
+    input_map.bind_mouse_motion(Axis::XNegative, "AIM_LEFT".to_string());
+    input_map.bind_mouse_motion(Axis::XPositive, "AIM_RIGHT".to_string());
 
     // dead zone
     input_map.set_dead_zone("AIM_UP".to_string(), 0.1);
