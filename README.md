@@ -1,12 +1,12 @@
-# Bevy Input Mapper
-Input Mapper decouples gameplay code from device specific input api. By converting user inputs from different input hardware into game specific actions, eg. *keyboard "Space" or joystick "A" can be mapped to "Jump" Action*. This improves the overall code quality, by keeping the gameplay code separate from input code.
+# Bevy Input Map
+Input Map decouples gameplay code from device specific input api. By converting user inputs from different input hardware into game specific actions, eg. *keyboard "Space" or joystick "A" can be mapped to "Jump" Action*. This improves the overall code quality, by keeping the gameplay code separate from input code.
 
 ## Usage
 
 *Add to Cargo.toml dependencies*
 ```
 [dependencies]
-bevy_prototype_input_map = "0.1.1"
+bevy_prototype_input_map = "0.1"
 ```
 
 *In code*
@@ -21,15 +21,18 @@ fn main() {
 }
 
 fn setup(
-    mut key_map: ResMut<KeyboardMap>
+    mut input_map: ResMut<InputMap>,
 ) {
-
-    key_map.bind_keyboard_pressed(KeyCode::Space, "JUMP".to_string());
+    input_map
+    .bind_keyboard_pressed(KeyCode::Return, "SHOOT")
+    .bind_mouse_motion(Axis::YNegative, "AIM_UP")
+    .set_dead_zone("AIM_UP", 0.1)
 }
 
+// system
 fn system(input_map: Res<InputMap>) {
-    if input_map.is_action_in_progress("JUMP".to_string()) {
-        println!("Jumping...");
+    if input_map.is_action_in_progress("SHOOT") {
+        println!("Bang...");
     }
 ```
 
@@ -60,6 +63,9 @@ Context based binding switch
 can be remapped to "equip" action in game inventory ui as shortcut...etc. Based on the view context the bindings will be swapped.
 
 # Release Notes
+## v0.1.2 (14 Sept, 2020)
+- New API
+- Ability to set custom strength curve
 
 ## v0.1.1 (7 Sept, 2020)
 - minor* Readme changes
