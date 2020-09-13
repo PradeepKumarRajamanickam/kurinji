@@ -24,7 +24,7 @@ impl Plugin for InputMapPlugin {
             .add_system_to_stage(stage::EVENT_UPDATE, InputMap::action_reset_system.system())
             // keyboard
             .init_resource::<KeyboardMap>()
-            .add_system_to_stage(stage::UPDATE, KeyboardMap::action_update_system.system())
+            .add_system_to_stage(stage::UPDATE, KeyboardMap::key_press_input_system.system())
             // mouse
             .init_resource::<MouseMap>()
             .add_system_to_stage(stage::UPDATE, MouseMap::button_press_input_system.system())

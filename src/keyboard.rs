@@ -29,7 +29,7 @@ impl KeyboardMap {
     }
 
     // system
-    pub(crate) fn action_update_system(
+    pub(crate) fn key_press_input_system(
         mut input_map: ResMut<InputMap>,
         key_map: Res<KeyboardMap>,
         key_input: Res<Input<KeyCode>>,
