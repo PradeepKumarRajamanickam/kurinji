@@ -1,8 +1,11 @@
+// publics 
 pub mod axis;
 pub mod inputmap;
-pub mod keyboard;
-pub mod mouse;
-pub mod util;
+
+// crates
+mod util;
+mod keyboard;
+mod mouse;
 
 use crate::inputmap::InputMap;
 use bevy_app::prelude::*;
