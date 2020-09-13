@@ -24,7 +24,7 @@ fn setup(
 
     .bind_keyboard_pressed(KeyCode::Escape, "QUIT_APP")
 
-    // // mouse
+    // mouse
     .bind_mouse_button_pressed(MouseButton::Left, "SHOOT")
     .bind_mouse_button_pressed(MouseButton::Right, "JUMP")
 
@@ -39,7 +39,7 @@ fn setup(
     .set_dead_zone("AIM_LEFT", 0.1)
     .set_dead_zone("AIM_RIGHT", 0.1)
 
-    // strength curve function
+    // custom strength curve function
     .set_strength_curve_function("AIM_UP", |x  | -> f32 { x.powi(2)})
     .set_strength_curve_function("AIM_DOWN", |x  | -> f32 { x.powi(2) })
     .set_strength_curve_function("AIM_LEFT", |x  | -> f32 { x.powi(2) })
