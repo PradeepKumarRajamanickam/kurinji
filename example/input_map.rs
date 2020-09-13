@@ -18,31 +18,32 @@ fn setup(
     mut input_map: ResMut<InputMap>,
 ) {
     // keyboard
-    input_map.bind_keyboard_pressed(KeyCode::Space, "JUMP");
-    input_map.bind_keyboard_pressed(KeyCode::Return, "SHOOT");
+    input_map
+    .bind_keyboard_pressed(KeyCode::Space, "JUMP")
+    .bind_keyboard_pressed(KeyCode::Return, "SHOOT")
 
-    input_map.bind_keyboard_pressed(KeyCode::Escape, "QUIT_APP");
+    .bind_keyboard_pressed(KeyCode::Escape, "QUIT_APP")
 
     // // mouse
-    input_map.bind_mouse_button_pressed(MouseButton::Left, "SHOOT");
-    input_map.bind_mouse_button_pressed(MouseButton::Right, "JUMP");
+    .bind_mouse_button_pressed(MouseButton::Left, "SHOOT")
+    .bind_mouse_button_pressed(MouseButton::Right, "JUMP")
 
-    input_map.bind_mouse_motion(Axis::YNegative, "AIM_UP");
-    input_map.bind_mouse_motion(Axis::YPositive, "AIM_DOWN");
-    input_map.bind_mouse_motion(Axis::XNegative, "AIM_LEFT");
-    input_map.bind_mouse_motion(Axis::XPositive, "AIM_RIGHT");
+    .bind_mouse_motion(Axis::YNegative, "AIM_UP")
+    .bind_mouse_motion(Axis::YPositive, "AIM_DOWN")
+    .bind_mouse_motion(Axis::XNegative, "AIM_LEFT")
+    .bind_mouse_motion(Axis::XPositive, "AIM_RIGHT")
 
     // dead zone
-    input_map.set_dead_zone("AIM_UP", 0.1);
-    input_map.set_dead_zone("AIM_DOWN", 0.1);
-    input_map.set_dead_zone("AIM_LEFT", 0.1);
-    input_map.set_dead_zone("AIM_RIGHT", 0.1);
+    .set_dead_zone("AIM_UP", 0.1)
+    .set_dead_zone("AIM_DOWN", 0.1)
+    .set_dead_zone("AIM_LEFT", 0.1)
+    .set_dead_zone("AIM_RIGHT", 0.1)
 
     // strength curve function
-    input_map.set_strength_curve_function("AIM_UP", |x  | -> f32 { x.powi(2)});
-    input_map.set_strength_curve_function("AIM_DOWN", |x  | -> f32 { x.powi(2) });
-    input_map.set_strength_curve_function("AIM_LEFT", |x  | -> f32 { x.powi(2) });
-    input_map.set_strength_curve_function("AIM_RIGHT", |x  | -> f32 { x.powi(2) });
+    .set_strength_curve_function("AIM_UP", |x  | -> f32 { x.powi(2)})
+    .set_strength_curve_function("AIM_DOWN", |x  | -> f32 { x.powi(2) })
+    .set_strength_curve_function("AIM_LEFT", |x  | -> f32 { x.powi(2) })
+    .set_strength_curve_function("AIM_RIGHT", |x  | -> f32 { x.powi(2) })
 }
 
 /// This system prints 'A' key state
