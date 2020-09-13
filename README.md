@@ -50,6 +50,13 @@ Use command
 - Action Strength
 - Action Deadzone
 
+## Repo
+https://github.com/PradeepKumarRajamanickam/bevy_input_map/
+
+## Bug Report
+https://github.com/PradeepKumarRajamanickam/bevy_input_map/issues
+
+
 ## Planned
 Joystick Mapping
 > Depends on bevy input support for joystick
