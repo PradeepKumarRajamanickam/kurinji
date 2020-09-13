@@ -11,20 +11,24 @@ pub struct MouseMoveState {
 
 impl InputMap {
     // publics
-    pub fn bind_mouse_button_pressed(&mut self, code: MouseButton, action: &str) {
+    pub fn bind_mouse_button_pressed(&mut self, code: MouseButton, action: &str) -> &mut InputMap {
         self.mouse_button_binding.insert(code, action.to_string());
+        self
     }
 
-    pub fn unbind_mouse_button_pressed(&mut self, button: MouseButton) {
+    pub fn unbind_mouse_button_pressed(&mut self, button: MouseButton) -> &mut InputMap {
         self.mouse_button_binding.remove(&button);
+        self
     }
 
-    pub fn bind_mouse_motion(&mut self, axis: Axis, action: &str) {
+    pub fn bind_mouse_motion(&mut self, axis: Axis, action: &str) -> &mut InputMap {
         self.mouse_move_binding.insert(axis, action.to_string());
+        self
     }
 
-    pub fn unbind_mouse_motion(&mut self, axis: Axis) {
+    pub fn unbind_mouse_motion(&mut self, axis: Axis) -> &mut InputMap {
         self.mouse_move_binding.remove(&axis);
+        self
     }
 
     // systems

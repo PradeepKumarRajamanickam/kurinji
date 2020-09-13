@@ -35,14 +35,16 @@ impl InputMap {
     ///
     /// Note* meaningful only for analog inputs like joystick, 
     /// mouse move delta...etc
-    pub fn set_dead_zone(&mut self, action: &str, value: f32) {
+    pub fn set_dead_zone(&mut self, action: &str, value: f32)  -> &mut InputMap{
         self.action_deadzone.insert(action.to_string(), value);
+        self
     }
 
     /// Set a custom curve function that will be applied to
     /// actions strength.
-    pub fn set_strength_curve_function(&mut self, action: &str, function: fn(f32) -> f32) {
+    pub fn set_strength_curve_function(&mut self, action: &str, function: fn(f32) -> f32) -> &mut InputMap {
         self.action_strength_curve.insert(action.to_string(), function);
+        self
     }
 
     // crates
