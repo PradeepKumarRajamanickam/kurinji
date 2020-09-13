@@ -43,7 +43,7 @@ fn setup(
     .set_strength_curve_function("AIM_UP", |x  | -> f32 { x.powi(2)})
     .set_strength_curve_function("AIM_DOWN", |x  | -> f32 { x.powi(2) })
     .set_strength_curve_function("AIM_LEFT", |x  | -> f32 { x.powi(2) })
-    .set_strength_curve_function("AIM_RIGHT", |x  | -> f32 { x.powi(2) })
+    .set_strength_curve_function("AIM_RIGHT", |x  | -> f32 { x.powi(2) });
 }
 
 /// This system prints 'A' key state
