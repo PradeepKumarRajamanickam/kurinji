@@ -36,7 +36,7 @@ fn system(input_map: Res<InputMap>) {
     }
 ```
 
-*Check out "examples/*"
+*Check out [examples](https://github.com/PradeepKumarRajamanickam/bevy_input_map/tree/master/example)
 
 ## Example
 Use command
@@ -44,6 +44,7 @@ Use command
 > cargo run --example with_json
 
 ## Features
+- new* RON config support
 - new* JSON config support
 - Support to set custom strength curve function
 - Keyboard Key Mapping
