@@ -16,15 +16,6 @@ impl InputMap {
     }
 
     // crates
-    pub(crate) fn set_bindings(&mut self, binding: HashMap<KeyCode, String>)
-    {
-        self.keyboard_action_binding = binding;
-    }
-    pub(crate) fn get_bindings(&self) -> HashMap<KeyCode, String>
-    {
-        self.keyboard_action_binding.clone()
-    }
-
     // system
     pub(crate) fn kb_key_press_input_system(
         mut input_map: ResMut<InputMap>,

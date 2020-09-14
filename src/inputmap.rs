@@ -18,4 +18,3 @@ pub struct InputMap {
     pub(crate) mouse_button_binding: HashMap<MouseButton, String>,
     pub(crate) mouse_move_binding: HashMap<Axis, String>,
 }
-
