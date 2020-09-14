@@ -36,14 +36,16 @@ fn system(input_map: Res<InputMap>) {
     }
 ```
 
-*Check out [example/input_map.rs](https://github.com/PradeepKumarRajamanickam/bevy_input_map/blob/master/example/input_map.rs)*
+*Check out "examples/*"
 
 ## Example
 Use command
-> cargo run --example input_map
+> cargo run --example with_code
+> cargo run --example with_json
 
 ## Features
-- new* Support to set custom strength curve function
+- new* JSON config support
+- Support to set custom strength curve function
 - Keyboard Key Mapping
 - Mouse Button Mapping
 - Mouse Move Mapping
@@ -60,9 +62,6 @@ https://github.com/PradeepKumarRajamanickam/bevy_input_map/issues
 ## Planned
 Joystick Mapping
 > Depends on bevy input support for joystick
-
-RON based binding config file
->Allow bindings to be loaded from a ron string/file
 
 Context based binding switch
 >Allow multiple binding sets to be defined in the ron config. That can be swapped out based on the context, eg.
