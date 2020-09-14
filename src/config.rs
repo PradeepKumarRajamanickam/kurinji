@@ -6,7 +6,7 @@ use crate::{axis::Axis, inputmap::InputMap};
 
 /// Data structure for serde
 #[derive(Default, Debug, Serialize, Deserialize)]
-pub struct ConfigData
+pub struct Config
 {
     #[serde(rename = "KeyboardKeys")]
     keyboard_key_bindings: HashMap<KeyCode, String>,
@@ -21,9 +21,9 @@ pub struct ConfigData
 impl InputMap{
 
     // public
-    pub fn get_config(&self) -> ConfigData
+    pub fn get_binding(&self) -> Config
     {
-        ConfigData
+        Config
         {
             keyboard_key_bindings: self.keyboard_action_binding.clone(),
             mouse_button_binding: self.mouse_button_binding.clone(),
@@ -32,16 +32,18 @@ impl InputMap{
             action_deadzone: self.action_deadzone.clone()
         }
     }
-    pub fn set_bindings(&mut self, config: ConfigData)
+    pub fn set_bindings(&mut self, config: Config)
     {
         self.keyboard_action_binding = config.keyboard_key_bindings;
         self.mouse_button_binding = config.mouse_button_binding;
         self.mouse_move_binding = config.mouse_move_binding;
         self.action_deadzone = config.action_deadzone;
     }
+
+    // ron
     pub fn get_bindings_as_ron(&self) ->  Result<String, String>
     {
-        let data = self.get_config();
+        let data = self.get_binding();
         let pretty = ron::ser::PrettyConfig::new()
         .with_enumerate_arrays(true)
         .with_new_line("\n".to_string());
@@ -51,10 +53,9 @@ impl InputMap{
             Err(e) => Err("Failed to generate ron".to_string()),
         }
     }
-
     pub fn set_bindings_with_ron(&mut self, ron: &str)
     {
-        let config: ConfigData = ron::de::from_str(ron)
+        let config: Config = ron::de::from_str(ron)
         .expect("Failed to deserialise config ron");
 
         self.set_bindings(config);
@@ -62,19 +63,19 @@ impl InputMap{
         self.action_strength_curve.clear();
     } 
 
+    // json
     pub fn get_bindings_as_json(&self) ->  Result<String, String>
     {
-        let data =  self.get_config();
+        let data =  self.get_binding();
         let serialized = serde_json::to_string_pretty(&data);
         match serialized {
             Ok(s) => Ok(s),
             Err(e) => Err("Failed to generate json".to_string()),
         }
     }
-
     pub fn set_bindings_with_json(&mut self, json: &str)
     {
-        let config: ConfigData = serde_json::from_str(json)
+        let config: Config = serde_json::from_str(json)
         .expect("Failed to deserialise config json");
 
         self.set_bindings(config);
