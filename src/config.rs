@@ -21,16 +21,27 @@ pub struct ConfigData
 impl InputMap{
 
     // public
-    pub fn get_bindings_as_ron(&self) ->  Result<String, String>
+    pub fn get_config(&self) -> ConfigData
     {
-        let data = ConfigData
+        ConfigData
         {
             keyboard_key_bindings: self.keyboard_action_binding.clone(),
             mouse_button_binding: self.mouse_button_binding.clone(),
             mouse_move_binding: self.mouse_move_binding.clone(),
 
             action_deadzone: self.action_deadzone.clone()
-        };
+        }
+    }
+    pub fn set_bindings(&mut self, config: ConfigData)
+    {
+        self.keyboard_action_binding = config.keyboard_key_bindings;
+        self.mouse_button_binding = config.mouse_button_binding;
+        self.mouse_move_binding = config.mouse_move_binding;
+        self.action_deadzone = config.action_deadzone;
+    }
+    pub fn get_bindings_as_ron(&self) ->  Result<String, String>
+    {
+        let data = self.get_config();
         let pretty = ron::ser::PrettyConfig::new()
         .with_enumerate_arrays(true)
         .with_new_line("\n".to_string());
@@ -46,24 +57,14 @@ impl InputMap{
         let config: ConfigData = ron::de::from_str(ron)
         .expect("Failed to deserialise config ron");
 
-        self.keyboard_action_binding = config.keyboard_key_bindings;
-        self.mouse_button_binding = config.mouse_button_binding;
-        self.mouse_move_binding = config.mouse_move_binding;
-        self.action_deadzone = config.action_deadzone;
+        self.set_bindings(config);
 
         self.action_strength_curve.clear();
     } 
 
     pub fn get_bindings_as_json(&self) ->  Result<String, String>
     {
-        let data = ConfigData
-        {
-            keyboard_key_bindings: self.keyboard_action_binding.clone(),
-            mouse_button_binding: self.mouse_button_binding.clone(),
-            mouse_move_binding: self.mouse_move_binding.clone(),
-
-            action_deadzone: self.action_deadzone.clone()
-        };
+        let data =  self.get_config();
         let serialized = serde_json::to_string_pretty(&data);
         match serialized {
             Ok(s) => Ok(s),
@@ -76,10 +77,7 @@ impl InputMap{
         let config: ConfigData = serde_json::from_str(json)
         .expect("Failed to deserialise config json");
 
-        self.keyboard_action_binding = config.keyboard_key_bindings;
-        self.mouse_button_binding = config.mouse_button_binding;
-        self.mouse_move_binding = config.mouse_move_binding;
-        self.action_deadzone = config.action_deadzone;
+        self.set_bindings(config);
 
         self.action_strength_curve.clear();
     } 
