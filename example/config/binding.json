@@ -1,0 +1,23 @@
+{
+    "KeyboardKeys": {
+      "Space": "JUMP",
+      "Escape": "QUIT_APP",
+      "Return": "SHOOT"
+    },
+    "MouseButtons": {
+      "Right": "JUMP",
+      "Left": "SHOOT"
+    },
+    "MouseMove": {
+      "XNegative": "AIM_LEFT",
+      "YNegative": "AIM_UP",
+      "XPositive": "AIM_RIGHT",
+      "YPositive": "AIM_DOWN"
+    },
+    "DeadZone": {
+      "AIM_LEFT": 0.1,
+      "AIM_UP": 0.1,
+      "AIM_RIGHT": 0.1,
+      "AIM_DOWN": 0.1
+    }
+  }
