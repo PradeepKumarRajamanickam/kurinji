@@ -5,6 +5,7 @@ use bevy_ecs::ResMut;
 use bevy_prototype_input_map::{inputmap::InputMap, InputMapPlugin, axis::Axis};
 
 fn main() {
+    println!("Input Map Binding In Code Example");
     App::build()
         .add_default_plugins()
         // setup
