@@ -1,4 +1,16 @@
 use bevy::prelude::Vec2;
+use crate::config::Config;
+
+pub fn get_config_from_json(json: &str) -> Config
+{
+    let config = serde_json::from_str(json).expect("Failed to deserialise config json");
+    config
+}
+pub fn get_config_from_ron(ron: &str) -> Config
+{
+    let config = ron::de::from_str(ron).expect("Failed to deserialise config ron");
+    config
+}
 
 pub(crate) fn normalised_within_range(min: f32, max: f32, value: f32) -> f32 {
     // src: https://stats.stackexchange.com/questions/70801/how-to-normalize-data-to-0-1-range
