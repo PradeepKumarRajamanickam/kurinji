@@ -8,6 +8,7 @@ mod keyboard;
 mod mouse;
 mod util;
 mod config;
+mod stack;
 
 use crate::inputmap::InputMap;
 use bevy_app::prelude::*;
