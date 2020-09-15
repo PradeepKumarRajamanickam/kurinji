@@ -1,13 +1,12 @@
-use std::collections::HashMap;
-use serde::{Serialize, Deserialize};
 use bevy::prelude::{KeyCode, MouseButton};
+use serde::{Deserialize, Serialize};
+use std::{collections::HashMap, hash::Hash};
 
 use crate::{axis::Axis, inputmap::InputMap};
 
 /// Data structure for serde
-#[derive(Default, Debug, Serialize, Deserialize)]
-pub struct Config
-{
+#[derive(Default, Clone, Debug, Serialize, Deserialize)]
+pub struct Config {
     #[serde(rename = "KeyboardKeys")]
     keyboard_key_bindings: HashMap<KeyCode, String>,
     #[serde(rename = "MouseButtons")]
@@ -15,25 +14,58 @@ pub struct Config
     #[serde(rename = "MouseMove")]
     mouse_move_binding: HashMap<Axis, String>,
     #[serde(rename = "DeadZone")]
-    action_deadzone: HashMap<String, f32>
+    action_deadzone: HashMap<String, f32>,
 }
 
-impl InputMap{
+impl Config {
+    // publics
+    pub fn merge(&mut self, config: Config) {
 
+        // keyboard
+        self.keyboard_key_bindings = Config::get_merged_hashmaps(
+            config.keyboard_key_bindings,
+            self.keyboard_key_bindings.clone(),
+        );
+
+        // mouse
+        self.mouse_button_binding = Config::get_merged_hashmaps(
+            config.mouse_button_binding,
+            self.mouse_button_binding.clone(),
+        );
+        self.mouse_move_binding = Config::get_merged_hashmaps(
+            config.mouse_move_binding,
+            self.mouse_move_binding.clone(),
+        );
+
+        // actions
+        self.action_deadzone = Config::get_merged_hashmaps(
+            config.action_deadzone,
+            self.action_deadzone.clone(),
+        );
+    }
+
+    // private
+    // src: https://stackoverflow.com/questions/27244465/merge-two-hashmaps-in-rust
+    fn get_merged_hashmaps<K: Hash + Eq + Clone, V: Clone>(
+        map1: HashMap<K, V>,
+        map2: HashMap<K, V>,
+    ) -> HashMap<K, V> {
+        map1.clone().into_iter().chain(map2).collect()
+    }
+}
+
+impl InputMap {
     // public
-    pub fn get_binding(&self) -> Config
-    {
-        Config
-        {
+    pub fn get_binding(&self) -> Config {
+        Config {
             keyboard_key_bindings: self.keyboard_action_binding.clone(),
             mouse_button_binding: self.mouse_button_binding.clone(),
             mouse_move_binding: self.mouse_move_binding.clone(),
 
-            action_deadzone: self.action_deadzone.clone()
+            action_deadzone: self.action_deadzone.clone(),
         }
     }
-    pub fn set_bindings(&mut self, config: Config)
-    {
+    pub fn set_bindings(&mut self, config: Config) {
         self.keyboard_action_binding = config.keyboard_key_bindings;
         self.mouse_button_binding = config.mouse_button_binding;
         self.mouse_move_binding = config.mouse_move_binding;
@@ -41,45 +73,39 @@ impl InputMap{
     }
 
     // ron
-    pub fn get_bindings_as_ron(&self) ->  Result<String, String>
-    {
+    pub fn get_bindings_as_ron(&self) -> Result<String, String> {
         let data = self.get_binding();
         let pretty = ron::ser::PrettyConfig::new()
-        .with_enumerate_arrays(true)
-        .with_new_line("\n".to_string());
+            .with_enumerate_arrays(true)
+            .with_new_line("\n".to_string());
         let serialized = ron::ser::to_string_pretty(&data, pretty);
         match serialized {
             Ok(s) => Ok(s),
             Err(e) => Err("Failed to generate ron".to_string()),
         }
     }
-    pub fn set_bindings_with_ron(&mut self, ron: &str)
-    {
-        let config: Config = ron::de::from_str(ron)
-        .expect("Failed to deserialise config ron");
+    pub fn set_bindings_with_ron(&mut self, ron: &str) {
+        let config: Config = ron::de::from_str(ron).expect("Failed to deserialise config ron");
 
         self.set_bindings(config);
 
         self.action_strength_curve.clear();
-    } 
+    }
 
     // json
-    pub fn get_bindings_as_json(&self) ->  Result<String, String>
-    {
-        let data =  self.get_binding();
+    pub fn get_bindings_as_json(&self) -> Result<String, String> {
+        let data = self.get_binding();
         let serialized = serde_json::to_string_pretty(&data);
         match serialized {
             Ok(s) => Ok(s),
             Err(e) => Err("Failed to generate json".to_string()),
         }
     }
-    pub fn set_bindings_with_json(&mut self, json: &str)
-    {
-        let config: Config = serde_json::from_str(json)
-        .expect("Failed to deserialise config json");
+    pub fn set_bindings_with_json(&mut self, json: &str) {
+        let config: Config = serde_json::from_str(json).expect("Failed to deserialise config json");
 
         self.set_bindings(config);
 
         self.action_strength_curve.clear();
-    } 
+    }
 }
