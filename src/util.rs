@@ -1,5 +1,25 @@
+use std::fs;
+
 use bevy::prelude::Vec2;
 use crate::config::Config;
+
+pub fn get_config_from_json_file(path: &str) -> Config
+{
+    let json = fs::
+    read_to_string(path)
+    .expect("Error! could not open config file");
+
+    get_config_from_json(&json.to_owned())
+}
+
+pub fn get_config_from_ron_file(path: &str) -> Config
+{
+    let ron = fs::
+    read_to_string(path)
+    .expect("Error! could not open config file");
+
+    get_config_from_ron(&ron.to_owned())
+}
 
 pub fn get_config_from_json(json: &str) -> Config
 {
