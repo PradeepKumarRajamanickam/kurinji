@@ -3,6 +3,7 @@ use std::collections::HashMap;
 use crate::{config::Config, inputmap::InputMap};
 
 impl InputMap {
+    // Push bindings into stack
     pub fn push(&mut self, config: Config) {
         // store current in stack
         let current = self.get_bindings();
@@ -12,6 +13,8 @@ impl InputMap {
         self.set_bindings(config);
     }
 
+    /// Clones current bindings updates it with the pushed
+    /// config
     pub fn push_additive(&mut self, config: Config) {
         
         // store current in stack
@@ -28,6 +31,7 @@ impl InputMap {
         self.set_bindings(new_binding);
     }
 
+    /// Pop the current binding out of stack
     pub fn pop(&mut self) {
         if let Some(next) = self.stack.pop() {
             self.set_bindings(next);
