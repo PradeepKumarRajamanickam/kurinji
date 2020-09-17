@@ -6,7 +6,7 @@ use crate::{axis::Axis, inputmap::InputMap, util};
 
 /// Data structure for serde
 #[derive(Default, Clone, Debug, Serialize, Deserialize)]
-pub struct Config {
+pub struct Bindings {
     #[serde(default, rename = "KeyboardKeys")]
     keyboard_key_bindings: HashMap<KeyCode, String>,
     #[serde(default, rename = "MouseButtons")]
@@ -17,30 +17,30 @@ pub struct Config {
     action_deadzone: HashMap<String, f32>,
 }
 
-impl Config {
+impl Bindings {
     // publics
-    pub fn merge(&mut self, config: Config) {
+    pub fn merge(&mut self, bindings: Bindings) {
 
         // keyboard
-        self.keyboard_key_bindings = Config::get_merged_hashmaps(
+        self.keyboard_key_bindings = Bindings::get_merged_hashmaps(
             self.keyboard_key_bindings.clone(),
-            config.keyboard_key_bindings,
+            bindings.keyboard_key_bindings,
         );
 
         // mouse
-        self.mouse_button_binding = Config::get_merged_hashmaps(
+        self.mouse_button_binding = Bindings::get_merged_hashmaps(
             self.mouse_button_binding.clone(),
-            config.mouse_button_binding,
+            bindings.mouse_button_binding,
         );
-        self.mouse_move_binding = Config::get_merged_hashmaps(
+        self.mouse_move_binding = Bindings::get_merged_hashmaps(
             self.mouse_move_binding.clone(),
-            config.mouse_move_binding,
+            bindings.mouse_move_binding,
         );
 
         // actions
-        self.action_deadzone = Config::get_merged_hashmaps(
+        self.action_deadzone = Bindings::get_merged_hashmaps(
             self.action_deadzone.clone(),
-            config.action_deadzone,
+            bindings.action_deadzone,
         );
     }
 
@@ -56,8 +56,8 @@ impl Config {
 
 impl InputMap {
     // public
-    pub fn get_bindings(&self) -> Config {
-        Config {
+    pub fn get_bindings(&self) -> Bindings {
+        Bindings {
             keyboard_key_bindings: self.keyboard_action_binding.clone(),
             mouse_button_binding: self.mouse_button_binding.clone(),
             mouse_move_binding: self.mouse_move_binding.clone(),
@@ -65,11 +65,12 @@ impl InputMap {
             action_deadzone: self.action_deadzone.clone(),
         }
     }
-    pub fn set_bindings(&mut self, config: Config) {
-        self.keyboard_action_binding = config.keyboard_key_bindings;
-        self.mouse_button_binding = config.mouse_button_binding;
-        self.mouse_move_binding = config.mouse_move_binding;
-        self.action_deadzone = config.action_deadzone;
+    pub fn set_bindings(&mut self, bindings: Bindings) {
+        self.keyboard_action_binding = bindings.keyboard_key_bindings;
+        self.mouse_button_binding = bindings.mouse_button_binding;
+        self.mouse_move_binding = bindings.mouse_move_binding;
+        self.action_deadzone = bindings.action_deadzone;
+
     }
 
     // ron
@@ -85,8 +86,8 @@ impl InputMap {
         }
     }
     pub fn set_bindings_with_ron(&mut self, ron: &str) {
-        let config: Config = util::get_config_from_ron(ron);
-        self.set_bindings(config);
+        let bindings: Bindings = util::get_bindings_from_ron(ron);
+        self.set_bindings(bindings);
 
         self.action_strength_curve.clear();
     }
@@ -101,8 +102,8 @@ impl InputMap {
         }
     }
     pub fn set_bindings_with_json(&mut self, json: &str) {
-        let config: Config = util::get_config_from_json(json);
-        self.set_bindings(config);
+        let bindings: Bindings = util::get_bindings_from_json(json);
+        self.set_bindings(bindings);
 
         self.action_strength_curve.clear();
     }

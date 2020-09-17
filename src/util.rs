@@ -1,35 +1,35 @@
 use std::fs;
 
 use bevy::prelude::Vec2;
-use crate::config::Config;
+use crate::bindings::Bindings;
 
-pub fn get_config_from_json_file(path: &str) -> Config
+pub fn get_bindings_from_json_file(path: &str) -> Bindings
 {
     let json = fs::
     read_to_string(path)
-    .expect("Error! could not open config file");
+    .expect("Error! could not open bindings file");
 
-    get_config_from_json(&json.to_owned())
+    get_bindings_from_json(&json.to_owned())
 }
 
-pub fn get_config_from_ron_file(path: &str) -> Config
+pub fn get_bindings_from_ron_file(path: &str) -> Bindings
 {
     let ron = fs::
     read_to_string(path)
-    .expect("Error! could not open config file");
+    .expect("Error! could not open bindings file");
 
-    get_config_from_ron(&ron.to_owned())
+    get_bindings_from_ron(&ron.to_owned())
 }
 
-pub fn get_config_from_json(json: &str) -> Config
+pub fn get_bindings_from_json(json: &str) -> Bindings
 {
-    let config = serde_json::from_str(json).expect("Failed to deserialise config json");
-    config
+    let bindings = serde_json::from_str(json).expect("Failed to deserialise bindings json");
+    bindings
 }
-pub fn get_config_from_ron(ron: &str) -> Config
+pub fn get_bindings_from_ron(ron: &str) -> Bindings
 {
-    let config = ron::de::from_str(ron).expect("Failed to deserialise config ron");
-    config
+    let bindings = ron::de::from_str(ron).expect("Failed to deserialise bindings ron");
+    bindings
 }
 
 pub(crate) fn normalised_within_range(min: f32, max: f32, value: f32) -> f32 {

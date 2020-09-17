@@ -1,7 +1,7 @@
 use bevy::prelude::{KeyCode, MouseButton};
 use bevy_ecs::ResMut;
 use std::collections::HashMap;
-use crate::{util, axis::Axis, config::Config};
+use crate::{util, axis::Axis, bindings::Bindings};
 
 #[derive(Default)]
 pub struct InputMap {
@@ -19,5 +19,5 @@ pub struct InputMap {
     pub(crate) mouse_move_binding: HashMap<Axis, String>,
 
     // stack
-    pub(crate) stack: Vec<Config>,
+    pub(crate) stack: Vec<Bindings>,
 }

@@ -2,7 +2,7 @@
 pub mod axis;
 pub mod inputmap;
 pub mod util;
-pub mod config;
+pub mod bindings;
 pub mod stack;
 
 // crates
