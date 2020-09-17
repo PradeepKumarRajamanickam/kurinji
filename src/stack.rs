@@ -5,7 +5,7 @@ use crate::{config::Config, inputmap::InputMap};
 impl InputMap {
     pub fn push(&mut self, config: Config) {
         // store current in stack
-        let current = self.get_binding();
+        let current = self.get_bindings();
         self.stack.push(current);
 
         // set new config as current
@@ -15,7 +15,7 @@ impl InputMap {
     pub fn push_additive(&mut self, config: Config) {
         
         // store current in stack
-        let current = self.get_binding();
+        let current = self.get_bindings();
         self.stack.push(current);
 
         // additive merge

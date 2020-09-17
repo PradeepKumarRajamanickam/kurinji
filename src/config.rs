@@ -56,7 +56,7 @@ impl Config {
 
 impl InputMap {
     // public
-    pub fn get_binding(&self) -> Config {
+    pub fn get_bindings(&self) -> Config {
         Config {
             keyboard_key_bindings: self.keyboard_action_binding.clone(),
             mouse_button_binding: self.mouse_button_binding.clone(),
@@ -74,7 +74,7 @@ impl InputMap {
 
     // ron
     pub fn get_bindings_as_ron(&self) -> Result<String, String> {
-        let data = self.get_binding();
+        let data = self.get_bindings();
         let pretty = ron::ser::PrettyConfig::new()
             .with_enumerate_arrays(true)
             .with_new_line("\n".to_string());
@@ -93,7 +93,7 @@ impl InputMap {
 
     // json
     pub fn get_bindings_as_json(&self) -> Result<String, String> {
-        let data = self.get_binding();
+        let data = self.get_bindings();
         let serialized = serde_json::to_string_pretty(&data);
         match serialized {
             Ok(s) => Ok(s),
