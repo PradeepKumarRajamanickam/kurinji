@@ -23,24 +23,24 @@ impl Config {
 
         // keyboard
         self.keyboard_key_bindings = Config::get_merged_hashmaps(
-            config.keyboard_key_bindings,
             self.keyboard_key_bindings.clone(),
+            config.keyboard_key_bindings,
         );
 
         // mouse
         self.mouse_button_binding = Config::get_merged_hashmaps(
-            config.mouse_button_binding,
             self.mouse_button_binding.clone(),
+            config.mouse_button_binding,
         );
         self.mouse_move_binding = Config::get_merged_hashmaps(
-            config.mouse_move_binding,
             self.mouse_move_binding.clone(),
+            config.mouse_move_binding,
         );
 
         // actions
         self.action_deadzone = Config::get_merged_hashmaps(
-            config.action_deadzone,
             self.action_deadzone.clone(),
+            config.action_deadzone,
         );
     }
 
