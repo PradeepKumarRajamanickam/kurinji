@@ -7,13 +7,13 @@ use crate::{axis::Axis, inputmap::InputMap, util};
 /// Data structure for serde
 #[derive(Default, Clone, Debug, Serialize, Deserialize)]
 pub struct Config {
-    #[serde(rename = "KeyboardKeys")]
+    #[serde(default, rename = "KeyboardKeys")]
     keyboard_key_bindings: HashMap<KeyCode, String>,
-    #[serde(rename = "MouseButtons")]
+    #[serde(default, rename = "MouseButtons")]
     mouse_button_binding: HashMap<MouseButton, String>,
-    #[serde(rename = "MouseMove")]
+    #[serde(default, rename = "MouseMove")]
     mouse_move_binding: HashMap<Axis, String>,
-    #[serde(rename = "DeadZone")]
+    #[serde(default, rename = "DeadZone")]
     action_deadzone: HashMap<String, f32>,
 }
 
