@@ -1,0 +1,7 @@
+(
+    // keyboard
+    KeyboardKeys: {
+        Enter: "YES",
+        Escape: "NO",
+    },
+)

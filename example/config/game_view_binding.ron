@@ -1,0 +1,8 @@
+(
+    // keyboard
+    KeyboardKeys: {
+        I: "OPEN_INVENTORY",
+        E: "USE",
+        Escape: "QUIT_APP",
+    }
+)

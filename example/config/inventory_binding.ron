@@ -1,0 +1,18 @@
+(
+    // keyboard
+    KeyboardKeys: {
+        
+        // disable prev bind 
+        // Note* only required for additive push to stack
+        I: "NO_ACTION",
+
+        // navigation
+        Up: "MOVE_UP_LIST",
+        Down: "MOVE_DOWN_LIST",
+
+        // item
+        E: "CONSUME_ITEM",
+        Delete: "DESTROY_ITEM",
+        Escape: "CLOSE_DIALOG",
+    },
+)
