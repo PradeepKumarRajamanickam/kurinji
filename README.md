@@ -44,8 +44,8 @@ Use command
 > cargo run --example with_json
 
 ## Features
-- new* RON config support
-- new* JSON config support
+- new* Binding Stack: Ability to Push, Additive Push and Pop bindings
+- new* JSON & RON binding support
 - Support to set custom strength curve function
 - Keyboard Key Mapping
 - Mouse Button Mapping
@@ -63,11 +63,6 @@ https://github.com/PradeepKumarRajamanickam/bevy_input_map/issues
 ## Planned
 Joystick Mapping
 > Depends on bevy input support for joystick
-
-Context based binding switch
->Allow multiple binding sets to be defined in the ron config. That can be swapped out based on the context, eg.
-"E" can be mapped to "use" action in game view but
-can be remapped to "equip" action in game inventory ui as shortcut...etc. Based on the view context the bindings will be swapped.
 
 # Release Notes
 ## v0.1.2 (14 Sept, 2020)
