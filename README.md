@@ -45,7 +45,7 @@ Use command
 
 ## Features
 - new* Binding Stack: Ability to Push, Additive Push and Pop bindings
-- new* JSON & RON binding support
+- new* JSON/RON Support: Ability to use serialised string to setup bindings
 - Support to set custom strength curve function
 - Keyboard Key Mapping
 - Mouse Button Mapping
@@ -65,6 +65,10 @@ Joystick Mapping
 > Depends on bevy input support for joystick
 
 # Release Notes
+## v0.1.3 (18 Sept, 2020)
+- Binding Stack
+- JSON & RON Support
+  
 ## v0.1.2 (14 Sept, 2020)
 - New API
 - Ability to set custom strength curve
