@@ -41,6 +41,7 @@ fn system(input_map: Res<InputMap>) {
 ## Example
 Use command
 > cargo run --example with_code
+
 > cargo run --example with_json
 
 ## Features
