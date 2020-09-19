@@ -24,8 +24,47 @@ impl InputMap {
         }
     }
 
+    /// Is this action happening. 
+    /// Note* this depends on action event phase
+    pub fn is_action_active(&self, action: &str) -> bool {
+        match self.get_event_phase(action) 
+        {
+            Phase::OnBegin => { self.did_action_just_began(action) }
+            Phase::OnProgress => { self.is_action_in_progress(action) }
+            Phase::OnEnded => { self.did_action_just_end(action)}
+        }
+    }
+
+    pub fn did_action_just_began(&self, action: &str) -> bool{
+        self.get_prev_strength(action) == 0. 
+        && self.get_action_strength(action) > 0.0
+    }
+    /// Is this action happening. 
+    /// Note* this does not consider action event phase
+    /// use is_action_active() in that case
     pub fn is_action_in_progress(&self, action: &str) -> bool {
         self.get_action_strength(action) > 0.0
+    }
+    pub fn did_action_just_end(&self, action: &str) -> bool{
+        self.get_prev_strength(action) > 0. 
+        && self.get_action_strength(action) == 0.0
+    }
+
+
+    /// Returns in which event phase this action active will be true
+    pub fn get_event_phase(&self, action: &str) -> &Phase{
+        if let Some(v) = self.action_phase.get(action)
+        {
+            return v
+        }
+
+        &Phase::OnProgress
+    }
+    /// Set on which event phase should action will be true.
+    /// By default will be Phase::OnProgress
+    pub fn set_event_phase(&mut self, action: &str, phase: Phase)  -> &mut InputMap{
+        self.action_phase.insert(action.to_string(), phase);
+        self
     }
 
     /// Set a dead zone threshold i.e. strenght will be 0.0 until 
@@ -57,11 +96,31 @@ impl InputMap {
 
     // systems
     pub(crate) fn action_reset_system(mut input_map: ResMut<InputMap>) {
+        // cache prev frame
+        input_map.action_prev_strength.clear();
+        for (k, phase) in input_map.action_phase.clone()
+        {
+            let strength = input_map.get_action_strength(&k);
+            input_map
+            .action_prev_strength
+            .insert(k.clone(), strength);
+        }
+
         input_map.reset_all_raw_strength();
     }
 
     // private
     fn get_strength_after_applying_deadzone(deadzone: f32, raw_strength: f32) -> f32 {
         util::normalised_within_range(deadzone, 1.0, raw_strength)
+    }
+
+    fn get_prev_strength(&self, action: &str) -> f32
+    {
+        if let Some(v) = self.action_prev_strength.get(action)
+        {
+            return v.clone();
+        }
+
+        0.
     }
 }
