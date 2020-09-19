@@ -29,43 +29,43 @@ fn setup(
 }
 
 fn action_system(input_map: Res<InputMap>, mut app_exit_events: ResMut<Events<AppExit>>) {
-    if input_map.is_action_in_progress("JUMP") {
+    if input_map.is_action_active("JUMP") {
         println!("Jumping...");
     }
 
-    if input_map.is_action_in_progress("SHOOT") {
+    if input_map.is_action_active("SHOOT") {
         println!("Bang");
     }
 
-    if input_map.is_action_in_progress("AIM_UP") {
+    if input_map.is_action_active("AIM_UP") {
         println!(
             "AIM_UP... [ strength: {}] ",
             input_map.get_action_strength("AIM_UP")
         );
     }
 
-    if input_map.is_action_in_progress("AIM_DOWN") {
+    if input_map.is_action_active("AIM_DOWN") {
         println!(
             "AIM_DOWN... [ strength: {}] ",
             input_map.get_action_strength("AIM_DOWN")
         );
     }
 
-    if input_map.is_action_in_progress("AIM_LEFT") {
+    if input_map.is_action_active("AIM_LEFT") {
         println!(
             "AIM_LEFT... [ strength: {}] ",
             input_map.get_action_strength("AIM_LEFT")
         );
     }
 
-    if input_map.is_action_in_progress("AIM_RIGHT") {
+    if input_map.is_action_active("AIM_RIGHT") {
         println!(
             "AIM_RIGHT... [ strength: {}] ",
             input_map.get_action_strength("AIM_RIGHT")
         );
     }
 
-    if input_map.is_action_in_progress("QUIT_APP") {
+    if input_map.is_action_active("QUIT_APP") {
         println!("Quiting...");
         app_exit_events.send(AppExit);
     }

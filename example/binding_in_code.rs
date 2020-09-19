@@ -35,7 +35,8 @@ fn setup(
     .bind_mouse_motion(Axis::XPositive, "AIM_RIGHT")
 
     // set event phase
-    .set_event_phase("SHOOT", Phase::OnBegin) // fires only on key/button down
+    .set_event_phase("QUIT_APP", Phase::OnEnded)
+    .set_event_phase("SHOOT", Phase::OnBegin)
 
     // dead zone
     .set_dead_zone("AIM_UP", 0.1)
@@ -48,6 +49,8 @@ fn setup(
     .set_strength_curve_function("AIM_DOWN", |x  | -> f32 { x.powi(2) })
     .set_strength_curve_function("AIM_LEFT", |x  | -> f32 { x.powi(2) })
     .set_strength_curve_function("AIM_RIGHT", |x  | -> f32 { x.powi(2) });
+
+    println!("{}", input_map.get_bindings_as_json().unwrap());
 }
 
 fn action_system(input_map: Res<InputMap>, mut app_exit_events: ResMut<Events<AppExit>>) {

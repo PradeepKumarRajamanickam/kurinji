@@ -19,5 +19,9 @@
       "AIM_UP": 0.1,
       "AIM_RIGHT": 0.1,
       "AIM_DOWN": 0.1
+    },
+    "EventPhase": {
+      "QUIT_APP": "OnEnded",
+      "SHOOT": "OnBegin"
     }
   }
