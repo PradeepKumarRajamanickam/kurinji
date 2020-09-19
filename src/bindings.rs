@@ -2,7 +2,7 @@ use bevy::prelude::{KeyCode, MouseButton};
 use serde::{Deserialize, Serialize};
 use std::{collections::HashMap, hash::Hash};
 
-use crate::{axis::Axis, inputmap::InputMap, util};
+use crate::{axis::Axis, inputmap::InputMap, util, phase::Phase};
 
 /// Data structure for serde
 #[derive(Default, Clone, Debug, Serialize, Deserialize)]
@@ -15,6 +15,8 @@ pub struct Bindings {
     mouse_move_binding: HashMap<Axis, String>,
     #[serde(default, rename = "DeadZone")]
     action_deadzone: HashMap<String, f32>,
+    #[serde(default, rename = "EventPhase")]
+    action_phase: HashMap<String, Phase>,
 }
 
 impl Bindings {
@@ -42,6 +44,10 @@ impl Bindings {
             self.action_deadzone.clone(),
             bindings.action_deadzone,
         );
+        self.action_phase = Bindings::get_merged_hashmaps(
+            self.action_phase.clone(),
+            bindings.action_phase,
+        );
     }
 
     // private
@@ -63,6 +69,7 @@ impl InputMap {
             mouse_move_binding: self.mouse_move_binding.clone(),
 
             action_deadzone: self.action_deadzone.clone(),
+            action_phase: self.action_phase.clone()
         }
     }
     pub fn set_bindings(&mut self, bindings: Bindings) {
@@ -70,7 +77,7 @@ impl InputMap {
         self.mouse_button_binding = bindings.mouse_button_binding;
         self.mouse_move_binding = bindings.mouse_move_binding;
         self.action_deadzone = bindings.action_deadzone;
-
+        self.action_phase = bindings.action_phase;
     }
 
     // ron
