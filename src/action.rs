@@ -1,6 +1,16 @@
 use bevy_ecs::ResMut;
+use serde::{Serialize, Deserialize};
 
 use crate::{inputmap::InputMap, util};
+
+#[derive(Serialize, Deserialize)]
+#[derive(Debug, Hash, Ord, PartialOrd, PartialEq, Eq, Clone, Copy)]
+pub enum Phase
+{
+    OnBegan,
+    OnProgress,
+    OnEnded
+}
 
 impl InputMap {
     // publics
