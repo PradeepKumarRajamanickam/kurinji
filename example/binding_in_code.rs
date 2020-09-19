@@ -2,7 +2,7 @@ use bevy::prelude::*;
 use bevy_app::AppExit;
 use bevy_app::Events;
 use bevy_ecs::ResMut;
-use bevy_prototype_input_map::{inputmap::InputMap, InputMapPlugin, axis::Axis};
+use bevy_prototype_input_map::{inputmap::InputMap, InputMapPlugin, axis::Axis, phase::Phase};
 
 fn main() {
     println!("Input Map Binding In Code Example");
@@ -34,6 +34,9 @@ fn setup(
     .bind_mouse_motion(Axis::XNegative, "AIM_LEFT")
     .bind_mouse_motion(Axis::XPositive, "AIM_RIGHT")
 
+    // set event phase
+    .set_event_phase("SHOOT", Phase::OnBegin) // fires only on key/button down
+
     // dead zone
     .set_dead_zone("AIM_UP", 0.1)
     .set_dead_zone("AIM_DOWN", 0.1)
@@ -48,43 +51,43 @@ fn setup(
 }
 
 fn action_system(input_map: Res<InputMap>, mut app_exit_events: ResMut<Events<AppExit>>) {
-    if input_map.is_action_in_progress("JUMP") {
+    if input_map.is_action_active("JUMP") {
         println!("Jumping...");
     }
 
-    if input_map.is_action_in_progress("SHOOT") {
+    if input_map.is_action_active("SHOOT") {
         println!("Bang");
     }
 
-    if input_map.is_action_in_progress("AIM_UP") {
+    if input_map.is_action_active("AIM_UP") {
         println!(
             "AIM_UP... [ strength: {}] ",
             input_map.get_action_strength("AIM_UP")
         );
     }
 
-    if input_map.is_action_in_progress("AIM_DOWN") {
+    if input_map.is_action_active("AIM_DOWN") {
         println!(
             "AIM_DOWN... [ strength: {}] ",
             input_map.get_action_strength("AIM_DOWN")
         );
     }
 
-    if input_map.is_action_in_progress("AIM_LEFT") {
+    if input_map.is_action_active("AIM_LEFT") {
         println!(
             "AIM_LEFT... [ strength: {}] ",
             input_map.get_action_strength("AIM_LEFT")
         );
     }
 
-    if input_map.is_action_in_progress("AIM_RIGHT") {
+    if input_map.is_action_active("AIM_RIGHT") {
         println!(
             "AIM_RIGHT... [ strength: {}] ",
             input_map.get_action_strength("AIM_RIGHT")
         );
     }
 
-    if input_map.is_action_in_progress("QUIT_APP") {
+    if input_map.is_action_active("QUIT_APP") {
         println!("Quiting...");
         app_exit_events.send(AppExit);
     }
