@@ -31,7 +31,7 @@ fn setup(
 
 // system
 fn system(input_map: Res<InputMap>) {
-    if input_map.is_action_in_progress("SHOOT") {
+    if input_map.is_action_active("SHOOT") {
         println!("Bang...");
     }
 ```
