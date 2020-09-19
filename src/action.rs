@@ -35,38 +35,6 @@ impl InputMap {
         }
     }
 
-    pub fn did_action_just_began(&self, action: &str) -> bool{
-        self.get_prev_strength(action) == 0. 
-        && self.get_action_strength(action) > 0.0
-    }
-    /// Is this action happening. 
-    /// Note* this does not consider action event phase
-    /// use is_action_active() in that case
-    pub fn is_action_in_progress(&self, action: &str) -> bool {
-        self.get_action_strength(action) > 0.0
-    }
-    pub fn did_action_just_end(&self, action: &str) -> bool{
-        self.get_prev_strength(action) > 0. 
-        && self.get_action_strength(action) == 0.0
-    }
-
-
-    /// Returns in which event phase this action active will be true
-    pub fn get_event_phase(&self, action: &str) -> &Phase{
-        if let Some(v) = self.action_phase.get(action)
-        {
-            return v
-        }
-
-        &Phase::OnProgress
-    }
-    /// Set on which event phase should action will be true.
-    /// By default will be Phase::OnProgress
-    pub fn set_event_phase(&mut self, action: &str, phase: Phase)  -> &mut InputMap{
-        self.action_phase.insert(action.to_string(), phase);
-        self
-    }
-
     /// Set a dead zone threshold i.e. strenght will be 0.0 until 
     /// threshold is met. The strength range 0.0 - 1.0 is now mapped to
     /// min_threshold - 1.0
@@ -86,6 +54,15 @@ impl InputMap {
     }
 
     // crates
+    pub(crate) fn get_prev_strength(&self, action: &str) -> f32
+    {
+        if let Some(v) = self.action_prev_strength.get(action)
+        {
+            return v.clone();
+        }
+
+        0.
+    }
     pub(crate) fn set_raw_action_strength(&mut self, action: &str, strength: f32) {
         self.action_raw_strength.insert(action.to_string(), strength);
     }
@@ -112,15 +89,5 @@ impl InputMap {
     // private
     fn get_strength_after_applying_deadzone(deadzone: f32, raw_strength: f32) -> f32 {
         util::normalised_within_range(deadzone, 1.0, raw_strength)
-    }
-
-    fn get_prev_strength(&self, action: &str) -> f32
-    {
-        if let Some(v) = self.action_prev_strength.get(action)
-        {
-            return v.clone();
-        }
-
-        0.
     }
 }
