@@ -1,10 +1,10 @@
-use std::{fs, io::Read};
+use std::fs;
 
 use bevy::prelude::*;
 use bevy_app::AppExit;
 use bevy_app::Events;
 use bevy_ecs::ResMut;
-use bevy_prototype_input_map::{inputmap::InputMap, InputMapPlugin, axis::Axis};
+use bevy_prototype_input_map::{inputmap::InputMap, InputMapPlugin};
 
 fn main() {
     println!("Input Map Binding From Json Example");
