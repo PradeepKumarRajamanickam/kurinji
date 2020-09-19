@@ -39,14 +39,15 @@ fn system(input_map: Res<InputMap>) {
 *Check out [examples](https://github.com/PradeepKumarRajamanickam/bevy_input_map/tree/master/example)
 
 ## Example
-Use command
+Use commands
 > cargo run --example with_code
 
 > cargo run --example with_json
 
 ## Features
-- new* Binding Stack: Ability to Push, Additive Push and Pop bindings
-- new* JSON/RON Support: Ability to use serialised string to setup bindings
+- new* Event Phase: Ability to set at which event phase an action is active
+- Binding Stack: Ability to Push, Additive Push and Pop bindings
+- JSON/RON Support: Ability to use serialised string to setup bindings
 - Support to set custom strength curve function
 - Keyboard Key Mapping
 - Mouse Button Mapping
