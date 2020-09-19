@@ -1,5 +1,5 @@
 use bevy_ecs::ResMut;
-use crate::{inputmap::InputMap, util, phase::Phase};
+use crate::{inputmap::InputMap, util, eventphase::EventPhase};
 
 impl InputMap {
     // publics
@@ -29,9 +29,9 @@ impl InputMap {
     pub fn is_action_active(&self, action: &str) -> bool {
         match self.get_event_phase(action) 
         {
-            Phase::OnBegin => { self.did_action_just_began(action) }
-            Phase::OnProgress => { self.is_action_in_progress(action) }
-            Phase::OnEnded => { self.did_action_just_end(action)}
+            EventPhase::OnBegin => { self.did_action_just_began(action) }
+            EventPhase::OnProgress => { self.is_action_in_progress(action) }
+            EventPhase::OnEnded => { self.did_action_just_end(action)}
         }
     }
 

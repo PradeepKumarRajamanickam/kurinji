@@ -2,7 +2,7 @@ use bevy::prelude::*;
 use bevy_app::AppExit;
 use bevy_app::Events;
 use bevy_ecs::ResMut;
-use bevy_prototype_input_map::{inputmap::InputMap, InputMapPlugin, axis::Axis, phase::Phase};
+use bevy_prototype_input_map::{inputmap::InputMap, InputMapPlugin, axis::Axis, eventphase::EventPhase};
 
 fn main() {
     println!("Input Map Binding In Code Example");
@@ -35,8 +35,8 @@ fn setup(
     .bind_mouse_motion(Axis::XPositive, "AIM_RIGHT")
 
     // set event phase
-    .set_event_phase("QUIT_APP", Phase::OnEnded)
-    .set_event_phase("SHOOT", Phase::OnBegin)
+    .set_event_phase("QUIT_APP", EventPhase::OnEnded)
+    .set_event_phase("SHOOT", EventPhase::OnBegin)
 
     // dead zone
     .set_dead_zone("AIM_UP", 0.1)

@@ -1,7 +1,7 @@
 use bevy::prelude::{KeyCode, MouseButton};
 use bevy_ecs::ResMut;
 use std::collections::HashMap;
-use crate::{axis::Axis, bindings::Bindings, phase::Phase};
+use crate::{axis::Axis, bindings::Bindings, eventphase::EventPhase};
 
 #[derive(Default)]
 pub struct InputMap {
@@ -11,7 +11,7 @@ pub struct InputMap {
     pub(crate) action_raw_strength: HashMap<String, f32>,
     pub(crate) action_prev_strength: HashMap<String, f32>, // strength value from prev frame
     pub(crate) action_deadzone: HashMap<String, f32>,
-    pub(crate) action_phase: HashMap<String, Phase>,
+    pub(crate) action_phase: HashMap<String, EventPhase>,
 
     // keyboard
     pub(crate) keyboard_action_binding: HashMap<KeyCode, String>,

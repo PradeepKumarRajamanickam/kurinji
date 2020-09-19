@@ -4,31 +4,31 @@ use crate::inputmap::InputMap;
 #[derive(Serialize, Deserialize)]
 #[derive(Debug, Hash, Ord, PartialOrd, PartialEq, Eq, Clone, Copy)]
 /// Event phase that action is mapped to.
-pub enum Phase
+pub enum EventPhase
 {
     OnBegin, // In the beginning of the event
     OnProgress, // During the event
     OnEnded, // At the end of the event
 }
-impl Default for Phase {
-    fn default() -> Self { Phase::OnProgress }
+impl Default for EventPhase {
+    fn default() -> Self { EventPhase::OnProgress }
 }
 
 impl InputMap
 {
     // publics
     /// Returns in which event phase this action active will be true
-    pub fn get_event_phase(&self, action: &str) -> &Phase{
+    pub fn get_event_phase(&self, action: &str) -> &EventPhase{
         if let Some(v) = self.action_phase.get(action)
         {
             return v
         }
 
-        &Phase::OnProgress
+        &EventPhase::OnProgress
     }
     /// Set on which event phase should action will be true.
     /// By default will be Phase::OnProgress
-    pub fn set_event_phase(&mut self, action: &str, phase: Phase)  -> &mut InputMap{
+    pub fn set_event_phase(&mut self, action: &str, phase: EventPhase)  -> &mut InputMap{
         self.action_phase.insert(action.to_string(), phase);
         self
     }

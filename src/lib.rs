@@ -4,7 +4,7 @@ pub mod inputmap;
 pub mod util;
 pub mod bindings;
 pub mod stack;
-pub mod phase;
+pub mod eventphase;
 
 // crates
 mod action;

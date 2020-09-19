@@ -2,7 +2,7 @@ use bevy::prelude::{KeyCode, MouseButton};
 use serde::{Deserialize, Serialize};
 use std::{collections::HashMap, hash::Hash};
 
-use crate::{axis::Axis, inputmap::InputMap, util, phase::Phase};
+use crate::{axis::Axis, inputmap::InputMap, util, eventphase::EventPhase};
 
 /// Data structure for serde
 #[derive(Default, Clone, Debug, Serialize, Deserialize)]
@@ -16,7 +16,7 @@ pub struct Bindings {
     #[serde(default, rename = "DeadZone")]
     action_deadzone: HashMap<String, f32>,
     #[serde(default, rename = "EventPhase")]
-    action_phase: HashMap<String, Phase>,
+    action_phase: HashMap<String, EventPhase>,
 }
 
 impl Bindings {
