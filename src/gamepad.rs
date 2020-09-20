@@ -14,12 +14,13 @@ pub struct GamepadState {
 
 impl InputMap {
     // publics
+    // buttons
     pub fn bind_gamepad_button_pressed(
         &mut self,
-        joy_button: GamepadButtonType,
+        pad_button: GamepadButtonType,
         action: &str,
     ) -> &mut InputMap {
-        self.bind_gamepad_button_pressed_with_gamepad_number(0, joy_button, action)
+        self.bind_gamepad_button_pressed_with_gamepad_number(0, pad_button, action)
     }
     pub fn bind_gamepad_button_pressed_with_gamepad_number(
         &mut self,
@@ -41,20 +42,19 @@ impl InputMap {
             .insert(button, action.to_string());
         self
     }
-
     pub fn unbind_gamepad_button_pressed(
         &mut self,
-        joy_button: GamepadButtonType,
+        pad_button: GamepadButtonType,
     ) -> &mut InputMap {
-        self.unbind_gamepad_button_pressed_with_gamepad_number(0, joy_button)
+        self.unbind_gamepad_button_pressed_with_gamepad_handle(0, pad_button)
     }
-    pub fn unbind_gamepad_button_pressed_with_gamepad_number(
+    pub fn unbind_gamepad_button_pressed_with_gamepad_handle(
         &mut self,
-        pad_number: usize,
+        pad_handle: usize,
         pad_button: GamepadButtonType,
     ) -> &mut InputMap {
         self.unbind_gamepad_button_pressed_with_gamepad_button(GamepadButton(
-            Gamepad(pad_number),
+            Gamepad(pad_handle),
             pad_button,
         ))
     }
@@ -66,6 +66,7 @@ impl InputMap {
         self
     }
 
+    // axis
     pub fn bind_gamepad_axis(
         &mut self,
         pad_axis: GamepadAxis,
@@ -120,7 +121,7 @@ impl InputMap {
         }
     }
 
-    pub(crate) fn gamepad_axis_event_system(
+    pub(crate) fn gamepad_axis_system(
         mut input_map: ResMut<InputMap>,
         pad_axis: Res<bevy_input::Axis<GamepadAxis>>,
     ) {
