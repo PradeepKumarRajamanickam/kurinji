@@ -2,7 +2,7 @@ use bevy::prelude::*;
 use bevy_app::AppExit;
 use bevy_app::Events;
 use bevy_ecs::ResMut;
-use bevy_prototype_input_map::{inputmap::InputMap, InputMapPlugin, axis::Axis, eventphase::EventPhase};
+use bevy_prototype_input_map::{inputmap::InputMap, InputMapPlugin, axis::Axis, eventphase::EventPhase, axis::AnalogDirection};
 
 fn main() {
     println!("Input Map Binding In Code Example");
@@ -18,8 +18,17 @@ fn main() {
 fn setup(
     mut input_map: ResMut<InputMap>,
 ) {
-    // keyboard
     input_map
+    // joystick
+    .bind_gamepad_button_pressed(GamepadButtonType::Start, "QUIT_APP")
+    .bind_gamepad_button_pressed(GamepadButtonType::South, "SHOOT")
+    .bind_gamepad_axis(GamepadAxis(Gamepad(0), GamepadAxisType::RightStickX), AnalogDirection::Negative, "AIM_LEFT")
+    .bind_gamepad_axis(GamepadAxis(Gamepad(0), GamepadAxisType::RightStickX), AnalogDirection::Positve, "AIM_RIGHT")
+    .bind_gamepad_axis(GamepadAxis(Gamepad(0), GamepadAxisType::RightStickY), AnalogDirection::Positve, "AIM_UP")
+    .bind_gamepad_axis(GamepadAxis(Gamepad(0), GamepadAxisType::RightStickY), AnalogDirection::Negative, "AIM_DOWN")
+
+
+    // keyboard
     .bind_keyboard_pressed(KeyCode::Space, "JUMP")
     .bind_keyboard_pressed(KeyCode::Return, "SHOOT")
 
