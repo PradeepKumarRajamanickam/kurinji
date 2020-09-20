@@ -1,4 +1,4 @@
-use bevy::prelude::{KeyCode, MouseButton};
+use bevy::prelude::{KeyCode, MouseButton, GamepadButton, Gamepad};
 
 use std::collections::HashMap;
 use crate::{axis::Axis, bindings::Bindings, eventphase::EventPhase};
@@ -19,6 +19,10 @@ pub struct InputMap {
     // mouse
     pub(crate) mouse_button_binding: HashMap<MouseButton, String>,
     pub(crate) mouse_move_binding: HashMap<Axis, String>,
+
+    // joystick
+    pub(crate) joystick_button_binding: HashMap<GamepadButton, String>,
+    // pub(crate) mouse_move_binding: HashMap<Axis, String>,
 
     // stack
     pub(crate) stack: Vec<Bindings>,

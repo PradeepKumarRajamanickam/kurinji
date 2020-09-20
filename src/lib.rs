@@ -10,6 +10,7 @@ pub mod eventphase;
 mod action;
 mod keyboard;
 mod mouse;
+mod gamepad;
 use crate::inputmap::InputMap;
 use bevy_app::prelude::*;
 use bevy_ecs::IntoQuerySystem;
@@ -23,9 +24,11 @@ impl Plugin for InputMapPlugin {
             // input map
             .init_resource::<InputMap>()
             .add_system_to_stage(stage::EVENT_UPDATE, InputMap::action_reset_system.system())
-            // // keyboard
+            // joystick
+            .add_system_to_stage(stage::UPDATE, InputMap::gamepad_button_press_input_system.system())
+            // keyboard
             .add_system_to_stage(stage::UPDATE, InputMap::kb_key_press_input_system.system())
-            // // mouse
+            // mouse
             .add_system_to_stage(stage::UPDATE, InputMap::mouse_button_press_input_system.system())
             .add_system_to_stage(stage::UPDATE, InputMap::mouse_move_event_system.system());
     }
