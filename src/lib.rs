@@ -25,7 +25,9 @@ impl Plugin for InputMapPlugin {
             .init_resource::<InputMap>()
             .add_system_to_stage(stage::EVENT_UPDATE, InputMap::action_reset_system.system())
             // joystick
+            .add_system_to_stage(stage::UPDATE, InputMap::gamepad_connection_event_system.system())
             .add_system_to_stage(stage::UPDATE, InputMap::gamepad_button_press_input_system.system())
+            .add_system_to_stage(stage::UPDATE, InputMap::gamepad_axis_event_system.system())
             // keyboard
             .add_system_to_stage(stage::UPDATE, InputMap::kb_key_press_input_system.system())
             // mouse
