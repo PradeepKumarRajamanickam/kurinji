@@ -2,7 +2,7 @@ use bevy::prelude::{KeyCode, MouseButton};
 use serde::{Deserialize, Serialize};
 use std::{collections::HashMap, hash::Hash};
 
-use crate::{axis::Axis, inputmap::InputMap, util, eventphase::EventPhase};
+use crate::{axis::Axis, inputmap::InputMap, eventphase::EventPhase};
 
 /// Data structure for serde
 #[derive(Default, Clone, Debug, Serialize, Deserialize)]
@@ -93,7 +93,7 @@ impl InputMap {
         }
     }
     pub fn set_bindings_with_ron(&mut self, ron: &str) {
-        let bindings: Bindings = util::get_bindings_from_ron(ron);
+        let bindings: Bindings = InputMap::get_bindings_from_ron(ron);
         self.set_bindings(bindings);
 
         self.action_strength_curve.clear();
@@ -109,7 +109,7 @@ impl InputMap {
         }
     }
     pub fn set_bindings_with_json(&mut self, json: &str) {
-        let bindings: Bindings = util::get_bindings_from_json(json);
+        let bindings: Bindings = InputMap::get_bindings_from_json(json);
         self.set_bindings(bindings);
 
         self.action_strength_curve.clear();

@@ -10,7 +10,6 @@ pub mod eventphase;
 mod action;
 mod keyboard;
 mod mouse;
-
 use crate::inputmap::InputMap;
 use bevy_app::prelude::*;
 use bevy_ecs::IntoQuerySystem;

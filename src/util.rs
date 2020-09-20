@@ -1,36 +1,33 @@
+use bevy::prelude::Vec2;
+
 use std::fs;
 
-use bevy::prelude::Vec2;
-use crate::bindings::Bindings;
+use crate::{inputmap::InputMap, bindings::Bindings};
 
-pub fn get_bindings_from_json_file(path: &str) -> Bindings
-{
-    let json = fs::
-    read_to_string(path)
-    .expect("Error! could not open bindings file");
+impl InputMap {
+    // publics
+    pub fn get_bindings_from_json_file(path: &str) -> Bindings {
+        let json = fs::read_to_string(path).expect("Error! could not open bindings file");
 
-    get_bindings_from_json(&json.to_owned())
+        InputMap::get_bindings_from_json(&json.to_owned())
+    }
+
+    pub fn get_bindings_from_ron_file(path: &str) -> Bindings {
+        let ron = fs::read_to_string(path).expect("Error! could not open bindings file");
+
+        InputMap::get_bindings_from_ron(&ron.to_owned())
+    }
+
+    pub fn get_bindings_from_json(json: &str) -> Bindings {
+        let bindings = serde_json::from_str(json).expect("Failed to deserialise bindings json");
+        bindings
+    }
+    pub fn get_bindings_from_ron(ron: &str) -> Bindings {
+        let bindings = ron::de::from_str(ron).expect("Failed to deserialise bindings ron");
+        bindings
+    }
 }
 
-pub fn get_bindings_from_ron_file(path: &str) -> Bindings
-{
-    let ron = fs::
-    read_to_string(path)
-    .expect("Error! could not open bindings file");
-
-    get_bindings_from_ron(&ron.to_owned())
-}
-
-pub fn get_bindings_from_json(json: &str) -> Bindings
-{
-    let bindings = serde_json::from_str(json).expect("Failed to deserialise bindings json");
-    bindings
-}
-pub fn get_bindings_from_ron(ron: &str) -> Bindings
-{
-    let bindings = ron::de::from_str(ron).expect("Failed to deserialise bindings ron");
-    bindings
-}
 
 pub(crate) fn normalised_within_range(min: f32, max: f32, value: f32) -> f32 {
     // src: https://stats.stackexchange.com/questions/70801/how-to-normalize-data-to-0-1-range
