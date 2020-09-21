@@ -1,4 +1,4 @@
-use bevy::prelude::{KeyCode, MouseButton};
+use bevy::prelude::{KeyCode, MouseButton, GamepadButton};
 use serde::{Deserialize, Serialize};
 use std::{collections::HashMap, hash::Hash};
 
@@ -7,6 +7,8 @@ use crate::{axis::Axis, inputmap::InputMap, eventphase::EventPhase};
 /// Data structure for serde
 #[derive(Default, Clone, Debug, Serialize, Deserialize)]
 pub struct Bindings {
+    #[serde(default, rename = "GamepadButtons")]
+    gamepad_button_bindings: HashMap<GamepadButton, String>,
     #[serde(default, rename = "KeyboardKeys")]
     keyboard_key_bindings: HashMap<KeyCode, String>,
     #[serde(default, rename = "MouseButtons")]
@@ -64,6 +66,7 @@ impl InputMap {
     // public
     pub fn get_bindings(&self) -> Bindings {
         Bindings {
+            gamepad_button_bindings: self.joystick_button_binding.clone(),
             keyboard_key_bindings: self.keyboard_action_binding.clone(),
             mouse_button_binding: self.mouse_button_binding.clone(),
             mouse_move_binding: self.mouse_move_binding.clone(),
@@ -73,45 +76,11 @@ impl InputMap {
         }
     }
     pub fn set_bindings(&mut self, bindings: Bindings) {
+        self.joystick_button_binding = bindings.gamepad_button_bindings;
         self.keyboard_action_binding = bindings.keyboard_key_bindings;
         self.mouse_button_binding = bindings.mouse_button_binding;
         self.mouse_move_binding = bindings.mouse_move_binding;
         self.action_deadzone = bindings.action_deadzone;
         self.action_phase = bindings.action_phase;
-    }
-
-    // ron
-    pub fn get_bindings_as_ron(&self) -> Result<String, String> {
-        let data = self.get_bindings();
-        let pretty = ron::ser::PrettyConfig::new()
-            .with_enumerate_arrays(true)
-            .with_new_line("\n".to_string());
-        let serialized = ron::ser::to_string_pretty(&data, pretty);
-        match serialized {
-            Ok(s) => Ok(s),
-            Err(e) => Err("Failed to generate ron".to_string()),
-        }
-    }
-    pub fn set_bindings_with_ron(&mut self, ron: &str) {
-        let bindings: Bindings = InputMap::get_bindings_from_ron(ron);
-        self.set_bindings(bindings);
-
-        self.action_strength_curve.clear();
-    }
-
-    // json
-    pub fn get_bindings_as_json(&self) -> Result<String, String> {
-        let data = self.get_bindings();
-        let serialized = serde_json::to_string_pretty(&data);
-        match serialized {
-            Ok(s) => Ok(s),
-            Err(e) => Err("Failed to generate json".to_string()),
-        }
-    }
-    pub fn set_bindings_with_json(&mut self, json: &str) {
-        let bindings: Bindings = InputMap::get_bindings_from_json(json);
-        self.set_bindings(bindings);
-
-        self.action_strength_curve.clear();
     }
 }

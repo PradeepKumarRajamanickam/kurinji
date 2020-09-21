@@ -7,6 +7,7 @@ pub mod stack;
 pub mod eventphase;
 
 // crates
+mod serde;
 mod action;
 mod keyboard;
 mod mouse;
