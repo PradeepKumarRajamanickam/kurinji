@@ -22,10 +22,16 @@ fn setup(
     // joystick
     .bind_gamepad_button_pressed(GamepadButtonType::Start, "QUIT_APP")
     .bind_gamepad_button_pressed(GamepadButtonType::South, "SHOOT")
-    .bind_gamepad_axis(GamepadAxis(Gamepad(0), GamepadAxisType::RightStickX), AnalogDirection::Negative, "AIM_LEFT")
-    .bind_gamepad_axis(GamepadAxis(Gamepad(0), GamepadAxisType::RightStickX), AnalogDirection::Positve, "AIM_RIGHT")
-    .bind_gamepad_axis(GamepadAxis(Gamepad(0), GamepadAxisType::RightStickY), AnalogDirection::Positve, "AIM_UP")
-    .bind_gamepad_axis(GamepadAxis(Gamepad(0), GamepadAxisType::RightStickY), AnalogDirection::Negative, "AIM_DOWN")
+
+    .bind_gamepad_axis( GamepadAxisType::RightStickX, AnalogDirection::Negative, "AIM_LEFT")
+    .bind_gamepad_axis( GamepadAxisType::RightStickX, AnalogDirection::Positve, "AIM_RIGHT")
+    .bind_gamepad_axis( GamepadAxisType::RightStickY, AnalogDirection::Positve, "AIM_UP")
+    .bind_gamepad_axis(  GamepadAxisType::RightStickY, AnalogDirection::Negative, "AIM_DOWN")
+
+    // multiple gamepads
+    .bind_gamepad_button_pressed_with_gamepad_handle(0,GamepadButtonType::Select, "BACK_PLAYER1")
+    .bind_gamepad_button_pressed_with_gamepad_handle(1,GamepadButtonType::Select, "BACK_PLAYER2")
+
 
 
     // keyboard
@@ -44,6 +50,8 @@ fn setup(
     .bind_mouse_motion(Axis::XPositive, "AIM_RIGHT")
 
     // set event phase
+    .set_event_phase("BACK_PLAYER1", EventPhase::OnEnded)
+    .set_event_phase("BACK_PLAYER2", EventPhase::OnEnded)
     .set_event_phase("QUIT_APP", EventPhase::OnEnded)
     .set_event_phase("SHOOT", EventPhase::OnBegin)
 
@@ -59,10 +67,16 @@ fn setup(
     .set_strength_curve_function("AIM_LEFT", |x  | -> f32 { x.powi(2) })
     .set_strength_curve_function("AIM_RIGHT", |x  | -> f32 { x.powi(2) });
 
-    println!("{}", input_map.get_bindings_as_json().unwrap());
 }
 
 fn action_system(input_map: Res<InputMap>, mut app_exit_events: ResMut<Events<AppExit>>) {
+    if input_map.is_action_active("BACK_PLAYER1") {
+        println!("Player 1 wants to go back");
+    }
+    if input_map.is_action_active("BACK_PLAYER2") {
+        println!("Player 2 wants to go back");
+    }
+
     if input_map.is_action_active("JUMP") {
         println!("Jumping...");
     }
