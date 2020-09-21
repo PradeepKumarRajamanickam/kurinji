@@ -1,6 +1,6 @@
-use crate::{axis::AnalogDirection, axis::Axis, inputmap::InputMap, util::clamp_vec2};
+use crate::{axis::AnalogDirection, inputmap::InputMap};
 use bevy::{
-    math::Vec2, prelude::Gamepad, prelude::GamepadAxis, prelude::GamepadAxisType,
+    prelude::Gamepad, prelude::GamepadAxis, prelude::GamepadAxisType,
     prelude::GamepadButton, prelude::GamepadButtonType, prelude::GamepadEvent,
 };
 use bevy_app::{EventReader, Events};
@@ -69,6 +69,19 @@ impl InputMap {
     // axis
     pub fn bind_gamepad_axis(
         &mut self,
+        axis_type: GamepadAxisType,
+        analog_direction: AnalogDirection,
+        action: &str,
+    )  -> &mut InputMap 
+    {
+        self.bind_gamepad_axis_with_handle(
+            0, 
+            axis_type, 
+            analog_direction, 
+            action)
+    }
+    pub fn bind_gamepad_axis_with_axis(
+        &mut self,
         pad_axis: GamepadAxis,
         analog_direction: AnalogDirection,
         action: &str,
@@ -78,13 +91,56 @@ impl InputMap {
         self
     }
 
+    pub fn bind_gamepad_axis_with_handle(
+        &mut self,
+        pad_handle: usize,
+        axis_type: GamepadAxisType,
+        analog_direction: AnalogDirection,
+        action: &str,
+    )  -> &mut InputMap {
+        self.bind_gamepad_axis_with_axis(
+            GamepadAxis(
+                Gamepad(pad_handle),
+                axis_type
+            ),
+            analog_direction,
+            action
+            )
+    }
+
     pub fn unbind_gamepad_axis(
+        &mut self,
+        axis_type: GamepadAxisType,
+        analog_direction: AnalogDirection,
+    )  -> &mut InputMap {
+        self.unbind_gamepad_axis_with_handle(
+            0, 
+            axis_type,
+            analog_direction)
+    }
+    pub fn unbind_gamepad_axis_with_axis(
         &mut self,
         pad_axis: GamepadAxis,
         analog_direction: AnalogDirection,
     ) -> &mut InputMap {
         self.joystick_axis_binding
             .remove(&(pad_axis, analog_direction));
+        self
+    }
+
+    pub fn unbind_gamepad_axis_with_handle(
+        &mut self,
+        pad_handle: usize,
+        axis_type: GamepadAxisType,
+        analog_direction: AnalogDirection,
+    )  -> &mut InputMap {
+        self.unbind_gamepad_axis_with_axis(
+            GamepadAxis(
+                Gamepad(pad_handle),
+                axis_type
+            ),
+            analog_direction,
+            );
         self
     }
 
