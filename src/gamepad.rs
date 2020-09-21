@@ -20,16 +20,16 @@ impl InputMap {
         pad_button: GamepadButtonType,
         action: &str,
     ) -> &mut InputMap {
-        self.bind_gamepad_button_pressed_with_gamepad_number(0, pad_button, action)
+        self.bind_gamepad_button_pressed_with_gamepad_handle(0, pad_button, action)
     }
-    pub fn bind_gamepad_button_pressed_with_gamepad_number(
+    pub fn bind_gamepad_button_pressed_with_gamepad_handle(
         &mut self,
-        pad_number: usize,
+        pad_handle: usize,
         pad_button: GamepadButtonType,
         action: &str,
     ) -> &mut InputMap {
         self.bind_gamepad_button_pressed_with_gamepad_button(
-            GamepadButton(Gamepad(pad_number), pad_button),
+            GamepadButton(Gamepad(pad_handle), pad_button),
             action,
         )
     }
