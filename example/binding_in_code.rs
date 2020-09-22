@@ -22,21 +22,30 @@ fn setup(
     // joystick
     .bind_gamepad_button_pressed(GamepadButtonType::Start, "QUIT_APP")
     .bind_gamepad_button_pressed(GamepadButtonType::South, "SHOOT")
+    .bind_gamepad_button_pressed(GamepadButtonType::RightTrigger2, "SHOOT")
 
     .bind_gamepad_axis( GamepadAxisType::RightStickX, AnalogDirection::Negative, "AIM_LEFT")
     .bind_gamepad_axis( GamepadAxisType::RightStickX, AnalogDirection::Positve, "AIM_RIGHT")
     .bind_gamepad_axis( GamepadAxisType::RightStickY, AnalogDirection::Positve, "AIM_UP")
     .bind_gamepad_axis(  GamepadAxisType::RightStickY, AnalogDirection::Negative, "AIM_DOWN")
 
+    .bind_gamepad_axis( GamepadAxisType::LeftStickX, AnalogDirection::Negative, "MOVE_LEFT")
+    .bind_gamepad_axis( GamepadAxisType::LeftStickX, AnalogDirection::Positve, "MOVE_RIGHT")
+    .bind_gamepad_axis( GamepadAxisType::LeftStickY, AnalogDirection::Positve, "MOVE_FORWARD")
+    .bind_gamepad_axis( GamepadAxisType::LeftStickY, AnalogDirection::Negative, "MOVE_BACKWARD")
+
     // multiple gamepads
     .bind_gamepad_button_pressed_with_gamepad_handle(0,GamepadButtonType::Select, "BACK_PLAYER1")
     .bind_gamepad_button_pressed_with_gamepad_handle(1,GamepadButtonType::Select, "BACK_PLAYER2")
 
-
-
     // keyboard
     .bind_keyboard_pressed(KeyCode::Space, "JUMP")
     .bind_keyboard_pressed(KeyCode::Return, "SHOOT")
+
+    .bind_keyboard_pressed( KeyCode::A, "MOVE_LEFT")
+    .bind_keyboard_pressed( KeyCode::D, "MOVE_RIGHT")
+    .bind_keyboard_pressed( KeyCode::W, "MOVE_FORWARD")
+    .bind_keyboard_pressed( KeyCode::S, "MOVE_BACKWARD")
 
     .bind_keyboard_pressed(KeyCode::Escape, "QUIT_APP")
 
@@ -61,11 +70,18 @@ fn setup(
     .set_dead_zone("AIM_LEFT", 0.1)
     .set_dead_zone("AIM_RIGHT", 0.1)
 
+    .set_dead_zone("MOVE_LEFT", 0.25)
+    .set_dead_zone("MOVE_RIGHT", 0.25)
+    .set_dead_zone("MOVE_FORWARD", 0.25)
+    .set_dead_zone("MOVE_BACKWARD", 0.25)
+
     // custom strength curve function
     .set_strength_curve_function("AIM_UP", |x  | -> f32 { x.powi(2)})
     .set_strength_curve_function("AIM_DOWN", |x  | -> f32 { x.powi(2) })
     .set_strength_curve_function("AIM_LEFT", |x  | -> f32 { x.powi(2) })
     .set_strength_curve_function("AIM_RIGHT", |x  | -> f32 { x.powi(2) });
+
+    println!("{}", input_map.get_bindings_as_json().unwrap());
 
 }
 
@@ -110,6 +126,34 @@ fn action_system(input_map: Res<InputMap>, mut app_exit_events: ResMut<Events<Ap
         println!(
             "AIM_RIGHT... [ strength: {}] ",
             input_map.get_action_strength("AIM_RIGHT")
+        );
+    }
+
+    if input_map.is_action_active("MOVE_LEFT") {
+        println!(
+            "MOVE_LEFT... [ strength: {}] ",
+            input_map.get_action_strength("MOVE_LEFT")
+        );
+    }
+
+    if input_map.is_action_active("MOVE_RIGHT") {
+        println!(
+            "MOVE_RIGHT... [ strength: {}] ",
+            input_map.get_action_strength("MOVE_RIGHT")
+        );
+    }
+
+    if input_map.is_action_active("MOVE_FORWARD") {
+        println!(
+            "MOVE_FORWARD... [ strength: {}] ",
+            input_map.get_action_strength("MOVE_FORWARD")
+        );
+    }
+
+    if input_map.is_action_active("MOVE_BACKWARD") {
+        println!(
+            "MOVE_BACKWARD... [ strength: {}] ",
+            input_map.get_action_strength("MOVE_BACKWARD")
         );
     }
 
