@@ -1,6 +1,7 @@
 use crate::inputmap::InputMap;
+use bevy::prelude::KeyCode;
 use bevy_ecs::{Res, ResMut};
-use bevy_input::{prelude::KeyCode, Input};
+use bevy_input::Input;
 
 impl InputMap {
     // publics

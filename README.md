@@ -6,7 +6,7 @@ Input Map decouples gameplay code from device specific input api. By converting 
 *Add to Cargo.toml dependencies*
 ```
 [dependencies]
-bevy_prototype_input_map = "0.1"
+bevy_prototype_input_map = "0.2"
 ```
 
 *In code*
@@ -40,11 +40,15 @@ fn system(input_map: Res<InputMap>) {
 
 ## Example
 Use commands
+
+Via Code
 > cargo run --example with_code
 
+Via JSON
 > cargo run --example with_json
 
 ## Features
+- new* Joystick Support: Button & Analog Input
 - new* Event Phase: Ability to set at which event phase an action is active
 - Binding Stack: Ability to Push, Additive Push and Pop bindings
 - JSON/RON Support: Ability to use serialised string to setup bindings
@@ -60,11 +64,6 @@ https://github.com/PradeepKumarRajamanickam/bevy_input_map/
 
 ## Bug Report
 https://github.com/PradeepKumarRajamanickam/bevy_input_map/issues
-
-
-## Planned
-Joystick Mapping
-> Depends on bevy input support for joystick
 
 # Release Notes
 ## v0.1.3 (18 Sept, 2020)
