@@ -1,7 +1,7 @@
 use bevy::prelude::{KeyCode, MouseButton, GamepadButton, GamepadAxis, Gamepad};
 
 use std::collections::{HashMap, HashSet};
-use crate::{axis::Axis, bindings::Bindings, eventphase::EventPhase, axis::AnalogDirection};
+use crate::{axis::AnalogDirection, axis::Axis, bindings::Bindings, eventphase::EventPhase, gamepad::GamepadAnalog};
 
 #[derive(Default)]
 pub struct InputMap {
@@ -23,7 +23,7 @@ pub struct InputMap {
     // joystick
     pub(crate) joystick_connected_handle: HashSet<Gamepad>,
     pub(crate) joystick_button_binding: HashMap<GamepadButton, String>,
-    pub(crate) joystick_axis_binding: HashMap<(GamepadAxis, AnalogDirection), String>,
+    pub(crate) joystick_axis_binding: HashMap<GamepadAnalog, String>,
 
     // stack
     pub(crate) stack: Vec<Bindings>,

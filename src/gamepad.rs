@@ -1,4 +1,6 @@
 use crate::{axis::AnalogDirection, inputmap::InputMap};
+use serde::{Deserialize, Serialize};
+
 use bevy::{
     prelude::Gamepad, prelude::GamepadAxis, prelude::GamepadAxisType,
     prelude::GamepadButton, prelude::GamepadButtonType, prelude::GamepadEvent,
@@ -10,6 +12,13 @@ use bevy_input::Input;
 #[derive(Default)]
 pub struct GamepadState {
     reader: EventReader<GamepadEvent>,
+}
+
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
+pub struct GamepadAnalog
+{
+    pub GamepadAxis: GamepadAxis,
+    pub Direction: AnalogDirection
 }
 
 impl InputMap {
@@ -87,7 +96,7 @@ impl InputMap {
         action: &str,
     ) -> &mut InputMap {
         self.joystick_axis_binding
-            .insert((pad_axis, analog_direction), action.to_string());
+            .insert(GamepadAnalog{ GamepadAxis: pad_axis, Direction: analog_direction }, action.to_string());
         self
     }
 
@@ -124,7 +133,7 @@ impl InputMap {
         analog_direction: AnalogDirection,
     ) -> &mut InputMap {
         self.joystick_axis_binding
-            .remove(&(pad_axis, analog_direction));
+            .remove(&GamepadAnalog{ GamepadAxis: pad_axis, Direction: analog_direction });
         self
     }
 
@@ -184,8 +193,8 @@ impl InputMap {
         let connected_pads = input_map.joystick_connected_handle.clone();
         for pad_handle in connected_pads.iter(){
             for (k, v) in input_map.joystick_axis_binding.clone().iter() {
-                let g_axis = k.0;
-                let a_dir = k.1;
+                let g_axis = k.GamepadAxis;
+                let a_dir = k.Direction;
 
                 let signed_str = pad_axis.get(&g_axis).unwrap_or(0.);
 

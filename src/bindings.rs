@@ -1,24 +1,18 @@
-use bevy::prelude::{KeyCode, MouseButton, GamepadButton};
+use bevy::prelude::{GamepadButton, KeyCode, MouseButton};
 use serde::{Deserialize, Serialize};
 use std::{collections::HashMap, hash::Hash};
 
-use crate::{axis::Axis, inputmap::InputMap, eventphase::EventPhase};
+use crate::{axis::Axis, eventphase::EventPhase, gamepad::GamepadAnalog, inputmap::InputMap};
 
-/// Data structure for serde
-#[derive(Default, Clone, Debug, Serialize, Deserialize)]
+#[derive(Default, Clone, Debug)]
 pub struct Bindings {
-    #[serde(default, rename = "GamepadButtons")]
-    gamepad_button_bindings: HashMap<GamepadButton, String>,
-    #[serde(default, rename = "KeyboardKeys")]
-    keyboard_key_bindings: HashMap<KeyCode, String>,
-    #[serde(default, rename = "MouseButtons")]
-    mouse_button_binding: HashMap<MouseButton, String>,
-    #[serde(default, rename = "MouseMove")]
-    mouse_move_binding: HashMap<Axis, String>,
-    #[serde(default, rename = "DeadZone")]
-    action_deadzone: HashMap<String, f32>,
-    #[serde(default, rename = "EventPhase")]
-    action_phase: HashMap<String, EventPhase>,
+    pub(crate) gamepad_button_bindings: HashMap<GamepadButton, String>,
+    pub(crate) gamepad_axis_bindings: HashMap<GamepadAnalog, String>,
+    pub(crate) keyboard_key_bindings: HashMap<KeyCode, String>,
+    pub(crate) mouse_button_binding: HashMap<MouseButton, String>,
+    pub(crate) mouse_move_binding: HashMap<Axis, String>,
+    pub(crate) action_deadzone: HashMap<String, f32>,
+    pub(crate) action_phase: HashMap<String, EventPhase>,
 }
 
 impl Bindings {
@@ -67,6 +61,7 @@ impl InputMap {
     pub fn get_bindings(&self) -> Bindings {
         Bindings {
             gamepad_button_bindings: self.joystick_button_binding.clone(),
+            gamepad_axis_bindings: self.joystick_axis_binding.clone(),
             keyboard_key_bindings: self.keyboard_action_binding.clone(),
             mouse_button_binding: self.mouse_button_binding.clone(),
             mouse_move_binding: self.mouse_move_binding.clone(),
@@ -77,6 +72,7 @@ impl InputMap {
     }
     pub fn set_bindings(&mut self, bindings: Bindings) {
         self.joystick_button_binding = bindings.gamepad_button_bindings;
+        self.joystick_axis_binding = bindings.gamepad_axis_bindings;
         self.keyboard_action_binding = bindings.keyboard_key_bindings;
         self.mouse_button_binding = bindings.mouse_button_binding;
         self.mouse_move_binding = bindings.mouse_move_binding;
