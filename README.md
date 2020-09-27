@@ -6,7 +6,7 @@ Input Map decouples gameplay code from device specific input api. By converting 
 *Add to Cargo.toml dependencies*
 ```
 [dependencies]
-bevy_prototype_input_map = "0.1"
+bevy_prototype_input_map = "0.2"
 ```
 
 *In code*
