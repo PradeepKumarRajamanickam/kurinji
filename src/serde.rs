@@ -182,7 +182,6 @@ impl Serialize for Bindings {
         S: serde::Serializer {
 
         BindingsHelper{
-            // gmpad_button_bindings: 
             keyboard_key_bindings: self.keyboard_key_bindings.clone(),
             mouse_button_binding: self.mouse_button_binding.clone(),
             mouse_move_binding: self.mouse_move_binding.clone(),
@@ -223,35 +222,3 @@ impl<'de> Deserialize<'de> for Bindings {
             })
     }
 }
-
-
-// helpers
-#[derive(Default, Clone, Debug, PartialEq, Eq)]
-#[derive(serde::Serialize, serde::Deserialize)]
-pub struct GamepadBindingsSerdeHelper
-{   
-    #[serde(default, rename = "Gamepad")]
-    pub handle: usize,
-
-    #[serde(default, rename = "ButtonBindings")]
-    pub button_bindings: HashMap<
-        GamepadButtonType, 
-        String>,
-
-    // #[serde(default, rename = "AnalogBindings")]
-    // pub analog_bindings: HashMap<
-    // GamepadAxisBindingsSerdeHelper, 
-    // String>
-}
-
-
-// #[derive(Serialize, Deserialize)]
-// #[derive(Debug, Hash, PartialEq, Eq, Clone, Copy)]
-// pub struct GamepadAxisBindingsSerdeHelper
-// {
-//     #[serde(default, rename = "Kind")]
-//     axis_type: GamepadAxisType,
-
-//     #[serde(default, rename = "Direction")]
-//     direction: AnalogDirection
-// }

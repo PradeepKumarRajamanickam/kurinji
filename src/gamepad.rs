@@ -14,7 +14,7 @@ pub struct GamepadState {
     reader: EventReader<GamepadEvent>,
 }
 
-#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 pub struct GamepadAnalog
 {
     pub GamepadAxis: GamepadAxis,
