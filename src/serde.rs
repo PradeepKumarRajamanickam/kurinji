@@ -1,4 +1,6 @@
-use bevy::prelude::{GamepadAxisType, GamepadButton, GamepadButtonType, KeyCode, MouseButton};
+use bevy::prelude::{
+    Gamepad, GamepadAxis, GamepadAxisType, GamepadButton, GamepadButtonType, KeyCode, MouseButton,
+};
 use serde::{Deserialize, Deserializer, Serialize};
 use std::collections::HashMap;
 
@@ -83,7 +85,7 @@ impl Default for GamepadAxisHelper {
 }
 
 #[derive(Default, Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
-pub struct BindingsHelper {
+pub struct BindingsSerdeHelper {
     #[serde(default, rename = "GamepadButtons")]
     gamepad_button_bindings: HashMap<usize, HashMap<GamepadButtonType, String>>,
     #[serde(default, rename = "GamepadAnalogs")]
@@ -102,7 +104,34 @@ pub struct BindingsHelper {
     #[serde(default, rename = "EventPhase")]
     action_phase: HashMap<String, EventPhase>,
 }
-impl BindingsHelper {
+impl BindingsSerdeHelper {
+    // utils
+    pub fn get_gamepad_button_hash_map_from_json_friendly_map(
+        json_map: HashMap<usize, HashMap<GamepadButtonType, String>>,
+    ) -> HashMap<GamepadButton, String> {
+        let mut result: HashMap<GamepadButton, String> = HashMap::new();
+        for (pad_handle, h_map) in json_map {
+            for (btn_type, action) in h_map {
+                result
+                    .entry(GamepadButton(Gamepad(pad_handle), btn_type))
+                    .or_insert(action);
+            }
+        }
+        result
+    }
+    pub fn get_gamepad_analog_hash_map_from_json_friendly_map(
+        json_map: HashMap<usize, HashMap<GamepadAxisHelper, String>>,
+    ) -> HashMap<GamepadAnalog, String> {
+        let mut result: HashMap<GamepadAnalog, String> = HashMap::new();
+        for (pad_handle, h_map) in json_map {
+            for (axis_helper, action) in h_map {
+                let analog =
+                    BindingsSerdeHelper::get_gamepad_analog_from_axis_helper(pad_handle, axis_helper);
+                result.entry(analog).or_insert(action);
+            }
+        }
+        result
+    }
     pub fn get_json_friendly_gamepad_button_hash_map(
         binding: HashMap<GamepadButton, String>,
     ) -> HashMap<usize, HashMap<GamepadButtonType, String>> {
@@ -123,15 +152,93 @@ impl BindingsHelper {
     ) -> HashMap<usize, HashMap<GamepadAxisHelper, String>> {
         let mut result: HashMap<usize, HashMap<GamepadAxisHelper, String>> = HashMap::new();
 
-        for (k, v) in binding {
+        for (k, action) in binding {
             let id = (k.axis.0).0;
-            let analog = BindingsHelper::get_gamepad_axis_helper(k);
-            let action = v;
+            let axis_helper = BindingsSerdeHelper::get_gamepad_axis_helper(k);
 
             result.entry(id).or_insert_with(HashMap::new);
-            result.get_mut(&id).unwrap().insert(analog, action);
+            result.get_mut(&id).unwrap().insert(axis_helper, action);
         }
         result
+    }
+
+    pub fn get_gamepad_analog_from_axis_helper(
+        pad_handle: usize,
+        axis_helper: GamepadAxisHelper,
+    ) -> GamepadAnalog {
+        match axis_helper {
+            GamepadAxisHelper::LeftStickXPositive => GamepadAnalog {
+                axis: GamepadAxis(Gamepad(pad_handle), GamepadAxisType::LeftStickX),
+                direction: AnalogDirection::Positve,
+            },
+            GamepadAxisHelper::LeftStickXNegative => GamepadAnalog {
+                axis: GamepadAxis(Gamepad(pad_handle), GamepadAxisType::LeftStickX),
+                direction: AnalogDirection::Negative,
+            },
+
+            GamepadAxisHelper::LeftStickYPositive => GamepadAnalog {
+                axis: GamepadAxis(Gamepad(pad_handle), GamepadAxisType::LeftStickY),
+                direction: AnalogDirection::Positve,
+            },
+            GamepadAxisHelper::LeftStickYNegative => GamepadAnalog {
+                axis: GamepadAxis(Gamepad(pad_handle), GamepadAxisType::LeftStickY),
+                direction: AnalogDirection::Negative,
+            },
+
+            GamepadAxisHelper::LeftZPositive => GamepadAnalog {
+                axis: GamepadAxis(Gamepad(pad_handle), GamepadAxisType::LeftZ),
+                direction: AnalogDirection::Positve,
+            },
+            GamepadAxisHelper::LeftZNegative => GamepadAnalog {
+                axis: GamepadAxis(Gamepad(pad_handle), GamepadAxisType::LeftZ),
+                direction: AnalogDirection::Negative,
+            },
+
+            GamepadAxisHelper::RightStickXPositive => GamepadAnalog {
+                axis: GamepadAxis(Gamepad(pad_handle), GamepadAxisType::RightStickX),
+                direction: AnalogDirection::Positve,
+            },
+            GamepadAxisHelper::RightStickXNegative => GamepadAnalog {
+                axis: GamepadAxis(Gamepad(pad_handle), GamepadAxisType::RightStickX),
+                direction: AnalogDirection::Negative,
+            },
+
+            GamepadAxisHelper::RightStickYPositive => GamepadAnalog {
+                axis: GamepadAxis(Gamepad(pad_handle), GamepadAxisType::RightStickY),
+                direction: AnalogDirection::Positve,
+            },
+            GamepadAxisHelper::RightStickYNegative => GamepadAnalog {
+                axis: GamepadAxis(Gamepad(pad_handle), GamepadAxisType::RightStickY),
+                direction: AnalogDirection::Negative,
+            },
+
+            GamepadAxisHelper::RightZPositive => GamepadAnalog {
+                axis: GamepadAxis(Gamepad(pad_handle), GamepadAxisType::RightZ),
+                direction: AnalogDirection::Positve,
+            },
+            GamepadAxisHelper::RightZNegative => GamepadAnalog {
+                axis: GamepadAxis(Gamepad(pad_handle), GamepadAxisType::RightZ),
+                direction: AnalogDirection::Negative,
+            },
+
+            GamepadAxisHelper::DPadXPositive => GamepadAnalog {
+                axis: GamepadAxis(Gamepad(pad_handle), GamepadAxisType::DPadX),
+                direction: AnalogDirection::Positve,
+            },
+            GamepadAxisHelper::DPadXNegative => GamepadAnalog {
+                axis: GamepadAxis(Gamepad(pad_handle), GamepadAxisType::DPadX),
+                direction: AnalogDirection::Negative,
+            },
+
+            GamepadAxisHelper::DPadYPositive => GamepadAnalog {
+                axis: GamepadAxis(Gamepad(pad_handle), GamepadAxisType::DPadY),
+                direction: AnalogDirection::Positve,
+            },
+            GamepadAxisHelper::DPadYNegative => GamepadAnalog {
+                axis: GamepadAxis(Gamepad(pad_handle), GamepadAxisType::DPadY),
+                direction: AnalogDirection::Negative,
+            },
+        }
     }
 
     pub fn get_gamepad_axis_helper(analog: GamepadAnalog) -> GamepadAxisHelper {
@@ -190,16 +297,16 @@ impl Serialize for Bindings {
     where
         S: serde::Serializer,
     {
-        BindingsHelper {
+        BindingsSerdeHelper {
             keyboard_key_bindings: self.keyboard_key_bindings.clone(),
             mouse_button_binding: self.mouse_button_binding.clone(),
             mouse_move_binding: self.mouse_move_binding.clone(),
             action_deadzone: self.action_deadzone.clone(),
             action_phase: self.action_phase.clone(),
-            gamepad_button_bindings: BindingsHelper::get_json_friendly_gamepad_button_hash_map(
+            gamepad_button_bindings: BindingsSerdeHelper::get_json_friendly_gamepad_button_hash_map(
                 self.gamepad_button_bindings.clone(),
             ),
-            gamepad_axis_bindings: BindingsHelper::get_json_friendly_gamepad_analog_hash_map(
+            gamepad_axis_bindings: BindingsSerdeHelper::get_json_friendly_gamepad_analog_hash_map(
                 self.gamepad_axis_bindings.clone(),
             ),
         }
@@ -213,9 +320,9 @@ impl<'de> Deserialize<'de> for Bindings {
         D: Deserializer<'de>,
     {
         Deserialize::deserialize(deserializer).map(
-            |BindingsHelper {
-                 gamepad_button_bindings: _,
-                 gamepad_axis_bindings: _,
+            |BindingsSerdeHelper {
+                 gamepad_button_bindings,
+                 gamepad_axis_bindings,
                  keyboard_key_bindings,
                  mouse_button_binding,
                  mouse_move_binding,
@@ -228,8 +335,14 @@ impl<'de> Deserialize<'de> for Bindings {
                 action_deadzone,
                 action_phase,
 
-                gamepad_button_bindings: Default::default(),
-                gamepad_axis_bindings: Default::default(),
+                gamepad_button_bindings:
+                    BindingsSerdeHelper::get_gamepad_button_hash_map_from_json_friendly_map(
+                        gamepad_button_bindings,
+                    ),
+                gamepad_axis_bindings:
+                    BindingsSerdeHelper::get_gamepad_analog_hash_map_from_json_friendly_map(
+                        gamepad_axis_bindings,
+                    ),
             },
         )
     }
