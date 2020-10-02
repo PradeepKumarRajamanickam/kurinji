@@ -5,12 +5,13 @@ use bevy_input::Input;
 
 impl InputMap {
     // publics
-    pub fn bind_keyboard_pressed(&mut self, code: KeyCode, action: &str) -> &mut InputMap{
-        self.keyboard_action_binding.insert(code, action.to_string());
+    pub fn bind_keyboard_pressed(&mut self, code: KeyCode, action: &str) -> &mut InputMap {
+        self.keyboard_action_binding
+            .insert(code, action.to_string());
         self
     }
 
-    pub fn unbind_keyboard_pressed(&mut self, code: KeyCode) -> &mut InputMap{
+    pub fn unbind_keyboard_pressed(&mut self, code: KeyCode) -> &mut InputMap {
         self.keyboard_action_binding.remove(&code);
         self
     }

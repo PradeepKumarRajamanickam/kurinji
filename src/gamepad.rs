@@ -2,8 +2,8 @@ use crate::{axis::AnalogDirection, inputmap::InputMap};
 use serde::{Deserialize, Serialize};
 
 use bevy::{
-    prelude::Gamepad, prelude::GamepadAxis, prelude::GamepadAxisType,
-    prelude::GamepadButton, prelude::GamepadButtonType, prelude::GamepadEvent,
+    prelude::Gamepad, prelude::GamepadAxis, prelude::GamepadAxisType, prelude::GamepadButton,
+    prelude::GamepadButtonType, prelude::GamepadEvent,
 };
 use bevy_app::{EventReader, Events};
 use bevy_ecs::{Local, Res, ResMut};
@@ -15,10 +15,9 @@ pub struct GamepadState {
 }
 
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
-pub struct GamepadAnalog
-{
+pub struct GamepadAnalog {
     pub GamepadAxis: GamepadAxis,
-    pub Direction: AnalogDirection
+    pub Direction: AnalogDirection,
 }
 
 impl InputMap {
@@ -81,13 +80,8 @@ impl InputMap {
         axis_type: GamepadAxisType,
         analog_direction: AnalogDirection,
         action: &str,
-    )  -> &mut InputMap 
-    {
-        self.bind_gamepad_axis_with_handle(
-            0, 
-            axis_type, 
-            analog_direction, 
-            action)
+    ) -> &mut InputMap {
+        self.bind_gamepad_axis_with_handle(0, axis_type, analog_direction, action)
     }
     pub fn bind_gamepad_axis_with_axis(
         &mut self,
@@ -95,8 +89,13 @@ impl InputMap {
         analog_direction: AnalogDirection,
         action: &str,
     ) -> &mut InputMap {
-        self.joystick_axis_binding
-            .insert(GamepadAnalog{ GamepadAxis: pad_axis, Direction: analog_direction }, action.to_string());
+        self.joystick_axis_binding.insert(
+            GamepadAnalog {
+                GamepadAxis: pad_axis,
+                Direction: analog_direction,
+            },
+            action.to_string(),
+        );
         self
     }
 
@@ -106,34 +105,30 @@ impl InputMap {
         axis_type: GamepadAxisType,
         analog_direction: AnalogDirection,
         action: &str,
-    )  -> &mut InputMap {
+    ) -> &mut InputMap {
         self.bind_gamepad_axis_with_axis(
-            GamepadAxis(
-                Gamepad(pad_handle),
-                axis_type
-            ),
+            GamepadAxis(Gamepad(pad_handle), axis_type),
             analog_direction,
-            action
-            )
+            action,
+        )
     }
 
     pub fn unbind_gamepad_axis(
         &mut self,
         axis_type: GamepadAxisType,
         analog_direction: AnalogDirection,
-    )  -> &mut InputMap {
-        self.unbind_gamepad_axis_with_handle(
-            0, 
-            axis_type,
-            analog_direction)
+    ) -> &mut InputMap {
+        self.unbind_gamepad_axis_with_handle(0, axis_type, analog_direction)
     }
     pub fn unbind_gamepad_axis_with_axis(
         &mut self,
         pad_axis: GamepadAxis,
         analog_direction: AnalogDirection,
     ) -> &mut InputMap {
-        self.joystick_axis_binding
-            .remove(&GamepadAnalog{ GamepadAxis: pad_axis, Direction: analog_direction });
+        self.joystick_axis_binding.remove(&GamepadAnalog {
+            GamepadAxis: pad_axis,
+            Direction: analog_direction,
+        });
         self
     }
 
@@ -142,14 +137,11 @@ impl InputMap {
         pad_handle: usize,
         axis_type: GamepadAxisType,
         analog_direction: AnalogDirection,
-    )  -> &mut InputMap {
+    ) -> &mut InputMap {
         self.unbind_gamepad_axis_with_axis(
-            GamepadAxis(
-                Gamepad(pad_handle),
-                axis_type
-            ),
+            GamepadAxis(Gamepad(pad_handle), axis_type),
             analog_direction,
-            );
+        );
         self
     }
 
@@ -191,7 +183,7 @@ impl InputMap {
         pad_axis: Res<bevy_input::Axis<GamepadAxis>>,
     ) {
         let connected_pads = input_map.joystick_connected_handle.clone();
-        for pad_handle in connected_pads.iter(){
+        for pad_handle in connected_pads.iter() {
             for (k, v) in input_map.joystick_axis_binding.clone().iter() {
                 let g_axis = k.GamepadAxis;
                 let a_dir = k.Direction;
@@ -200,8 +192,7 @@ impl InputMap {
 
                 if signed_str > 0. && a_dir == AnalogDirection::Positve {
                     input_map.set_raw_action_strength(&v.to_string(), signed_str);
-                }
-                else if signed_str < 0. && a_dir == AnalogDirection::Negative {
+                } else if signed_str < 0. && a_dir == AnalogDirection::Negative {
                     input_map.set_raw_action_strength(&v.to_string(), signed_str.abs());
                 }
             }

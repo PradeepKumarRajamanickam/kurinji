@@ -18,7 +18,6 @@ pub struct Bindings {
 impl Bindings {
     // publics
     pub fn merge(&mut self, bindings: Bindings) {
-
         // keyboard
         self.keyboard_key_bindings = Bindings::get_merged_hashmaps(
             self.keyboard_key_bindings.clone(),
@@ -36,14 +35,10 @@ impl Bindings {
         );
 
         // actions
-        self.action_deadzone = Bindings::get_merged_hashmaps(
-            self.action_deadzone.clone(),
-            bindings.action_deadzone,
-        );
-        self.action_phase = Bindings::get_merged_hashmaps(
-            self.action_phase.clone(),
-            bindings.action_phase,
-        );
+        self.action_deadzone =
+            Bindings::get_merged_hashmaps(self.action_deadzone.clone(), bindings.action_deadzone);
+        self.action_phase =
+            Bindings::get_merged_hashmaps(self.action_phase.clone(), bindings.action_phase);
     }
 
     // private
@@ -67,7 +62,7 @@ impl InputMap {
             mouse_move_binding: self.mouse_move_binding.clone(),
 
             action_deadzone: self.action_deadzone.clone(),
-            action_phase: self.action_phase.clone()
+            action_phase: self.action_phase.clone(),
         }
     }
     pub fn set_bindings(&mut self, bindings: Bindings) {
