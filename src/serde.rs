@@ -1,5 +1,5 @@
 use bevy::prelude::{
-    GamepadAxis, GamepadAxisType, GamepadButton, GamepadButtonType, KeyCode, MouseButton,
+    GamepadAxisType, GamepadButton, GamepadButtonType, KeyCode, MouseButton,
 };
 use serde::{Deserialize, Deserializer, Serialize};
 use std::collections::HashMap;
@@ -23,7 +23,7 @@ impl InputMap {
         let serialized = ron::ser::to_string_pretty(&data, pretty);
         match serialized {
             Ok(s) => Ok(s),
-            Err(e) => Err("Failed to generate ron".to_string()),
+            Err(e) => Err(format!("Failed to generate ron {}",e).to_string()),
         }
     }
     pub fn set_bindings_with_ron(&mut self, ron: &str) {
@@ -39,7 +39,7 @@ impl InputMap {
         let serialized = serde_json::to_string_pretty(&data);
         match serialized {
             Ok(s) => Ok(s),
-            Err(e) => Err("Failed to generate json".to_string()),
+            Err(e) => Err(format!("Failed to generate json {}",e).to_string()),
         }
     }
     pub fn set_bindings_with_json(&mut self, json: &str) {
@@ -52,34 +52,34 @@ impl InputMap {
 
 #[derive(Clone, Debug, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
 pub enum GamepadAxisHelper {
-    LeftStickX_Positive,
-    LeftStickX_Negative,
+    LeftStickXPositive,
+    LeftStickXNegative,
 
-    LeftStickY_Positive,
-    LeftStickY_Negative,
+    LeftStickYPositive,
+    LeftStickYNegative,
 
-    LeftZ_Positive,
-    LeftZ_Negative,
+    LeftZPositive,
+    LeftZNegative,
 
-    RightStickX_Positive,
-    RightStickX_Negative,
+    RightStickXPositive,
+    RightStickXNegative,
 
-    RightStickY_Positive,
-    RightStickY_Negative,
+    RightStickYPositive,
+    RightStickYNegative,
 
-    RightZ_Positive,
-    RightZ_Negative,
+    RightZPositive,
+    RightZNegative,
 
-    DPadX_Positive,
-    DPadX_Negative,
+    DPadXPositive,
+    DPadXNegative,
 
-    DPadY_Positive,
-    DPadY_Negative,
+    DPadYPositive,
+    DPadYNegative,
 }
 
 impl Default for GamepadAxisHelper {
     fn default() -> Self {
-        GamepadAxisHelper::LeftStickX_Positive
+        GamepadAxisHelper::LeftStickXPositive
     }
 }
 
@@ -147,56 +147,54 @@ impl BindingsHelper {
 
         match (game_axis_type, direction) {
             (GamepadAxisType::LeftStickX, AnalogDirection::Positve) => {
-                GamepadAxisHelper::LeftStickX_Positive
+                GamepadAxisHelper::LeftStickXPositive
             }
             (GamepadAxisType::LeftStickX, AnalogDirection::Negative) => {
-                GamepadAxisHelper::LeftStickX_Negative
+                GamepadAxisHelper::LeftStickXNegative
             }
 
             (GamepadAxisType::LeftStickY, AnalogDirection::Positve) => {
-                GamepadAxisHelper::LeftStickY_Positive
+                GamepadAxisHelper::LeftStickYPositive
             }
             (GamepadAxisType::LeftStickY, AnalogDirection::Negative) => {
-                GamepadAxisHelper::LeftStickY_Negative
+                GamepadAxisHelper::LeftStickYNegative
             }
 
-            (GamepadAxisType::LeftZ, AnalogDirection::Positve) => GamepadAxisHelper::LeftZ_Positive,
+            (GamepadAxisType::LeftZ, AnalogDirection::Positve) => GamepadAxisHelper::LeftZPositive,
             (GamepadAxisType::LeftZ, AnalogDirection::Negative) => {
-                GamepadAxisHelper::LeftZ_Negative
+                GamepadAxisHelper::LeftZNegative
             }
 
             (GamepadAxisType::RightStickX, AnalogDirection::Positve) => {
-                GamepadAxisHelper::RightStickX_Positive
+                GamepadAxisHelper::RightStickXPositive
             }
             (GamepadAxisType::RightStickX, AnalogDirection::Negative) => {
-                GamepadAxisHelper::RightStickX_Negative
+                GamepadAxisHelper::RightStickXNegative
             }
 
             (GamepadAxisType::RightStickY, AnalogDirection::Positve) => {
-                GamepadAxisHelper::RightStickY_Positive
+                GamepadAxisHelper::RightStickYPositive
             }
             (GamepadAxisType::RightStickY, AnalogDirection::Negative) => {
-                GamepadAxisHelper::RightStickY_Negative
+                GamepadAxisHelper::RightStickYNegative
             }
 
             (GamepadAxisType::RightZ, AnalogDirection::Positve) => {
-                GamepadAxisHelper::RightZ_Positive
+                GamepadAxisHelper::RightZPositive
             }
             (GamepadAxisType::RightZ, AnalogDirection::Negative) => {
-                GamepadAxisHelper::RightZ_Negative
+                GamepadAxisHelper::RightZNegative
             }
 
-            (GamepadAxisType::DPadX, AnalogDirection::Positve) => GamepadAxisHelper::DPadX_Positive,
+            (GamepadAxisType::DPadX, AnalogDirection::Positve) => GamepadAxisHelper::DPadXPositive,
             (GamepadAxisType::DPadX, AnalogDirection::Negative) => {
-                GamepadAxisHelper::DPadX_Negative
+                GamepadAxisHelper::DPadXNegative
             }
 
-            (GamepadAxisType::DPadY, AnalogDirection::Positve) => GamepadAxisHelper::DPadY_Positive,
+            (GamepadAxisType::DPadY, AnalogDirection::Positve) => GamepadAxisHelper::DPadYPositive,
             (GamepadAxisType::DPadY, AnalogDirection::Negative) => {
-                GamepadAxisHelper::DPadY_Negative
+                GamepadAxisHelper::DPadYNegative
             }
-
-            _ => Default::default(),
         }
     }
 }

@@ -1,5 +1,4 @@
 use crate::{axis::AnalogDirection, inputmap::InputMap};
-use serde::{Deserialize, Serialize};
 
 use bevy::{
     prelude::Gamepad, prelude::GamepadAxis, prelude::GamepadAxisType, prelude::GamepadButton,
@@ -166,11 +165,11 @@ impl InputMap {
         if let Some(value) = state.reader.latest(&gamepad_event) {
             let pad_handle = value.0;
             match value.1 {
-                Connected => {
+                bevy::prelude::GamepadEventType::Connected => {
                     println!("InputMap: Joystick Connected {:?}", pad_handle);
                     input_map.joystick_connected_handle.insert(pad_handle);
                 }
-                Disconnected => {
+                bevy::prelude::GamepadEventType::Disconnected => {
                     println!("InputMap: Joystick Disconnected {:?}", pad_handle);
                     input_map.joystick_connected_handle.remove(&pad_handle);
                 }

@@ -1,5 +1,4 @@
 use bevy::prelude::{GamepadButton, KeyCode, MouseButton};
-use serde::{Deserialize, Serialize};
 use std::{collections::HashMap, hash::Hash};
 
 use crate::{axis::Axis, eventphase::EventPhase, gamepad::GamepadAnalog, inputmap::InputMap};
