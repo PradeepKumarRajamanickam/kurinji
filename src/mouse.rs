@@ -64,14 +64,14 @@ impl InputMap {
             if x > 0.0 {
                 if let Some(action) = input_map.mouse_move_binding.get(&Axis::XPositive) {
                     let _action = action.clone();
-                    input_map.set_raw_action_strength(&_action.to_string(), x);
+                    input_map.set_raw_action_strength(&_action, x);
                 }
             }
 
             if x < 0.0 {
                 if let Some(action) = input_map.mouse_move_binding.get(&Axis::XNegative) {
                     let _action = action.clone();
-                    input_map.set_raw_action_strength(&_action.to_string(), x.abs());
+                    input_map.set_raw_action_strength(&_action, x.abs());
                 }
             }
 
@@ -79,14 +79,14 @@ impl InputMap {
             if y > 0.0 {
                 if let Some(action) = input_map.mouse_move_binding.get(&Axis::YPositive) {
                     let _action = action.clone();
-                    input_map.set_raw_action_strength(&_action.to_string(), y);
+                    input_map.set_raw_action_strength(&_action, y);
                 }
             }
 
             if y < 0.0 {
                 if let Some(action) = input_map.mouse_move_binding.get(&Axis::YNegative) {
                     let _action = action.clone();
-                    input_map.set_raw_action_strength(&_action.to_string(), y.abs());
+                    input_map.set_raw_action_strength(&_action, y.abs());
                 }
             }
         }

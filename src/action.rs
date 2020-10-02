@@ -15,7 +15,7 @@ impl InputMap {
                     if let Some(curve_func) = self.action_strength_curve.get(&action.to_string()) {
                         return curve_func(strength);
                     }
-                    return strength;
+                    strength
                 }
                 None => *raw_strength,
             },
@@ -59,7 +59,7 @@ impl InputMap {
     // crates
     pub(crate) fn get_prev_strength(&self, action: &str) -> f32 {
         if let Some(v) = self.action_prev_strength.get(action) {
-            return v.clone();
+            return *v;
         }
 
         0.
@@ -77,7 +77,7 @@ impl InputMap {
     pub(crate) fn action_reset_system(mut input_map: ResMut<InputMap>) {
         // cache prev frame
         input_map.action_prev_strength.clear();
-        for (k, phase) in input_map.action_phase.clone() {
+        for (k, _phase) in input_map.action_phase.clone() {
             let strength = input_map.get_action_strength(&k);
             input_map.action_prev_strength.insert(k.clone(), strength);
         }

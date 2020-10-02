@@ -1,5 +1,4 @@
 use crate::{axis::AnalogDirection, inputmap::InputMap};
-use serde::{Deserialize, Serialize};
 
 use bevy::{
     prelude::Gamepad, prelude::GamepadAxis, prelude::GamepadAxisType, prelude::GamepadButton,
@@ -16,8 +15,8 @@ pub struct GamepadState {
 
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 pub struct GamepadAnalog {
-    pub GamepadAxis: GamepadAxis,
-    pub Direction: AnalogDirection,
+    pub axis: GamepadAxis,
+    pub direction: AnalogDirection,
 }
 
 impl InputMap {
@@ -91,8 +90,8 @@ impl InputMap {
     ) -> &mut InputMap {
         self.joystick_axis_binding.insert(
             GamepadAnalog {
-                GamepadAxis: pad_axis,
-                Direction: analog_direction,
+                axis: pad_axis,
+                direction: analog_direction,
             },
             action.to_string(),
         );
@@ -126,8 +125,8 @@ impl InputMap {
         analog_direction: AnalogDirection,
     ) -> &mut InputMap {
         self.joystick_axis_binding.remove(&GamepadAnalog {
-            GamepadAxis: pad_axis,
-            Direction: analog_direction,
+            axis: pad_axis,
+            direction: analog_direction,
         });
         self
     }
@@ -166,11 +165,11 @@ impl InputMap {
         if let Some(value) = state.reader.latest(&gamepad_event) {
             let pad_handle = value.0;
             match value.1 {
-                Connected => {
+                bevy::prelude::GamepadEventType::Connected => {
                     println!("InputMap: Joystick Connected {:?}", pad_handle);
                     input_map.joystick_connected_handle.insert(pad_handle);
                 }
-                Disconnected => {
+                bevy::prelude::GamepadEventType::Disconnected => {
                     println!("InputMap: Joystick Disconnected {:?}", pad_handle);
                     input_map.joystick_connected_handle.remove(&pad_handle);
                 }
@@ -182,19 +181,16 @@ impl InputMap {
         mut input_map: ResMut<InputMap>,
         pad_axis: Res<bevy_input::Axis<GamepadAxis>>,
     ) {
-        let connected_pads = input_map.joystick_connected_handle.clone();
-        for pad_handle in connected_pads.iter() {
-            for (k, v) in input_map.joystick_axis_binding.clone().iter() {
-                let g_axis = k.GamepadAxis;
-                let a_dir = k.Direction;
+        for (k, v) in input_map.joystick_axis_binding.clone().iter() {
+            let g_axis = k.axis;
+            let a_dir = k.direction;
 
-                let signed_str = pad_axis.get(&g_axis).unwrap_or(0.);
+            let signed_str = pad_axis.get(&g_axis).unwrap_or(0.);
 
-                if signed_str > 0. && a_dir == AnalogDirection::Positve {
-                    input_map.set_raw_action_strength(&v.to_string(), signed_str);
-                } else if signed_str < 0. && a_dir == AnalogDirection::Negative {
-                    input_map.set_raw_action_strength(&v.to_string(), signed_str.abs());
-                }
+            if signed_str > 0. && a_dir == AnalogDirection::Positve {
+                input_map.set_raw_action_strength(&v.to_string(), signed_str);
+            } else if signed_str < 0. && a_dir == AnalogDirection::Negative {
+                input_map.set_raw_action_strength(&v.to_string(), signed_str.abs());
             }
         }
     }

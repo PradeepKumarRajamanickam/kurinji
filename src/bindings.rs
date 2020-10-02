@@ -1,5 +1,4 @@
 use bevy::prelude::{GamepadButton, KeyCode, MouseButton};
-use serde::{Deserialize, Serialize};
 use std::{collections::HashMap, hash::Hash};
 
 use crate::{axis::Axis, eventphase::EventPhase, gamepad::GamepadAnalog, inputmap::InputMap};
@@ -47,7 +46,7 @@ impl Bindings {
         map1: HashMap<K, V>,
         map2: HashMap<K, V>,
     ) -> HashMap<K, V> {
-        map1.clone().into_iter().chain(map2).collect()
+        map1.into_iter().chain(map2).collect()
     }
 }
 
