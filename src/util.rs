@@ -8,23 +8,19 @@ impl InputMap {
     // publics
     pub fn get_bindings_from_json_file(path: &str) -> Bindings {
         let json = fs::read_to_string(path).expect("Error! could not open bindings file");
-
-        InputMap::get_bindings_from_json(&json.to_owned())
+        InputMap::get_bindings_from_json(&json)
     }
 
     pub fn get_bindings_from_ron_file(path: &str) -> Bindings {
         let ron = fs::read_to_string(path).expect("Error! could not open bindings file");
-
-        InputMap::get_bindings_from_ron(&ron.to_owned())
+        InputMap::get_bindings_from_ron(&ron)
     }
 
     pub fn get_bindings_from_json(json: &str) -> Bindings {
-        let bindings = serde_json::from_str(json).expect("Failed to deserialise bindings json");
-        bindings
+        serde_json::from_str(json).expect("Failed to deserialise bindings json")
     }
     pub fn get_bindings_from_ron(ron: &str) -> Bindings {
-        let bindings = ron::de::from_str(ron).expect("Failed to deserialise bindings ron");
-        bindings
+        ron::de::from_str(ron).expect("Failed to deserialise bindings ron")
     }
 }
 

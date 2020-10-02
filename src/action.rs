@@ -59,7 +59,7 @@ impl InputMap {
     // crates
     pub(crate) fn get_prev_strength(&self, action: &str) -> f32 {
         if let Some(v) = self.action_prev_strength.get(action) {
-            return v.clone();
+            return *v;
         }
 
         0.

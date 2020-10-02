@@ -2,6 +2,7 @@ use bevy::prelude::{GamepadAxisType, GamepadButton, GamepadButtonType, KeyCode, 
 use serde::{Deserialize, Deserializer, Serialize};
 use std::collections::HashMap;
 
+// TODO Implement Deserialize Gamepad Bindings
 use crate::{
     axis::{AnalogDirection, Axis},
     bindings::Bindings,
@@ -21,7 +22,7 @@ impl InputMap {
         let serialized = ron::ser::to_string_pretty(&data, pretty);
         match serialized {
             Ok(s) => Ok(s),
-            Err(e) => Err(format!("Failed to generate ron {}", e).to_string()),
+            Err(e) => Err(format!("Failed to generate ron {}", e)),
         }
     }
     pub fn set_bindings_with_ron(&mut self, ron: &str) {
@@ -37,7 +38,7 @@ impl InputMap {
         let serialized = serde_json::to_string_pretty(&data);
         match serialized {
             Ok(s) => Ok(s),
-            Err(e) => Err(format!("Failed to generate json {}", e).to_string()),
+            Err(e) => Err(format!("Failed to generate json {}", e)),
         }
     }
     pub fn set_bindings_with_json(&mut self, json: &str) {
@@ -102,7 +103,7 @@ pub struct BindingsHelper {
     action_phase: HashMap<String, EventPhase>,
 }
 impl BindingsHelper {
-    pub fn GetJSONFriendlyGamepadButtonHashMap(
+    pub fn get_json_friendly_gamepad_button_hash_map(
         binding: HashMap<GamepadButton, String>,
     ) -> HashMap<usize, HashMap<GamepadButtonType, String>> {
         let mut result: HashMap<usize, HashMap<GamepadButtonType, String>> = HashMap::new();
@@ -112,36 +113,30 @@ impl BindingsHelper {
             let button = k.1;
             let action = v;
 
-            if !result.contains_key(&id) {
-                result.insert(id, HashMap::new());
-            }
-
+            result.entry(id).or_insert_with(HashMap::new);
             result.get_mut(&id).unwrap().insert(button, action);
         }
         result
     }
-    pub fn GetJSONFriendlyGamepadAnalogHashMap(
+    pub fn get_json_friendly_gamepad_analog_hash_map(
         binding: HashMap<GamepadAnalog, String>,
     ) -> HashMap<usize, HashMap<GamepadAxisHelper, String>> {
         let mut result: HashMap<usize, HashMap<GamepadAxisHelper, String>> = HashMap::new();
 
         for (k, v) in binding {
-            let id = (k.GamepadAxis.0).0;
-            let analog = BindingsHelper::GetGamepadAxisHelper(k);
+            let id = (k.axis.0).0;
+            let analog = BindingsHelper::get_gamepad_axis_helper(k);
             let action = v;
 
-            if !result.contains_key(&id) {
-                result.insert(id, HashMap::new());
-            }
-
+            result.entry(id).or_insert_with(HashMap::new);
             result.get_mut(&id).unwrap().insert(analog, action);
         }
         result
     }
 
-    pub fn GetGamepadAxisHelper(analog: GamepadAnalog) -> GamepadAxisHelper {
-        let game_axis_type = analog.GamepadAxis.1;
-        let direction = analog.Direction;
+    pub fn get_gamepad_axis_helper(analog: GamepadAnalog) -> GamepadAxisHelper {
+        let game_axis_type = analog.axis.1;
+        let direction = analog.direction;
 
         match (game_axis_type, direction) {
             (GamepadAxisType::LeftStickX, AnalogDirection::Positve) => {
@@ -201,10 +196,10 @@ impl Serialize for Bindings {
             mouse_move_binding: self.mouse_move_binding.clone(),
             action_deadzone: self.action_deadzone.clone(),
             action_phase: self.action_phase.clone(),
-            gamepad_button_bindings: BindingsHelper::GetJSONFriendlyGamepadButtonHashMap(
+            gamepad_button_bindings: BindingsHelper::get_json_friendly_gamepad_button_hash_map(
                 self.gamepad_button_bindings.clone(),
             ),
-            gamepad_axis_bindings: BindingsHelper::GetJSONFriendlyGamepadAnalogHashMap(
+            gamepad_axis_bindings: BindingsHelper::get_json_friendly_gamepad_analog_hash_map(
                 self.gamepad_axis_bindings.clone(),
             ),
         }
@@ -219,8 +214,8 @@ impl<'de> Deserialize<'de> for Bindings {
     {
         Deserialize::deserialize(deserializer).map(
             |BindingsHelper {
-                 gamepad_button_bindings,
-                 gamepad_axis_bindings,
+                 gamepad_button_bindings: _,
+                 gamepad_axis_bindings: _,
                  keyboard_key_bindings,
                  mouse_button_binding,
                  mouse_move_binding,

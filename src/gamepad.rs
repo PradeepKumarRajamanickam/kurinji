@@ -15,8 +15,8 @@ pub struct GamepadState {
 
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 pub struct GamepadAnalog {
-    pub GamepadAxis: GamepadAxis,
-    pub Direction: AnalogDirection,
+    pub axis: GamepadAxis,
+    pub direction: AnalogDirection,
 }
 
 impl InputMap {
@@ -90,8 +90,8 @@ impl InputMap {
     ) -> &mut InputMap {
         self.joystick_axis_binding.insert(
             GamepadAnalog {
-                GamepadAxis: pad_axis,
-                Direction: analog_direction,
+                axis: pad_axis,
+                direction: analog_direction,
             },
             action.to_string(),
         );
@@ -125,8 +125,8 @@ impl InputMap {
         analog_direction: AnalogDirection,
     ) -> &mut InputMap {
         self.joystick_axis_binding.remove(&GamepadAnalog {
-            GamepadAxis: pad_axis,
-            Direction: analog_direction,
+            axis: pad_axis,
+            direction: analog_direction,
         });
         self
     }
@@ -182,8 +182,8 @@ impl InputMap {
         pad_axis: Res<bevy_input::Axis<GamepadAxis>>,
     ) {
         for (k, v) in input_map.joystick_axis_binding.clone().iter() {
-            let g_axis = k.GamepadAxis;
-            let a_dir = k.Direction;
+            let g_axis = k.axis;
+            let a_dir = k.direction;
 
             let signed_str = pad_axis.get(&g_axis).unwrap_or(0.);
 
