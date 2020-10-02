@@ -14,15 +14,12 @@ impl InputMap {
     /// Clones current bindings updates it with the pushed
     /// config
     pub fn push_additive(&mut self, bindings: Bindings) {
-        
         // store current in stack
         let current = self.get_bindings();
         self.stack.push(current);
 
         // additive merge
-        let mut new_binding = self.stack.last()
-        .unwrap()
-        .clone();
+        let mut new_binding = self.stack.last().unwrap().clone();
         new_binding.merge(bindings);
 
         // set new config as current

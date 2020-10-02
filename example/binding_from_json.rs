@@ -17,15 +17,11 @@ fn main() {
         .run();
 }
 
-fn setup(
-    mut input_map: ResMut<InputMap>,
-) {
-    let binding_json = fs::
-    read_to_string("example/config/binding.json")
-    .expect("Error! could not open config file");
-    
-    input_map
-    .set_bindings_with_json(&binding_json.to_string());
+fn setup(mut input_map: ResMut<InputMap>) {
+    let binding_json = fs::read_to_string("example/config/binding.json")
+        .expect("Error! could not open config file");
+
+    input_map.set_bindings_with_json(&binding_json.to_string());
 }
 
 fn action_system(input_map: Res<InputMap>, mut app_exit_events: ResMut<Events<AppExit>>) {

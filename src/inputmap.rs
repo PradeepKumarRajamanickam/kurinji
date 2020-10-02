@@ -1,7 +1,10 @@
-use bevy::prelude::{KeyCode, MouseButton, GamepadButton, GamepadAxis, Gamepad};
+use bevy::prelude::{Gamepad, GamepadAxis, GamepadButton, KeyCode, MouseButton};
 
+use crate::{
+    axis::AnalogDirection, axis::Axis, bindings::Bindings, eventphase::EventPhase,
+    gamepad::GamepadAnalog,
+};
 use std::collections::{HashMap, HashSet};
-use crate::{axis::AnalogDirection, axis::Axis, bindings::Bindings, eventphase::EventPhase, gamepad::GamepadAnalog};
 
 #[derive(Default)]
 pub struct InputMap {
