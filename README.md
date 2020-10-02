@@ -62,6 +62,9 @@ Via JSON
 ## Repo
 https://github.com/PradeepKumarRajamanickam/bevy_input_map/
 
+Note* Latest commit on master branch might be unstable. Use the release tags if you are looking for stable commits or grab
+crate from [crate.io](https://crates.io/crates/bevy_prototype_input_map)
+
 ## Bug Report
 https://github.com/PradeepKumarRajamanickam/bevy_input_map/issues
 
