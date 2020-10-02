@@ -181,19 +181,16 @@ impl InputMap {
         mut input_map: ResMut<InputMap>,
         pad_axis: Res<bevy_input::Axis<GamepadAxis>>,
     ) {
-        let connected_pads = input_map.joystick_connected_handle.clone();
-        for pad_handle in connected_pads.iter() {
-            for (k, v) in input_map.joystick_axis_binding.clone().iter() {
-                let g_axis = k.GamepadAxis;
-                let a_dir = k.Direction;
+        for (k, v) in input_map.joystick_axis_binding.clone().iter() {
+            let g_axis = k.GamepadAxis;
+            let a_dir = k.Direction;
 
-                let signed_str = pad_axis.get(&g_axis).unwrap_or(0.);
+            let signed_str = pad_axis.get(&g_axis).unwrap_or(0.);
 
-                if signed_str > 0. && a_dir == AnalogDirection::Positve {
-                    input_map.set_raw_action_strength(&v.to_string(), signed_str);
-                } else if signed_str < 0. && a_dir == AnalogDirection::Negative {
-                    input_map.set_raw_action_strength(&v.to_string(), signed_str.abs());
-                }
+            if signed_str > 0. && a_dir == AnalogDirection::Positve {
+                input_map.set_raw_action_strength(&v.to_string(), signed_str);
+            } else if signed_str < 0. && a_dir == AnalogDirection::Negative {
+                input_map.set_raw_action_strength(&v.to_string(), signed_str.abs());
             }
         }
     }

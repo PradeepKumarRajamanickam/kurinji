@@ -1,6 +1,4 @@
-use bevy::prelude::{
-    GamepadAxisType, GamepadButton, GamepadButtonType, KeyCode, MouseButton,
-};
+use bevy::prelude::{GamepadAxisType, GamepadButton, GamepadButtonType, KeyCode, MouseButton};
 use serde::{Deserialize, Deserializer, Serialize};
 use std::collections::HashMap;
 
@@ -23,7 +21,7 @@ impl InputMap {
         let serialized = ron::ser::to_string_pretty(&data, pretty);
         match serialized {
             Ok(s) => Ok(s),
-            Err(e) => Err(format!("Failed to generate ron {}",e).to_string()),
+            Err(e) => Err(format!("Failed to generate ron {}", e).to_string()),
         }
     }
     pub fn set_bindings_with_ron(&mut self, ron: &str) {
@@ -39,7 +37,7 @@ impl InputMap {
         let serialized = serde_json::to_string_pretty(&data);
         match serialized {
             Ok(s) => Ok(s),
-            Err(e) => Err(format!("Failed to generate json {}",e).to_string()),
+            Err(e) => Err(format!("Failed to generate json {}", e).to_string()),
         }
     }
     pub fn set_bindings_with_json(&mut self, json: &str) {
@@ -161,9 +159,7 @@ impl BindingsHelper {
             }
 
             (GamepadAxisType::LeftZ, AnalogDirection::Positve) => GamepadAxisHelper::LeftZPositive,
-            (GamepadAxisType::LeftZ, AnalogDirection::Negative) => {
-                GamepadAxisHelper::LeftZNegative
-            }
+            (GamepadAxisType::LeftZ, AnalogDirection::Negative) => GamepadAxisHelper::LeftZNegative,
 
             (GamepadAxisType::RightStickX, AnalogDirection::Positve) => {
                 GamepadAxisHelper::RightStickXPositive
@@ -187,14 +183,10 @@ impl BindingsHelper {
             }
 
             (GamepadAxisType::DPadX, AnalogDirection::Positve) => GamepadAxisHelper::DPadXPositive,
-            (GamepadAxisType::DPadX, AnalogDirection::Negative) => {
-                GamepadAxisHelper::DPadXNegative
-            }
+            (GamepadAxisType::DPadX, AnalogDirection::Negative) => GamepadAxisHelper::DPadXNegative,
 
             (GamepadAxisType::DPadY, AnalogDirection::Positve) => GamepadAxisHelper::DPadYPositive,
-            (GamepadAxisType::DPadY, AnalogDirection::Negative) => {
-                GamepadAxisHelper::DPadYNegative
-            }
+            (GamepadAxisType::DPadY, AnalogDirection::Negative) => GamepadAxisHelper::DPadYNegative,
         }
     }
 }
