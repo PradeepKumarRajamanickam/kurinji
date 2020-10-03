@@ -74,6 +74,10 @@ Joystick Mapping
 > Depends on bevy input support for joystick
 
 # Release Notes
+## v0.1.4 (03 Oct, 2020)
+- Event Phase
+- Action Events
+
 ## v0.1.3 (18 Sept, 2020)
 - Binding Stack
 - JSON & RON Support
