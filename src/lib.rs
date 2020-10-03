@@ -5,6 +5,7 @@ pub mod eventphase;
 pub mod inputmap;
 pub mod stack;
 pub mod util;
+pub mod actionevent;
 
 // crates
 mod action;
@@ -13,6 +14,7 @@ mod keyboard;
 mod mouse;
 mod serde;
 use crate::inputmap::InputMap;
+use actionevent::{OnActionActive, OnActionBegin, OnActionEnd, OnActionProgress};
 use bevy_app::prelude::*;
 use bevy_ecs::IntoQuerySystem;
 
@@ -24,7 +26,14 @@ impl Plugin for InputMapPlugin {
         app
             // input map
             .init_resource::<InputMap>()
-            .add_system_to_stage(stage::EVENT_UPDATE, InputMap::action_reset_system.system())
+            // events
+            .add_event::<OnActionActive>()
+            .add_event::<OnActionBegin>()
+            .add_event::<OnActionProgress>()
+            .add_event::<OnActionEnd>()
+            .add_system_to_stage(stage::EVENT_UPDATE, InputMap::action_event_producer.system())
+            // reset
+            .add_system_to_stage(stage::PRE_UPDATE, InputMap::action_reset_system.system())
             // joystick
             .add_system_to_stage(
                 stage::UPDATE,
