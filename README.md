@@ -47,9 +47,13 @@ Via Code
 Via JSON
 > cargo run --example with_json
 
+For Action Events Usage
+> cargo run --example with_action_events
+
 ## Features
 - new* Joystick Support: Button & Analog Input
 - new* Event Phase: Ability to set at which event phase an action is active
+- new* Action Events: OnActionBegin, OnActionProgress, OnActionEnd
 - Binding Stack: Ability to Push, Additive Push and Pop bindings
 - JSON/RON Support: Ability to use serialised string to setup bindings
 - Support to set custom strength curve function
