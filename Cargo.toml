@@ -27,3 +27,7 @@ path = "example/binding_in_code.rs"
 [[example]]
 name = "with_json"
 path = "example/binding_from_json.rs"
+
+[[example]]
+name = "with_action_events"
+path = "example/example_action_events.rs"
