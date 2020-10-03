@@ -100,7 +100,7 @@ https://github.com/PradeepKumarRajamanickam/bevy_input_map/issues
   - For analog inputs sometimes it is meaningful to have a min threshold to avoid small input noise and to reduce sensitivity
 
 ## Author
-PradeepKumar Rajamanickam
+Pradeep Kumar Rajamanickam
 
 ## Acknowledgments
 Inspired by 
