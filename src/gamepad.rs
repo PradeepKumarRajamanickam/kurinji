@@ -145,17 +145,23 @@ impl InputMap {
     }
 
     // crates
-    pub(crate) fn get_available_player_handle(self) -> Result<usize, String>
+    pub(crate) fn get_available_player_handle(self) -> Option<usize>
     {
         let max_player_handles: usize = 8;
         for i in 0..(max_player_handles - 1)
         {
             if !self.player_handles_in_use.contains(&i) {
-               return  Ok(i);
+               return Some(i);
             }
         }
-
-        return Err(format!("No handles left. Player Handles Maxed Out"));
+        None
+    }
+    pub(crate) fn get_player_handle_for_gamepad(self, pad: Gamepad) -> Option<usize>
+    {
+        return match self.joystick_to_player_map.get(&pad) {
+            Some(a) => Some(*a),
+            _ => None
+        };
     }
     // systems
     pub(crate) fn gamepad_button_press_input_system(
