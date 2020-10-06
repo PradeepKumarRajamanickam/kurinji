@@ -23,6 +23,8 @@ pub struct InputMap {
 
     // joystick
     pub(crate) joystick_connected_handle: HashSet<Gamepad>,
+    pub(crate) player_handles_in_use: HashSet<usize>,
+    pub(crate) joystick_to_player_map: HashMap<Gamepad, usize>,
     pub(crate) joystick_button_binding: HashMap<GamepadButton, String>,
     pub(crate) joystick_axis_binding: HashMap<GamepadAnalog, String>,
 
