@@ -3,6 +3,7 @@ use bevy::prelude::{Gamepad, GamepadButton, KeyCode, MouseButton};
 use crate::{axis::Axis, bindings::Bindings, EventPhase, gamepad::GamepadAnalog};
 use std::collections::{HashMap, HashSet};
 
+/// Resource to access all Input Map APIs
 #[derive(Default)]
 pub struct InputMap {
     // crates

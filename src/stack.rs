@@ -1,7 +1,7 @@
 use crate::{Bindings, InputMap};
 
 impl InputMap {
-    // Push bindings into stack
+    /// Push bindings to stack
     pub fn push(&mut self, bindings: Bindings) {
         // store current in stack
         let current = self.get_bindings();
@@ -11,8 +11,8 @@ impl InputMap {
         self.set_bindings(bindings);
     }
 
-    /// Clones current bindings updates it with the pushed
-    /// config
+    /// Clones current bindings and pushes it with the new
+    /// changes
     pub fn push_additive(&mut self, bindings: Bindings) {
         // store current in stack
         let current = self.get_bindings();
@@ -26,7 +26,7 @@ impl InputMap {
         self.set_bindings(new_binding);
     }
 
-    /// Pop the current binding out of stack
+    /// Pop the current binding from stack
     pub fn pop(&mut self) {
         if let Some(next) = self.stack.pop() {
             self.set_bindings(next);
