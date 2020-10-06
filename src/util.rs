@@ -33,12 +33,12 @@ impl BindingsSerdeHelper {
     // utils
     pub fn get_gamepad_button_hash_map_from_json_friendly_map(
         json_map: HashMap<usize, HashMap<GamepadButtonType, String>>,
-    ) -> HashMap<GamepadButton, String> {
-        let mut result: HashMap<GamepadButton, String> = HashMap::new();
-        for (pad_handle, h_map) in json_map {
+    ) -> HashMap<(usize, GamepadButtonType), String> {
+        let mut result: HashMap<(usize, GamepadButtonType), String>  = HashMap::new();
+        for (player, h_map) in json_map {
             for (btn_type, action) in h_map {
                 result
-                    .entry(GamepadButton(Gamepad(pad_handle), btn_type))
+                    .entry((player, btn_type))
                     .or_insert(action);
             }
         }
@@ -60,12 +60,12 @@ impl BindingsSerdeHelper {
         result
     }
     pub fn get_json_friendly_gamepad_button_hash_map(
-        binding: HashMap<GamepadButton, String>,
+        binding: HashMap<(usize, GamepadButtonType), String>,
     ) -> HashMap<usize, HashMap<GamepadButtonType, String>> {
         let mut result: HashMap<usize, HashMap<GamepadButtonType, String>> = HashMap::new();
 
         for (k, v) in binding {
-            let id: usize = (k.0).0;
+            let id: usize = k.0;
             let button = k.1;
             let action = v;
 

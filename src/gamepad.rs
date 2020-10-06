@@ -27,49 +27,29 @@ impl InputMap {
         pad_button: GamepadButtonType,
         action: &str,
     ) -> &mut InputMap {
-        self.bind_gamepad_button_pressed_with_gamepad_handle(0, pad_button, action)
+        self.bind_gamepad_button_pressed_with_player(0, pad_button, action)
     }
-    pub fn bind_gamepad_button_pressed_with_gamepad_handle(
+    pub fn bind_gamepad_button_pressed_with_player(
         &mut self,
-        pad_handle: usize,
+        player: usize,
         pad_button: GamepadButtonType,
         action: &str,
     ) -> &mut InputMap {
-        self.bind_gamepad_button_pressed_with_gamepad_button(
-            GamepadButton(Gamepad(pad_handle), pad_button),
-            action,
-        )
-    }
-    pub fn bind_gamepad_button_pressed_with_gamepad_button(
-        &mut self,
-        button: GamepadButton,
-        action: &str,
-    ) -> &mut InputMap {
-        self.joystick_button_binding
-            .insert(button, action.to_string());
+        self.joystick_button_binding.entry((player, pad_button)).or_insert(action.to_string());
         self
     }
     pub fn unbind_gamepad_button_pressed(
         &mut self,
         pad_button: GamepadButtonType,
     ) -> &mut InputMap {
-        self.unbind_gamepad_button_pressed_with_gamepad_handle(0, pad_button)
+        self.unbind_gamepad_button_pressed_with_player(0, pad_button)
     }
-    pub fn unbind_gamepad_button_pressed_with_gamepad_handle(
+    pub fn unbind_gamepad_button_pressed_with_player(
         &mut self,
-        pad_handle: usize,
+        player: usize,
         pad_button: GamepadButtonType,
     ) -> &mut InputMap {
-        self.unbind_gamepad_button_pressed_with_gamepad_button(GamepadButton(
-            Gamepad(pad_handle),
-            pad_button,
-        ))
-    }
-    pub fn unbind_gamepad_button_pressed_with_gamepad_button(
-        &mut self,
-        button: GamepadButton,
-    ) -> &mut InputMap {
-        self.joystick_button_binding.remove(&button);
+        self.joystick_button_binding.remove(&(player, pad_button));
         self
     }
 
@@ -169,8 +149,8 @@ impl InputMap {
         joystick_button_input: Res<Input<GamepadButton>>,
     ) {
         let button_bindings_iter = input_map.joystick_button_binding.clone();
-        for (button, action) in button_bindings_iter.iter() {
-            if joystick_button_input.pressed(*button) {
+        for (player_button_bind, action) in button_bindings_iter.iter() {
+            if joystick_button_input.pressed(GamepadButton(Gamepad(player_button_bind.0), player_button_bind.1)) {
                 input_map.set_raw_action_strength(action, 1.0);
             }
         }

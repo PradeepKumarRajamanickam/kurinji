@@ -64,12 +64,12 @@ fn setup(mut input_map: ResMut<InputMap>) {
             "MOVE_BACKWARD",
         )
         // multiple gamepads
-        .bind_gamepad_button_pressed_with_gamepad_handle(
+        .bind_gamepad_button_pressed_with_player(
             0,
             GamepadButtonType::Select,
             "BACK_PLAYER1",
         )
-        .bind_gamepad_button_pressed_with_gamepad_handle(
+        .bind_gamepad_button_pressed_with_player(
             1,
             GamepadButtonType::Select,
             "BACK_PLAYER2",
