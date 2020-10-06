@@ -1,20 +1,36 @@
 // publics
-pub mod axis;
-pub mod bindings;
-pub mod eventphase;
-pub mod inputmap;
-pub mod stack;
-pub mod util;
-pub mod actionevent;
+pub use self::
+{
+    inputmap::InputMap,
+
+    axis::Axis,
+    axis::AnalogDirection,
+    
+    bindings::Bindings,
+    
+    eventphase::EventPhase,
+    
+    actionevent::OnActionBegin,
+    actionevent::OnActionActive,
+    actionevent::OnActionProgress,
+    actionevent::OnActionEnd,
+};
 
 // crates
+mod axis;
+mod util;
+mod stack;
+mod inputmap;
+mod bindings;
+mod eventphase;
+mod actionevent;
+
 mod action;
 mod gamepad;
 mod keyboard;
 mod mouse;
 mod serde;
-use crate::inputmap::InputMap;
-use actionevent::{OnActionActive, OnActionBegin, OnActionEnd, OnActionProgress};
+
 use bevy_app::prelude::*;
 use bevy_ecs::IntoQuerySystem;
 
