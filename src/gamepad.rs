@@ -145,6 +145,18 @@ impl InputMap {
     }
 
     // crates
+    pub(crate) fn get_available_player_handle(self) -> Result<usize, String>
+    {
+        let max_player_handles: usize = 8;
+        for i in 0..(max_player_handles - 1)
+        {
+            if !self.player_handles_in_use.contains(&i) {
+               return  Ok(i);
+            }
+        }
+
+        return Err(format!("No handles left. Player Handles Maxed Out"));
+    }
     // systems
     pub(crate) fn gamepad_button_press_input_system(
         mut input_map: ResMut<InputMap>,
