@@ -4,9 +4,7 @@ use bevy::prelude::*;
 use bevy_app::AppExit;
 use bevy_app::Events;
 use bevy_ecs::ResMut;
-use bevy_prototype_input_map::{
-    actionevent::OnActionActive, actionevent::OnActionEnd, inputmap::InputMap, InputMapPlugin,
-};
+use bevy_prototype_input_map::*;
 
 #[derive(Default)]
 pub struct ActionState {

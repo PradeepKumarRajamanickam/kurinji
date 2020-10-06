@@ -2,9 +2,9 @@ use bevy::prelude::*;
 use bevy_app::AppExit;
 use bevy_app::Events;
 use bevy_ecs::ResMut;
-use bevy_prototype_input_map::{
-    axis::AnalogDirection, axis::Axis, eventphase::EventPhase, inputmap::InputMap, InputMapPlugin,
-};
+use bevy_prototype_input_map::*;
+
+use bevy_prototype_input_map::Axis as Axis;
 
 fn main() {
     println!("Input Map Binding In Code Example");

@@ -1,6 +1,6 @@
 use bevy::prelude::{Gamepad, GamepadButton, KeyCode, MouseButton};
 
-use crate::{axis::Axis, bindings::Bindings, eventphase::EventPhase, gamepad::GamepadAnalog};
+use crate::{axis::Axis, bindings::Bindings, EventPhase, gamepad::GamepadAnalog};
 use std::collections::{HashMap, HashSet};
 
 #[derive(Default)]

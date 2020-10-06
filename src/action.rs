@@ -1,4 +1,4 @@
-use crate::{eventphase::EventPhase, inputmap::InputMap, util};
+use crate::{EventPhase, InputMap, util};
 use bevy_ecs::ResMut;
 
 impl InputMap {

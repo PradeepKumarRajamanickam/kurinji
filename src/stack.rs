@@ -1,4 +1,4 @@
-use crate::{bindings::Bindings, inputmap::InputMap};
+use crate::{Bindings, InputMap};
 
 impl InputMap {
     // Push bindings into stack
