@@ -184,12 +184,29 @@ impl InputMap {
             let pad_handle = value.0;
             match value.1 {
                 bevy::prelude::GamepadEventType::Connected => {
-                    println!("InputMap: Joystick Connected {:?}", pad_handle);
-                    input_map.joystick_connected_handle.insert(pad_handle);
+
+                    let res_player_handle = input_map.clone().get_available_player_handle();
+                    match res_player_handle {
+
+                        Some(player_handle) => 
+                        {
+                            println!("InputMap: Gamepad Connected {:?} to player {}", pad_handle, player_handle);
+                            input_map.player_handles_in_use.insert(player_handle);
+                            input_map.joystick_to_player_map.entry(pad_handle).or_insert(player_handle);
+                        }
+                        None => { println!("InputMap: Housefull. No space for more gamepads"); }
+                    }
+                        
                 }
                 bevy::prelude::GamepadEventType::Disconnected => {
-                    println!("InputMap: Joystick Disconnected {:?}", pad_handle);
-                    input_map.joystick_connected_handle.remove(&pad_handle);
+
+                    let opt_player_handle = input_map.clone().get_player_handle_for_gamepad(pad_handle);
+                    if let Some(player_handle) = opt_player_handle
+                    {
+                        println!("InputMap: Gamepad Disconnected {:?} for player {}", pad_handle, player_handle);
+                        input_map.player_handles_in_use.remove(&player_handle);
+                        input_map.joystick_to_player_map.remove(&pad_handle);
+                    }
                 }
             }
         }
