@@ -3,24 +3,33 @@ use bevy_ecs::{Res, ResMut};
 
 use crate::InputMap;
 
+/// Event that is fired when action is active.
+/// This depends on what event phase is set to
+/// the action by default it will be OnProgress.
 pub struct OnActionActive
 {
     pub action: String,
     pub strength: f32
 }
 
+/// Event that gets fired at the beginning
+/// of an action
 pub struct OnActionBegin
 {
     pub action: String,
     pub strength: f32
 }
 
+/// Event that gets fired at during
+/// an action
 pub struct OnActionProgress
 {
     pub action: String,
     pub strength: f32
 }
 
+/// Event that gets fired at the end
+/// of an action
 pub struct OnActionEnd
 {
     pub action: String

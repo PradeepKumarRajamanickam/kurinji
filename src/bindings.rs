@@ -3,6 +3,7 @@ use std::{collections::HashMap, hash::Hash};
 
 use crate::{axis::Axis, EventPhase, gamepad::GamepadAnalog, InputMap};
 
+/// Data structure to hold bindings.
 #[derive(Default, Clone, Debug)]
 pub struct Bindings {
     pub(crate) gamepad_button_bindings: HashMap<GamepadButton, String>,
