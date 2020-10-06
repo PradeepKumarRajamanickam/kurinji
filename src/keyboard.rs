@@ -1,4 +1,4 @@
-use crate::inputmap::InputMap;
+use crate::input_map::InputMap;
 use bevy::prelude::KeyCode;
 use bevy_ecs::{Res, ResMut};
 use bevy_input::Input;

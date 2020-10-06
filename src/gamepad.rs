@@ -1,4 +1,4 @@
-use crate::{axis::AnalogDirection, inputmap::InputMap};
+use crate::{AnalogDirection, InputMap};
 
 use bevy::{
     prelude::Gamepad, prelude::GamepadAxis, prelude::GamepadAxisType, prelude::GamepadButton,

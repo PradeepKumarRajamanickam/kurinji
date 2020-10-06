@@ -1,7 +1,7 @@
 use bevy_app::Events;
 use bevy_ecs::{Res, ResMut};
 
-use crate::inputmap::InputMap;
+use crate::InputMap;
 
 pub struct OnActionActive
 {

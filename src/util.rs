@@ -5,7 +5,7 @@ use bevy::prelude::{
 use std::{collections::HashMap, fs};
 
 use crate::{
-    axis::AnalogDirection, bindings::Bindings, gamepad::GamepadAnalog, inputmap::InputMap,
+    axis::AnalogDirection, bindings::Bindings, gamepad::GamepadAnalog, InputMap,
     serde::BindingsSerdeHelper, serde::GamepadAxisHelper,
 };
 

@@ -1,29 +1,29 @@
 // publics
 pub use self::
 {
-    inputmap::InputMap,
+    input_map::InputMap,
 
     axis::Axis,
     axis::AnalogDirection,
     
     bindings::Bindings,
     
-    eventphase::EventPhase,
+    event_phase::EventPhase,
     
-    actionevent::OnActionBegin,
-    actionevent::OnActionActive,
-    actionevent::OnActionProgress,
-    actionevent::OnActionEnd,
+    action_event::OnActionBegin,
+    action_event::OnActionActive,
+    action_event::OnActionProgress,
+    action_event::OnActionEnd,
 };
 
 // crates
 mod axis;
 mod util;
 mod stack;
-mod inputmap;
 mod bindings;
-mod eventphase;
-mod actionevent;
+mod input_map;
+mod event_phase;
+mod action_event;
 
 mod action;
 mod gamepad;
