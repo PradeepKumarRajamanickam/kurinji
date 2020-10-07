@@ -5,6 +5,7 @@ use bevy_ecs::ResMut;
 use bevy_prototype_input_map::*;
 
 use bevy_prototype_input_map::Axis as Axis;
+use bevy_prototype_input_map::GamepadAxis as GamepadAxis;
 
 fn main() {
     println!("Input Map Binding In Code Example");
@@ -24,43 +25,35 @@ fn setup(mut input_map: ResMut<InputMap>) {
         .bind_gamepad_button_pressed(GamepadButtonType::South, "SHOOT")
         .bind_gamepad_button_pressed(GamepadButtonType::RightTrigger2, "SHOOT")
         .bind_gamepad_axis(
-            GamepadAxisType::RightStickX,
-            AnalogDirection::Negative,
+            GamepadAxis::RightStickXNegative,
             "AIM_LEFT",
         )
         .bind_gamepad_axis(
-            GamepadAxisType::RightStickX,
-            AnalogDirection::Positve,
+            GamepadAxis::RightStickXPositive,
             "AIM_RIGHT",
         )
         .bind_gamepad_axis(
-            GamepadAxisType::RightStickY,
-            AnalogDirection::Positve,
+            GamepadAxis::RightStickYPositive,
             "AIM_UP",
         )
         .bind_gamepad_axis(
-            GamepadAxisType::RightStickY,
-            AnalogDirection::Negative,
+            GamepadAxis::RightStickYNegative,
             "AIM_DOWN",
         )
         .bind_gamepad_axis(
-            GamepadAxisType::LeftStickX,
-            AnalogDirection::Negative,
+            GamepadAxis::LeftStickXNegative,
             "MOVE_LEFT",
         )
         .bind_gamepad_axis(
-            GamepadAxisType::LeftStickX,
-            AnalogDirection::Positve,
+            GamepadAxis::LeftStickXPositive,
             "MOVE_RIGHT",
         )
         .bind_gamepad_axis(
-            GamepadAxisType::LeftStickY,
-            AnalogDirection::Positve,
+            GamepadAxis::LeftStickYPositive,
             "MOVE_FORWARD",
         )
         .bind_gamepad_axis(
-            GamepadAxisType::LeftStickY,
-            AnalogDirection::Negative,
+            GamepadAxis::LeftStickYNegative,
             "MOVE_BACKWARD",
         )
         // multiple gamepads
