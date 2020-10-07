@@ -77,7 +77,7 @@ impl Serialize for Bindings {
             gamepad_button_bindings: BindingsSerdeHelper::get_json_friendly_gamepad_button_hash_map(
                 self.gamepad_button_bindings.clone(),
             ),
-            gamepad_axis_bindings: BindingsSerdeHelper::get_json_friendly_gamepad_analog_hash_map(
+            gamepad_axis_bindings: BindingsSerdeHelper::get_json_friendly_gamepad_axis_hash_map(
                 self.gamepad_axis_bindings.clone(),
             ),
         }
@@ -111,7 +111,7 @@ impl<'de> Deserialize<'de> for Bindings {
                         gamepad_button_bindings,
                     ),
                 gamepad_axis_bindings:
-                    BindingsSerdeHelper::get_gamepad_analog_hash_map_from_json_friendly_map(
+                    BindingsSerdeHelper::get_gamepad_axis_hash_map_from_json_friendly_map(
                         gamepad_axis_bindings,
                     ),
             },
