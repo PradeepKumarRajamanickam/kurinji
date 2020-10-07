@@ -143,6 +143,13 @@ impl InputMap {
             _ => None
         };
     }
+    pub(crate) fn get_gamepad_from_player_handle(self, player: usize) -> Option<Gamepad>
+    {
+        return match self.player_to_joystick_map.get(&player) {
+            Some(a) => Some(*a),
+            _ => None
+        };
+    }
     // systems
     pub(crate) fn gamepad_button_press_input_system(
         mut input_map: ResMut<InputMap>,
@@ -172,7 +179,8 @@ impl InputMap {
                         {
                             println!("InputMap: Gamepad Connected {:?} to player {}", pad_handle, player_handle);
                             input_map.player_handles_in_use.insert(player_handle);
-                            input_map.joystick_to_player_map.entry(pad_handle).or_insert(player_handle);
+                            input_map.joystick_to_player_map.insert(pad_handle,player_handle);
+                            input_map.player_to_joystick_map.insert(player_handle,pad_handle);
                         }
                         None => { println!("InputMap: Housefull. No space for more gamepads"); }
                     }
@@ -186,6 +194,7 @@ impl InputMap {
                         println!("InputMap: Gamepad Disconnected {:?} for player {}", pad_handle, player_handle);
                         input_map.player_handles_in_use.remove(&player_handle);
                         input_map.joystick_to_player_map.remove(&pad_handle);
+                        input_map.player_to_joystick_map.remove(&player_handle);
                     }
                 }
             }
