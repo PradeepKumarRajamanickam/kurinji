@@ -166,17 +166,22 @@ impl InputMap {
 
     pub(crate) fn gamepad_axis_system(
         mut input_map: ResMut<InputMap>,
-        pad_axis: Res<bevy_input::Axis<GamepadAxis>>,
+        pad_axis: Res<bevy_input::Axis<bevy_input::gamepad::GamepadAxis>>,
     ) {
-        for (k, v) in input_map.joystick_axis_binding.clone().iter() {
-            let g_axis = k.axis;
-            let a_dir = k.direction;
+        for (k, v) in input_map.clone().joystick_axis_binding.iter() {
+            
+            let player = k.0;
+            let axis = k.1.clone();
+            let is_positive = InputMap::is_gamepad_axis_positive(axis.clone());
+            
+            let bevy_gamepad = input_map.clone().get_gamepad_from_player_handle(player).unwrap();
+            let bevy_axis_type = InputMap::get_bevy_gamepad_axis_type_from_pad_axis(axis);
+            let bevy_axis = bevy_input::gamepad::GamepadAxis(bevy_gamepad, bevy_axis_type);
 
-            let signed_str = pad_axis.get(&g_axis).unwrap_or(0.);
+            let signed_str = pad_axis.get(&bevy_axis).unwrap_or(0.);
 
-            if signed_str > 0. && a_dir == AnalogDirection::Positve {
-                input_map.set_raw_action_strength(&v.to_string(), signed_str);
-            } else if signed_str < 0. && a_dir == AnalogDirection::Negative {
+            if signed_str > 0. && is_positive 
+            || signed_str < 0. && !is_positive{
                 input_map.set_raw_action_strength(&v.to_string(), signed_str.abs());
             }
         }
