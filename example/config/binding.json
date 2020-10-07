@@ -1,59 +1,59 @@
 {
   "GamepadButtons": {
+    "0": {
+      "RightTrigger2": "SHOOT",
+      "Select": "BACK_PLAYER1",
+      "South": "SHOOT",
+      "Start": "QUIT_APP"
+    },
     "1": {
       "Select": "BACK_PLAYER2"
-    },
-    "0": {
-      "South": "SHOOT",
-      "Start": "QUIT_APP",
-      "Select": "BACK_PLAYER1",
-      "RightTrigger2": "SHOOT"
     }
   },
-  "GamepadAnalogs": {
+  "GamepadAxis": {
     "0": {
-      "RightStickXPositive": "AIM_RIGHT",
-      "LeftStickXPositive": "MOVE_RIGHT",
+      "RightStickYNegative": "AIM_DOWN",
+      "RightStickXNegative": "AIM_LEFT",
+      "RightStickYPositive": "AIM_UP",
       "LeftStickXNegative": "MOVE_LEFT",
       "LeftStickYPositive": "MOVE_FORWARD",
       "LeftStickYNegative": "MOVE_BACKWARD",
-      "RightStickYPositive": "AIM_UP",
-      "RightStickXNegative": "AIM_LEFT",
-      "RightStickYNegative": "AIM_DOWN"
+      "LeftStickXPositive": "MOVE_RIGHT",
+      "RightStickXPositive": "AIM_RIGHT"
     }
   },
   "KeyboardKeys": {
-    "D": "MOVE_RIGHT",
-    "S": "MOVE_BACKWARD",
-    "Escape": "QUIT_APP",
-    "Return": "SHOOT",
     "A": "MOVE_LEFT",
+    "W": "MOVE_FORWARD",
+    "S": "MOVE_BACKWARD",
     "Space": "JUMP",
-    "W": "MOVE_FORWARD"
+    "D": "MOVE_RIGHT",
+    "Escape": "QUIT_APP",
+    "Return": "SHOOT"
   },
   "MouseButtons": {
     "Right": "JUMP",
     "Left": "SHOOT"
   },
   "MouseMove": {
-    "YNegative": "AIM_UP",
-    "XNegative": "AIM_LEFT",
     "XPositive": "AIM_RIGHT",
-    "YPositive": "AIM_DOWN"
+    "YPositive": "AIM_DOWN",
+    "XNegative": "AIM_LEFT",
+    "YNegative": "AIM_UP"
   },
   "DeadZone": {
-    "MOVE_LEFT": 0.25,
-    "AIM_DOWN": 0.1,
-    "MOVE_RIGHT": 0.25,
     "MOVE_BACKWARD": 0.25,
-    "AIM_LEFT": 0.1,
-    "AIM_RIGHT": 0.1,
     "AIM_UP": 0.1,
-    "MOVE_FORWARD": 0.25
+    "MOVE_RIGHT": 0.25,
+    "MOVE_LEFT": 0.25,
+    "MOVE_FORWARD": 0.25,
+    "AIM_DOWN": 0.1,
+    "AIM_RIGHT": 0.1,
+    "AIM_LEFT": 0.1
   },
   "EventPhase": {
-    "SHOOT": "OnBegin",
     "BACK_PLAYER1": "OnEnded",
+    "SHOOT": "OnBegin",
     "QUIT_APP": "OnEnded",
     "BACK_PLAYER2": "OnEnded"
   }

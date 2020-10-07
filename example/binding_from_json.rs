@@ -25,6 +25,13 @@ fn setup(mut input_map: ResMut<InputMap>) {
 }
 
 fn action_system(input_map: Res<InputMap>, mut app_exit_events: ResMut<Events<AppExit>>) {
+    if input_map.is_action_active("BACK_PLAYER1") {
+        println!("Player 1 wants to go back");
+    }
+    if input_map.is_action_active("BACK_PLAYER2") {
+        println!("Player 2 wants to go back");
+    }
+
     if input_map.is_action_active("JUMP") {
         println!("Jumping...");
     }
@@ -58,6 +65,34 @@ fn action_system(input_map: Res<InputMap>, mut app_exit_events: ResMut<Events<Ap
         println!(
             "AIM_RIGHT... [ strength: {}] ",
             input_map.get_action_strength("AIM_RIGHT")
+        );
+    }
+
+    if input_map.is_action_active("MOVE_LEFT") {
+        println!(
+            "MOVE_LEFT... [ strength: {}] ",
+            input_map.get_action_strength("MOVE_LEFT")
+        );
+    }
+
+    if input_map.is_action_active("MOVE_RIGHT") {
+        println!(
+            "MOVE_RIGHT... [ strength: {}] ",
+            input_map.get_action_strength("MOVE_RIGHT")
+        );
+    }
+
+    if input_map.is_action_active("MOVE_FORWARD") {
+        println!(
+            "MOVE_FORWARD... [ strength: {}] ",
+            input_map.get_action_strength("MOVE_FORWARD")
+        );
+    }
+
+    if input_map.is_action_active("MOVE_BACKWARD") {
+        println!(
+            "MOVE_BACKWARD... [ strength: {}] ",
+            input_map.get_action_strength("MOVE_BACKWARD")
         );
     }
 
