@@ -24,6 +24,49 @@ impl InputMap {
     pub fn get_bindings_from_ron(ron: &str) -> Bindings {
         ron::de::from_str(ron).expect("Failed to deserialise bindings ron")
     }
+
+    // crate
+    pub(crate) fn is_gamepad_axis_positive(axis: GamepadAxis) -> bool
+    {
+        return axis == GamepadAxis::LeftStickXPositive
+        || axis == GamepadAxis::LeftStickYPositive
+        || axis == GamepadAxis::LeftZPositive
+        || axis == GamepadAxis::RightStickXPositive
+        || axis == GamepadAxis::RightStickYPositive
+        || axis == GamepadAxis::RightZPositive
+        || axis == GamepadAxis::DPadXPositive
+        || axis == GamepadAxis::DPadYPositive;
+    }
+
+    pub(crate) fn get_bevy_gamepad_axis_type_from_pad_axis(
+        axis: GamepadAxis,
+    ) -> bevy_input::gamepad::GamepadAxisType {
+        match axis {
+            GamepadAxis::LeftStickXPositive => bevy_input::gamepad::GamepadAxisType::LeftStickX,
+            GamepadAxis::LeftStickXNegative => bevy_input::gamepad::GamepadAxisType::LeftStickX,
+
+            GamepadAxis::LeftStickYPositive => bevy_input::gamepad::GamepadAxisType::LeftStickY,
+            GamepadAxis::LeftStickYNegative => bevy_input::gamepad::GamepadAxisType::LeftStickY,
+
+            GamepadAxis::LeftZPositive => bevy_input::gamepad::GamepadAxisType::LeftZ,
+            GamepadAxis::LeftZNegative => bevy_input::gamepad::GamepadAxisType::LeftZ,
+
+            GamepadAxis::RightStickXPositive => bevy_input::gamepad::GamepadAxisType::RightStickX,
+            GamepadAxis::RightStickXNegative => bevy_input::gamepad::GamepadAxisType::RightStickX,
+
+            GamepadAxis::RightStickYPositive => bevy_input::gamepad::GamepadAxisType::RightStickY,
+            GamepadAxis::RightStickYNegative => bevy_input::gamepad::GamepadAxisType::RightStickY,
+
+            GamepadAxis::RightZPositive => bevy_input::gamepad::GamepadAxisType::RightZ,
+            GamepadAxis::RightZNegative => bevy_input::gamepad::GamepadAxisType::RightZ,
+
+            GamepadAxis::DPadXPositive => bevy_input::gamepad::GamepadAxisType::DPadX,
+            GamepadAxis::DPadXNegative => bevy_input::gamepad::GamepadAxisType::DPadX,
+
+            GamepadAxis::DPadYPositive => bevy_input::gamepad::GamepadAxisType::DPadY,
+            GamepadAxis::DPadYNegative => bevy_input::gamepad::GamepadAxisType::DPadY,
+        }
+    } 
 }
 
 impl BindingsSerdeHelper {
