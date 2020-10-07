@@ -46,7 +46,7 @@ impl InputMap {
 pub struct BindingsSerdeHelper {
     #[serde(default, rename = "GamepadButtons")]
     gamepad_button_bindings: HashMap<usize, HashMap<GamepadButtonType, String>>,
-    #[serde(default, rename = "GamepadAnalogs")]
+    #[serde(default, rename = "GamepadAxis")]
     gamepad_axis_bindings: HashMap<usize, HashMap<GamepadAxis, String>>,
 
     #[serde(default, rename = "KeyboardKeys")]
