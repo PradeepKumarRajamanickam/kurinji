@@ -4,7 +4,7 @@ pub use self::
     input_map::InputMap,
 
     axis::Axis,
-    axis::AnalogDirection,
+    axis::GamepadAxis,
     
     bindings::Bindings,
     
