@@ -2,7 +2,7 @@ use bevy::prelude::{GamepadButtonType, KeyCode, MouseButton};
 use serde::{Deserialize, Deserializer, Serialize};
 use std::collections::HashMap;
 
-use crate::{Axis, Bindings, EventPhase, InputMap};
+use crate::{Axis, Bindings, EventPhase, InputMap, axis::GamepadAxis};
 
 impl InputMap {
     // publics
@@ -42,45 +42,12 @@ impl InputMap {
     }
 }
 
-#[derive(Clone, Debug, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
-pub enum GamepadAxisHelper {
-    LeftStickXPositive,
-    LeftStickXNegative,
-
-    LeftStickYPositive,
-    LeftStickYNegative,
-
-    LeftZPositive,
-    LeftZNegative,
-
-    RightStickXPositive,
-    RightStickXNegative,
-
-    RightStickYPositive,
-    RightStickYNegative,
-
-    RightZPositive,
-    RightZNegative,
-
-    DPadXPositive,
-    DPadXNegative,
-
-    DPadYPositive,
-    DPadYNegative,
-}
-
-impl Default for GamepadAxisHelper {
-    fn default() -> Self {
-        GamepadAxisHelper::LeftStickXPositive
-    }
-}
-
 #[derive(Default, Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct BindingsSerdeHelper {
     #[serde(default, rename = "GamepadButtons")]
     gamepad_button_bindings: HashMap<usize, HashMap<GamepadButtonType, String>>,
-    #[serde(default, rename = "GamepadAnalogs")]
-    gamepad_axis_bindings: HashMap<usize, HashMap<GamepadAxisHelper, String>>,
+    #[serde(default, rename = "GamepadAxis")]
+    gamepad_axis_bindings: HashMap<usize, HashMap<GamepadAxis, String>>,
 
     #[serde(default, rename = "KeyboardKeys")]
     keyboard_key_bindings: HashMap<KeyCode, String>,
@@ -110,7 +77,7 @@ impl Serialize for Bindings {
             gamepad_button_bindings: BindingsSerdeHelper::get_json_friendly_gamepad_button_hash_map(
                 self.gamepad_button_bindings.clone(),
             ),
-            gamepad_axis_bindings: BindingsSerdeHelper::get_json_friendly_gamepad_analog_hash_map(
+            gamepad_axis_bindings: BindingsSerdeHelper::get_json_friendly_gamepad_axis_hash_map(
                 self.gamepad_axis_bindings.clone(),
             ),
         }
@@ -144,7 +111,7 @@ impl<'de> Deserialize<'de> for Bindings {
                         gamepad_button_bindings,
                     ),
                 gamepad_axis_bindings:
-                    BindingsSerdeHelper::get_gamepad_analog_hash_map_from_json_friendly_map(
+                    BindingsSerdeHelper::get_gamepad_axis_hash_map_from_json_friendly_map(
                         gamepad_axis_bindings,
                     ),
             },
