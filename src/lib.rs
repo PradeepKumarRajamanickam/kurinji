@@ -3,7 +3,7 @@ pub use self::
 {
     input_map::InputMap,
 
-    axis::Axis,
+    axis::MouseAxis,
     axis::GamepadAxis,
     
     bindings::Bindings,
@@ -34,6 +34,7 @@ mod serde;
 use bevy_app::prelude::*;
 use bevy_ecs::IntoQuerySystem;
 
+/// Adds input mapping (via code or json/ron) to an App
 #[derive(Default)]
 pub struct InputMapPlugin;
 

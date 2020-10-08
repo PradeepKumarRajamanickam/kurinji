@@ -1,8 +1,8 @@
-use bevy::prelude::{GamepadButtonType, KeyCode, MouseButton};
+use crate::{MouseAxis, Bindings, EventPhase, InputMap, axis::GamepadAxis};
+
+use bevy::prelude::*;
 use serde::{Deserialize, Deserializer, Serialize};
 use std::collections::HashMap;
-
-use crate::{Axis, Bindings, EventPhase, InputMap, axis::GamepadAxis};
 
 impl InputMap {
     // publics
@@ -56,7 +56,7 @@ pub struct BindingsSerdeHelper {
     #[serde(default, rename = "MouseButtons")]
     mouse_button_binding: HashMap<MouseButton, String>,
     #[serde(default, rename = "MouseMove")]
-    mouse_move_binding: HashMap<Axis, String>,
+    mouse_move_binding: HashMap<MouseAxis, String>,
 
     #[serde(default, rename = "DeadZone")]
     action_deadzone: HashMap<String, f32>,

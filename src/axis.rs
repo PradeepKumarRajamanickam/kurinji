@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 
 /// Axis of mouse movement
 #[derive(Serialize, Deserialize, Debug, Hash, Ord, PartialOrd, PartialEq, Eq, Clone, Copy)]
-pub enum Axis {
+pub enum MouseAxis {
     XPositive,
     XNegative,
 

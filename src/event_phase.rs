@@ -1,6 +1,7 @@
+use crate::InputMap;
+
 use serde::{Deserialize, Serialize};
 
-use crate::InputMap;
 #[derive(Serialize, Deserialize, Debug, Hash, Ord, PartialOrd, PartialEq, Eq, Clone, Copy)]
 /// Event phase that action is mapped to.
 pub enum EventPhase {

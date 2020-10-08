@@ -1,9 +1,9 @@
 use crate::{EventPhase, InputMap, util};
+
 use bevy_ecs::ResMut;
 
 impl InputMap {
     // publics
-
     /// Provides strength of action in range 0.0 - 1.0. Useful
     /// when working actions that mapped to analog input eg. joystick
     pub fn get_action_strength(&self, action: &str) -> f32 {

@@ -1,10 +1,7 @@
-use bevy::prelude::{
-  GamepadButtonType, Vec2,
-};
-
-use std::{collections::HashMap, fs};
-
 use crate::{GamepadAxis, InputMap, bindings::Bindings, serde::BindingsSerdeHelper};
+
+use bevy::prelude::*;
+use std::{collections::HashMap, fs};
 
 impl InputMap {
     // publics

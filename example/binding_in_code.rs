@@ -4,8 +4,6 @@ use bevy_app::Events;
 use bevy_ecs::ResMut;
 use bevy_prototype_input_map::*;
 
-use bevy_prototype_input_map::Axis as Axis;
-
 fn main() {
     println!("Input Map Binding In Code Example");
     App::build()
@@ -30,10 +28,10 @@ fn setup(mut input_map: ResMut<InputMap>) {
         // mouse
         .bind_mouse_button_pressed(MouseButton::Left, "SHOOT")
         .bind_mouse_button_pressed(MouseButton::Right, "JUMP")
-        .bind_mouse_motion(Axis::YNegative, "AIM_UP")
-        .bind_mouse_motion(Axis::YPositive, "AIM_DOWN")
-        .bind_mouse_motion(Axis::XNegative, "AIM_LEFT")
-        .bind_mouse_motion(Axis::XPositive, "AIM_RIGHT")
+        .bind_mouse_motion(MouseAxis::YNegative, "AIM_UP")
+        .bind_mouse_motion(MouseAxis::YPositive, "AIM_DOWN")
+        .bind_mouse_motion(MouseAxis::XNegative, "AIM_LEFT")
+        .bind_mouse_motion(MouseAxis::XPositive, "AIM_RIGHT")
         // set event phase
         .set_event_phase("QUIT_APP", EventPhase::OnEnded)
         .set_event_phase("SHOOT", EventPhase::OnBegin);
