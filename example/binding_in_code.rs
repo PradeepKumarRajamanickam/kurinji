@@ -5,7 +5,6 @@ use bevy_ecs::ResMut;
 use bevy_prototype_input_map::*;
 
 use bevy_prototype_input_map::Axis as Axis;
-use bevy_prototype_input_map::GamepadAxis as GamepadAxis;
 
 fn main() {
     println!("Input Map Binding In Code Example");
@@ -20,53 +19,6 @@ fn main() {
 
 fn setup(mut input_map: ResMut<InputMap>) {
     input_map
-        // joystick
-        .bind_gamepad_button_pressed(GamepadButtonType::Start, "QUIT_APP")
-        .bind_gamepad_button_pressed(GamepadButtonType::South, "SHOOT")
-        .bind_gamepad_button_pressed(GamepadButtonType::RightTrigger2, "SHOOT")
-        .bind_gamepad_axis(
-            GamepadAxis::RightStickXNegative,
-            "AIM_LEFT",
-        )
-        .bind_gamepad_axis(
-            GamepadAxis::RightStickXPositive,
-            "AIM_RIGHT",
-        )
-        .bind_gamepad_axis(
-            GamepadAxis::RightStickYPositive,
-            "AIM_UP",
-        )
-        .bind_gamepad_axis(
-            GamepadAxis::RightStickYNegative,
-            "AIM_DOWN",
-        )
-        .bind_gamepad_axis(
-            GamepadAxis::LeftStickXNegative,
-            "MOVE_LEFT",
-        )
-        .bind_gamepad_axis(
-            GamepadAxis::LeftStickXPositive,
-            "MOVE_RIGHT",
-        )
-        .bind_gamepad_axis(
-            GamepadAxis::LeftStickYPositive,
-            "MOVE_FORWARD",
-        )
-        .bind_gamepad_axis(
-            GamepadAxis::LeftStickYNegative,
-            "MOVE_BACKWARD",
-        )
-        // multiple gamepads
-        .bind_gamepad_button_pressed_with_player(
-            0,
-            GamepadButtonType::Select,
-            "BACK_PLAYER1",
-        )
-        .bind_gamepad_button_pressed_with_player(
-            1,
-            GamepadButtonType::Select,
-            "BACK_PLAYER2",
-        )
         // keyboard
         .bind_keyboard_pressed(KeyCode::Space, "JUMP")
         .bind_keyboard_pressed(KeyCode::Return, "SHOOT")
