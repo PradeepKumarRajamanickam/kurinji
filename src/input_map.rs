@@ -1,7 +1,13 @@
 use bevy::prelude::{Gamepad, GamepadButtonType, KeyCode, MouseButton};
 
-use crate::{EventPhase, GamepadAxis, axis::MouseAxis, bindings::Bindings};
+use crate::{axis::MouseAxis, bindings::Bindings, EventPhase, GamepadAxis};
 use std::collections::{HashMap, HashSet};
+
+impl InputMap {
+    // constants
+    /// Max number of players that can be connected using gamepads
+    pub const MAX_PLAYER_HANDLES: usize = 8;
+}
 
 /// Resource to access all Input Map APIs
 #[derive(Default, Clone)]
