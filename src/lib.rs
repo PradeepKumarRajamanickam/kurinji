@@ -3,7 +3,7 @@ pub use self::
 {
     input_map::InputMap,
 
-    axis::Axis,
+    axis::MouseAxis,
     axis::GamepadAxis,
     
     bindings::Bindings,

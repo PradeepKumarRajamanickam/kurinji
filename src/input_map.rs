@@ -1,6 +1,6 @@
 use bevy::prelude::{Gamepad, GamepadButtonType, KeyCode, MouseButton};
 
-use crate::{EventPhase, GamepadAxis, axis::Axis, bindings::Bindings};
+use crate::{EventPhase, GamepadAxis, axis::MouseAxis, bindings::Bindings};
 use std::collections::{HashMap, HashSet};
 
 /// Resource to access all Input Map APIs
@@ -19,7 +19,7 @@ pub struct InputMap {
 
     // mouse
     pub(crate) mouse_button_binding: HashMap<MouseButton, String>,
-    pub(crate) mouse_move_binding: HashMap<Axis, String>,
+    pub(crate) mouse_move_binding: HashMap<MouseAxis, String>,
 
     // joystick
     pub(crate) player_handles_in_use: HashSet<usize>,

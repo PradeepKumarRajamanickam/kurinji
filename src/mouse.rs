@@ -1,4 +1,4 @@
-use crate::{Axis, InputMap, util::clamp_vec2};
+use crate::{MouseAxis, InputMap, util::clamp_vec2};
 use bevy::{math::Vec2, prelude::MouseButton};
 use bevy_app::{EventReader, Events};
 use bevy_ecs::{Local, Res, ResMut};
@@ -21,12 +21,12 @@ impl InputMap {
         self
     }
 
-    pub fn bind_mouse_motion(&mut self, axis: Axis, action: &str) -> &mut InputMap {
+    pub fn bind_mouse_motion(&mut self, axis: MouseAxis, action: &str) -> &mut InputMap {
         self.mouse_move_binding.insert(axis, action.to_string());
         self
     }
 
-    pub fn unbind_mouse_motion(&mut self, axis: Axis) -> &mut InputMap {
+    pub fn unbind_mouse_motion(&mut self, axis: MouseAxis) -> &mut InputMap {
         self.mouse_move_binding.remove(&axis);
         self
     }
@@ -62,14 +62,14 @@ impl InputMap {
 
             // horizontal
             if x > 0.0 {
-                if let Some(action) = input_map.mouse_move_binding.get(&Axis::XPositive) {
+                if let Some(action) = input_map.mouse_move_binding.get(&MouseAxis::XPositive) {
                     let _action = action.clone();
                     input_map.set_raw_action_strength(&_action, x);
                 }
             }
 
             if x < 0.0 {
-                if let Some(action) = input_map.mouse_move_binding.get(&Axis::XNegative) {
+                if let Some(action) = input_map.mouse_move_binding.get(&MouseAxis::XNegative) {
                     let _action = action.clone();
                     input_map.set_raw_action_strength(&_action, x.abs());
                 }
@@ -77,14 +77,14 @@ impl InputMap {
 
             // vertical
             if y > 0.0 {
-                if let Some(action) = input_map.mouse_move_binding.get(&Axis::YPositive) {
+                if let Some(action) = input_map.mouse_move_binding.get(&MouseAxis::YPositive) {
                     let _action = action.clone();
                     input_map.set_raw_action_strength(&_action, y);
                 }
             }
 
             if y < 0.0 {
-                if let Some(action) = input_map.mouse_move_binding.get(&Axis::YNegative) {
+                if let Some(action) = input_map.mouse_move_binding.get(&MouseAxis::YNegative) {
                     let _action = action.clone();
                     input_map.set_raw_action_strength(&_action, y.abs());
                 }

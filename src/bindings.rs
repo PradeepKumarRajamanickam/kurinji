@@ -1,7 +1,7 @@
 use bevy::prelude::{GamepadButtonType, KeyCode, MouseButton};
 use std::{collections::HashMap, hash::Hash};
 
-use crate::{EventPhase, InputMap, axis::Axis, axis::GamepadAxis};
+use crate::{EventPhase, InputMap, axis::MouseAxis, axis::GamepadAxis};
 
 /// Data structure to hold bindings.
 #[derive(Default, Clone, Debug)]
@@ -10,7 +10,7 @@ pub struct Bindings {
     pub(crate) gamepad_axis_bindings: HashMap<(usize, GamepadAxis), String>,
     pub(crate) keyboard_key_bindings: HashMap<KeyCode, String>,
     pub(crate) mouse_button_binding: HashMap<MouseButton, String>,
-    pub(crate) mouse_move_binding: HashMap<Axis, String>,
+    pub(crate) mouse_move_binding: HashMap<MouseAxis, String>,
     pub(crate) action_deadzone: HashMap<String, f32>,
     pub(crate) action_phase: HashMap<String, EventPhase>,
 }
