@@ -1,4 +1,4 @@
-use bevy::prelude::{GamepadButton, GamepadButtonType, KeyCode, MouseButton};
+use bevy::prelude::{GamepadButtonType, KeyCode, MouseButton};
 use std::{collections::HashMap, hash::Hash};
 
 use crate::{EventPhase, InputMap, axis::Axis, axis::GamepadAxis};

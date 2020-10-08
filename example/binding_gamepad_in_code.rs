@@ -4,7 +4,6 @@ use bevy_app::Events;
 use bevy_ecs::ResMut;
 use bevy_prototype_input_map::*;
 
-use bevy_prototype_input_map::Axis as Axis;
 use bevy_prototype_input_map::GamepadAxis as GamepadAxis;
 
 fn main() {
