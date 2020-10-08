@@ -43,10 +43,12 @@ Use commands
 
 Via Code
 > cargo run --example keyboard_mouse_with_code
+
 > cargo run --example gamepad_with_code
 
 Via JSON/RON
 > cargo run --example keyboard_mouse_with_json
+
 > cargo run --example gamepad_with_ron
 
 For Action Events Usage
