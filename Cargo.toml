@@ -33,5 +33,9 @@ name = "gamepad_with_code"
 path = "example/binding_gamepad_in_code.rs"
 
 [[example]]
+name = "gamepad_with_ron"
+path = "example/binding_gamepad_from_ron.rs"
+
+[[example]]
 name = "with_action_events"
 path = "example/example_action_events.rs"
