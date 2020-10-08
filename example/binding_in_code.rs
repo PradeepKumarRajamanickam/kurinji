@@ -35,24 +35,8 @@ fn setup(mut input_map: ResMut<InputMap>) {
         .bind_mouse_motion(Axis::XNegative, "AIM_LEFT")
         .bind_mouse_motion(Axis::XPositive, "AIM_RIGHT")
         // set event phase
-        .set_event_phase("BACK_PLAYER1", EventPhase::OnEnded)
-        .set_event_phase("BACK_PLAYER2", EventPhase::OnEnded)
         .set_event_phase("QUIT_APP", EventPhase::OnEnded)
-        .set_event_phase("SHOOT", EventPhase::OnBegin)
-        // dead zone
-        .set_dead_zone("AIM_UP", 0.1)
-        .set_dead_zone("AIM_DOWN", 0.1)
-        .set_dead_zone("AIM_LEFT", 0.1)
-        .set_dead_zone("AIM_RIGHT", 0.1)
-        .set_dead_zone("MOVE_LEFT", 0.25)
-        .set_dead_zone("MOVE_RIGHT", 0.25)
-        .set_dead_zone("MOVE_FORWARD", 0.25)
-        .set_dead_zone("MOVE_BACKWARD", 0.25)
-        // custom strength curve function
-        .set_strength_curve_function("AIM_UP", |x| -> f32 { x.powi(2) })
-        .set_strength_curve_function("AIM_DOWN", |x| -> f32 { x.powi(2) })
-        .set_strength_curve_function("AIM_LEFT", |x| -> f32 { x.powi(2) })
-        .set_strength_curve_function("AIM_RIGHT", |x| -> f32 { x.powi(2) });
+        .set_event_phase("SHOOT", EventPhase::OnBegin);
 
     println!("{}", input_map.get_bindings_as_json().unwrap());
 }

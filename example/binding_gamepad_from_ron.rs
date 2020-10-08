@@ -21,11 +21,28 @@ fn setup(mut input_map: ResMut<InputMap>) {
     let binding_ron = fs::read_to_string("example/config/gamepad.ron")
         .expect("Error! could not open config file");
 
-    input_map.set_bindings_with_ron(&binding_ron);
+    input_map
+        .set_bindings_with_ron(&binding_ron)
+        // custom strength curve function
+        .set_strength_curve_function("AIM_UP_PLYR1", |x| -> f32 { x.powi(2) })
+        .set_strength_curve_function("AIM_UP_PLYR2", |x| -> f32 { x.powi(2) })
+        .set_strength_curve_function("AIM_UP_PLYR3", |x| -> f32 { x.powi(2) })
+        .set_strength_curve_function("AIM_UP_PLYR4", |x| -> f32 { x.powi(2) })
+        .set_strength_curve_function("AIM_DOWN_PLYR1", |x| -> f32 { x.powi(2) })
+        .set_strength_curve_function("AIM_DOWN_PLYR2", |x| -> f32 { x.powi(2) })
+        .set_strength_curve_function("AIM_DOWN_PLYR3", |x| -> f32 { x.powi(2) })
+        .set_strength_curve_function("AIM_DOWN_PLYR4", |x| -> f32 { x.powi(2) })
+        .set_strength_curve_function("AIM_LEFT_PLYR1", |x| -> f32 { x.powi(2) })
+        .set_strength_curve_function("AIM_LEFT_PLYR2", |x| -> f32 { x.powi(2) })
+        .set_strength_curve_function("AIM_LEFT_PLYR3", |x| -> f32 { x.powi(2) })
+        .set_strength_curve_function("AIM_LEFT_PLYR4", |x| -> f32 { x.powi(2) })
+        .set_strength_curve_function("AIM_RIGHT_PLYR1", |x| -> f32 { x.powi(2) })
+        .set_strength_curve_function("AIM_RIGHT_PLYR2", |x| -> f32 { x.powi(2) })
+        .set_strength_curve_function("AIM_RIGHT_PLYR3", |x| -> f32 { x.powi(2) })
+        .set_strength_curve_function("AIM_RIGHT_PLYR4", |x| -> f32 { x.powi(2) });
 }
 
 fn action_system(input_map: Res<InputMap>, mut app_exit_events: ResMut<Events<AppExit>>) {
-
     // PLAYER 1
     if input_map.is_action_active("BACK_PLYR1") {
         println!("Player 1 wants to go back");
