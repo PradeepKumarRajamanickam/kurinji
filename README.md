@@ -13,7 +13,6 @@ bevy_prototype_input_map = "0.1"
 ```rust
 fn main() {
     App::build()
-        ...
         .add_plugin(InputMapPlugin::default())
         .add_startup_system(setup.system())
         .add_system(system.system())
