@@ -21,12 +21,16 @@ serde_json = "1"
 ron = "0.6.2"
 
 [[example]]
-name = "with_code"
+name = "keyboard_mouse_with_code"
 path = "example/binding_in_code.rs"
 
 [[example]]
-name = "with_json"
+name = "keyboard_mouse_with_json"
 path = "example/binding_from_json.rs"
+
+[[example]]
+name = "gamepad_with_code"
+path = "example/binding_gamepad_in_code.rs"
 
 [[example]]
 name = "with_action_events"
