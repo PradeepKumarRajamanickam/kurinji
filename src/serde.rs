@@ -18,11 +18,12 @@ impl InputMap {
             Err(e) => Err(format!("Failed to generate ron {}", e)),
         }
     }
-    pub fn set_bindings_with_ron(&mut self, ron: &str) {
+    pub fn set_bindings_with_ron(&mut self, ron: &str) -> &mut InputMap  {
         let bindings: Bindings = InputMap::get_bindings_from_ron(ron);
         self.set_bindings(bindings);
 
         self.action_strength_curve.clear();
+        self
     }
 
     // json
@@ -34,11 +35,12 @@ impl InputMap {
             Err(e) => Err(format!("Failed to generate json {}", e)),
         }
     }
-    pub fn set_bindings_with_json(&mut self, json: &str) {
+    pub fn set_bindings_with_json(&mut self, json: &str)  -> &mut InputMap {
         let bindings: Bindings = InputMap::get_bindings_from_json(json);
         self.set_bindings(bindings);
 
         self.action_strength_curve.clear();
+        self
     }
 }
 
