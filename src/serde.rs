@@ -1,8 +1,8 @@
-use bevy::prelude::{GamepadButtonType, KeyCode, MouseButton};
+use crate::{MouseAxis, Bindings, EventPhase, InputMap, axis::GamepadAxis};
+
+use bevy::prelude::*;
 use serde::{Deserialize, Deserializer, Serialize};
 use std::collections::HashMap;
-
-use crate::{MouseAxis, Bindings, EventPhase, InputMap, axis::GamepadAxis};
 
 impl InputMap {
     // publics

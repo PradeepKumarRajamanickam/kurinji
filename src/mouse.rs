@@ -1,4 +1,5 @@
 use crate::{MouseAxis, InputMap, util::clamp_vec2};
+
 use bevy::{math::Vec2, prelude::MouseButton};
 use bevy_app::{EventReader, Events};
 use bevy_ecs::{Local, Res, ResMut};

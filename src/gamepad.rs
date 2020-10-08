@@ -1,8 +1,6 @@
 use crate::{GamepadAxis, InputMap};
 
-use bevy::{
-    prelude::Gamepad, prelude::GamepadButton, prelude::GamepadButtonType, prelude::GamepadEvent,
-};
+use bevy::prelude::*;
 use bevy_app::{EventReader, Events};
 use bevy_ecs::{Local, Res, ResMut};
 use bevy_input::Input;
@@ -38,9 +36,9 @@ impl InputMap {
         &mut self,
         pad_button: GamepadButtonType,
     ) -> &mut InputMap {
-        self.unbind_gamepad_button_pressed_with_player(0, pad_button)
+        self.unbind_gamepad_button_pressed_for_player(0, pad_button)
     }
-    pub fn unbind_gamepad_button_pressed_with_player(
+    pub fn unbind_gamepad_button_pressed_for_player(
         &mut self,
         player: usize,
         pad_button: GamepadButtonType,

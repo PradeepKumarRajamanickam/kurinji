@@ -1,7 +1,7 @@
-use bevy::prelude::{GamepadButtonType, KeyCode, MouseButton};
-use std::{collections::HashMap, hash::Hash};
-
 use crate::{EventPhase, InputMap, axis::MouseAxis, axis::GamepadAxis};
+
+use bevy::prelude::*;
+use std::{collections::HashMap, hash::Hash};
 
 /// Data structure to hold bindings.
 #[derive(Default, Clone, Debug)]
