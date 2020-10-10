@@ -1,7 +1,7 @@
 use crate::InputMap;
 
-use bevy_app::Events;
-use bevy_ecs::{Res, ResMut};
+use bevy::app::Events;
+use bevy::ecs::{Res, ResMut};
 
 /// Event that is fired when action is active.
 /// This depends on what event phase is set to
