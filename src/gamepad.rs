@@ -1,9 +1,9 @@
 use crate::{GamepadAxis, InputMap};
 
 use bevy::prelude::*;
-use bevy_app::{EventReader, Events};
-use bevy_ecs::{Local, Res, ResMut};
-use bevy_input::Input;
+use bevy::app::{EventReader, Events};
+use bevy::ecs::{Local, Res, ResMut};
+use bevy::input::Input;
 
 #[derive(Default)]
 pub struct GamepadState {
@@ -163,7 +163,7 @@ impl InputMap {
 
     pub(crate) fn gamepad_axis_system(
         mut input_map: ResMut<InputMap>,
-        pad_axis: Res<bevy_input::Axis<bevy_input::gamepad::GamepadAxis>>,
+        pad_axis: Res<bevy::input::Axis<bevy::input::gamepad::GamepadAxis>>,
     ) {
         for (k, v) in input_map.clone().joystick_axis_binding.iter() {
             let player = k.0;
@@ -172,7 +172,7 @@ impl InputMap {
 
             if let Some(bevy_gamepad) = input_map.clone().get_gamepad_from_player_handle(player) {
                 let bevy_axis_type = InputMap::get_bevy_gamepad_axis_type_from_pad_axis(axis);
-                let bevy_axis = bevy_input::gamepad::GamepadAxis(bevy_gamepad, bevy_axis_type);
+                let bevy_axis = bevy::input::gamepad::GamepadAxis(bevy_gamepad, bevy_axis_type);
 
                 let signed_str = pad_axis.get(&bevy_axis).unwrap_or(0.);
 

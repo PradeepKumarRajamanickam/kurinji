@@ -1,9 +1,9 @@
 use std::fs;
 
 use bevy::prelude::*;
-use bevy_app::AppExit;
-use bevy_app::Events;
-use bevy_ecs::ResMut;
+use bevy::app::AppExit;
+use bevy::app::Events;
+use bevy::ecs::ResMut;
 use bevy_prototype_input_map::*;
 
 fn main() {

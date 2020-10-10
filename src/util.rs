@@ -37,31 +37,31 @@ impl InputMap {
 
     pub(crate) fn get_bevy_gamepad_axis_type_from_pad_axis(
         axis: GamepadAxis,
-    ) -> bevy_input::gamepad::GamepadAxisType {
+    ) -> bevy::input::gamepad::GamepadAxisType {
         match axis {
-            GamepadAxis::LeftStickXPositive => bevy_input::gamepad::GamepadAxisType::LeftStickX,
-            GamepadAxis::LeftStickXNegative => bevy_input::gamepad::GamepadAxisType::LeftStickX,
+            GamepadAxis::LeftStickXPositive => bevy::input::gamepad::GamepadAxisType::LeftStickX,
+            GamepadAxis::LeftStickXNegative => bevy::input::gamepad::GamepadAxisType::LeftStickX,
 
-            GamepadAxis::LeftStickYPositive => bevy_input::gamepad::GamepadAxisType::LeftStickY,
-            GamepadAxis::LeftStickYNegative => bevy_input::gamepad::GamepadAxisType::LeftStickY,
+            GamepadAxis::LeftStickYPositive => bevy::input::gamepad::GamepadAxisType::LeftStickY,
+            GamepadAxis::LeftStickYNegative => bevy::input::gamepad::GamepadAxisType::LeftStickY,
 
-            GamepadAxis::LeftZPositive => bevy_input::gamepad::GamepadAxisType::LeftZ,
-            GamepadAxis::LeftZNegative => bevy_input::gamepad::GamepadAxisType::LeftZ,
+            GamepadAxis::LeftZPositive => bevy::input::gamepad::GamepadAxisType::LeftZ,
+            GamepadAxis::LeftZNegative => bevy::input::gamepad::GamepadAxisType::LeftZ,
 
-            GamepadAxis::RightStickXPositive => bevy_input::gamepad::GamepadAxisType::RightStickX,
-            GamepadAxis::RightStickXNegative => bevy_input::gamepad::GamepadAxisType::RightStickX,
+            GamepadAxis::RightStickXPositive => bevy::input::gamepad::GamepadAxisType::RightStickX,
+            GamepadAxis::RightStickXNegative => bevy::input::gamepad::GamepadAxisType::RightStickX,
 
-            GamepadAxis::RightStickYPositive => bevy_input::gamepad::GamepadAxisType::RightStickY,
-            GamepadAxis::RightStickYNegative => bevy_input::gamepad::GamepadAxisType::RightStickY,
+            GamepadAxis::RightStickYPositive => bevy::input::gamepad::GamepadAxisType::RightStickY,
+            GamepadAxis::RightStickYNegative => bevy::input::gamepad::GamepadAxisType::RightStickY,
 
-            GamepadAxis::RightZPositive => bevy_input::gamepad::GamepadAxisType::RightZ,
-            GamepadAxis::RightZNegative => bevy_input::gamepad::GamepadAxisType::RightZ,
+            GamepadAxis::RightZPositive => bevy::input::gamepad::GamepadAxisType::RightZ,
+            GamepadAxis::RightZNegative => bevy::input::gamepad::GamepadAxisType::RightZ,
 
-            GamepadAxis::DPadXPositive => bevy_input::gamepad::GamepadAxisType::DPadX,
-            GamepadAxis::DPadXNegative => bevy_input::gamepad::GamepadAxisType::DPadX,
+            GamepadAxis::DPadXPositive => bevy::input::gamepad::GamepadAxisType::DPadX,
+            GamepadAxis::DPadXNegative => bevy::input::gamepad::GamepadAxisType::DPadX,
 
-            GamepadAxis::DPadYPositive => bevy_input::gamepad::GamepadAxisType::DPadY,
-            GamepadAxis::DPadYNegative => bevy_input::gamepad::GamepadAxisType::DPadY,
+            GamepadAxis::DPadYPositive => bevy::input::gamepad::GamepadAxisType::DPadY,
+            GamepadAxis::DPadYNegative => bevy::input::gamepad::GamepadAxisType::DPadY,
         }
     } 
 }

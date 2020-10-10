@@ -1,9 +1,9 @@
 use crate::{MouseAxis, InputMap, util::clamp_vec2};
 
 use bevy::{math::Vec2, prelude::MouseButton};
-use bevy_app::{EventReader, Events};
-use bevy_ecs::{Local, Res, ResMut};
-use bevy_input::{mouse::MouseMotion, Input};
+use bevy::app::{EventReader, Events};
+use bevy::ecs::{Local, Res, ResMut};
+use bevy::input::{mouse::MouseMotion, Input};
 
 #[derive(Default)]
 pub struct MouseMoveState {

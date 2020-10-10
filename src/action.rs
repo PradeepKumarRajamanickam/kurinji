@@ -1,6 +1,6 @@
 use crate::{EventPhase, InputMap, util};
 
-use bevy_ecs::ResMut;
+use bevy::ecs::ResMut;
 
 impl InputMap {
     // publics

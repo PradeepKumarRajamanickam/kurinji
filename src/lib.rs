@@ -31,8 +31,8 @@ mod keyboard;
 mod mouse;
 mod serde;
 
-use bevy_app::prelude::*;
-use bevy_ecs::IntoQuerySystem;
+use bevy::app::prelude::*;
+use bevy::ecs::IntoQuerySystem;
 
 /// Adds input mapping (via code or json/ron) to an App
 #[derive(Default)]
