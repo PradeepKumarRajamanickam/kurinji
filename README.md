@@ -1,5 +1,5 @@
 # Bevy Input Map
-Decouples gameplay code from device specific input api. Converts user inputs from different input hardware into game specific actions, eg. *keyboard "Space" or joystick "A" can be mapped to "Jump" Action*. This aims to improve the overall code quality, by keeping the gameplay code separate from input code.
+Decouples gameplay code from device specific input api. Converts user inputs from different input hardware into game specific actions, eg. *keyboard "Space" or joystick "A" can be mapped to "Jump" Action*.
 
 ## Usage
 
