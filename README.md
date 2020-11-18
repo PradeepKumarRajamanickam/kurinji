@@ -76,6 +76,10 @@ crate from [crate.io](https://crates.io/crates/bevy_prototype_input_map)
 https://github.com/PradeepKumarRajamanickam/bevy_input_map/issues
 
 # Release Notes
+## v0.1.5 (18 Nov, 2020)
+- Joystick Support
+- Improved Documentations
+  
 ## v0.1.4 (03 Oct, 2020)
 - Event Phase
 - Action Events
