@@ -9,7 +9,7 @@ use bevy_prototype_input_map::GamepadAxis as GamepadAxis;
 fn main() {
     println!("Input Map Binding Gamepad In Code Example");
     App::build()
-        .add_default_plugins()
+        .add_plugins(DefaultPlugins)
         // setup
         .add_plugin(InputMapPlugin::default())
         .add_startup_system(setup.system())
