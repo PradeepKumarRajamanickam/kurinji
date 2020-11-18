@@ -157,6 +157,7 @@ impl InputMap {
                         input_map.player_to_joystick_map.remove(&player_handle);
                     }
                 }
+                _ => ()
             }
         }
     }
@@ -174,7 +175,7 @@ impl InputMap {
                 let bevy_axis_type = InputMap::get_bevy_gamepad_axis_type_from_pad_axis(axis);
                 let bevy_axis = bevy::input::gamepad::GamepadAxis(bevy_gamepad, bevy_axis_type);
 
-                let signed_str = pad_axis.get(&bevy_axis).unwrap_or(0.);
+                let signed_str = pad_axis.get(bevy_axis).unwrap_or(0.);
 
                 if signed_str > 0. && is_positive || signed_str < 0. && !is_positive {
                     input_map.set_raw_action_strength(&v.to_string(), signed_str.abs());

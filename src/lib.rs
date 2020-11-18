@@ -48,7 +48,7 @@ impl Plugin for InputMapPlugin {
             .add_event::<OnActionBegin>()
             .add_event::<OnActionProgress>()
             .add_event::<OnActionEnd>()
-            .add_system_to_stage(stage::EVENT_UPDATE, InputMap::action_event_producer.system())
+            .add_system_to_stage(stage::EVENT, InputMap::action_event_producer.system())
             // reset
             .add_system_to_stage(stage::PRE_UPDATE, InputMap::action_reset_system.system())
             // joystick
