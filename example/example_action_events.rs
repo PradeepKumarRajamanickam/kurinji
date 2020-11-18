@@ -15,7 +15,7 @@ pub struct ActionState {
 fn main() {
     println!("Input Map How To Use Action Events");
     App::build()
-        .add_default_plugins()
+        .add_plugins(DefaultPlugins)
         // setup
         .add_plugin(InputMapPlugin::default())
         .add_startup_system(setup.system())
