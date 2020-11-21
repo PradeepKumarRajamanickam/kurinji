@@ -76,6 +76,9 @@ For Action Events Usage
 - Event Phase: Ability to set at which event phase an action is active
 - Action Events: OnActionBegin, OnActionProgress, OnActionEnd
 
+Note* Latest commit on master branch might be unstable. Use the release tags if you are looking for stable commits 
+or grab crate from https://crates.io/crates/kurinji
+
 ## Bug Report
 https://github.com/PradeepKumarRajamanickam/kurinji/issues
 
