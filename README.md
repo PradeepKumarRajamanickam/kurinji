@@ -44,7 +44,7 @@ fn system(kurinji: Res<Kurinji>) {
     }
 ```
 
-*Check out [examples](https://github.com/PradeepKumarRajamanickam/bevy_input_map/tree/master/example)
+*Check out [examples](https://github.com/PradeepKumarRajamanickam/kurinji/tree/master/example)
 
 ## Example
 Use commands
