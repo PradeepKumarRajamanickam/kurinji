@@ -4,24 +4,24 @@ use bevy::prelude::*;
 use bevy::app::AppExit;
 use bevy::app::Events;
 use bevy::ecs::ResMut;
-use bevy_prototype_input_map::*;
+use kurinji::{Kurinji, KurinjiPlugin};
 
 fn main() {
-    println!("Input Map Binding Gamepad From RON Example");
+    println!("Kurinji Binding Gamepad From RON Example");
     App::build()
         .add_plugins(DefaultPlugins)
         // setup
-        .add_plugin(InputMapPlugin::default())
+        .add_plugin(KurinjiPlugin::default())
         .add_startup_system(setup.system())
         .add_system(action_system.system())
         .run();
 }
 
-fn setup(mut input_map: ResMut<InputMap>) {
+fn setup(mut kurinji: ResMut<Kurinji>) {
     let binding_ron = fs::read_to_string("example/config/gamepad.ron")
         .expect("Error! could not open config file");
 
-    input_map
+    kurinji
         .set_bindings_with_ron(&binding_ron)
         // custom strength curve function
         .set_strength_curve_function("AIM_UP_PLYR1", |x| -> f32 { x.powi(2) })
@@ -42,7 +42,7 @@ fn setup(mut input_map: ResMut<InputMap>) {
         .set_strength_curve_function("AIM_RIGHT_PLYR4", |x| -> f32 { x.powi(2) });
 }
 
-fn action_system(input_map: Res<InputMap>, mut app_exit_events: ResMut<Events<AppExit>>) {
+fn action_system(input_map: Res<Kurinji>, mut app_exit_events: ResMut<Events<AppExit>>) {
     // PLAYER 1
     if input_map.is_action_active("BACK_PLYR1") {
         println!("Player 1 wants to go back");

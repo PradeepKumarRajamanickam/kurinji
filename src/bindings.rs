@@ -1,4 +1,4 @@
-use crate::{EventPhase, InputMap, axis::MouseAxis, axis::GamepadAxis};
+use crate::{EventPhase, Kurinji, axis::MouseAxis, axis::GamepadAxis};
 
 use bevy::prelude::*;
 use std::{collections::HashMap, hash::Hash};
@@ -51,7 +51,7 @@ impl Bindings {
     }
 }
 
-impl InputMap {
+impl Kurinji {
     // public
     pub fn get_bindings(&self) -> Bindings {
         Bindings {

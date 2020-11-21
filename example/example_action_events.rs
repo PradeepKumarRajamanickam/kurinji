@@ -4,7 +4,7 @@ use bevy::prelude::*;
 use bevy::app::AppExit;
 use bevy::app::Events;
 use bevy::ecs::ResMut;
-use bevy_prototype_input_map::*;
+use kurinji::{OnActionActive, OnActionEnd, Kurinji, KurinjiPlugin};
 
 #[derive(Default)]
 pub struct ActionState {
@@ -13,22 +13,22 @@ pub struct ActionState {
 }
 
 fn main() {
-    println!("Input Map How To Use Action Events");
+    println!("Kurinji Action Events");
     App::build()
         .add_plugins(DefaultPlugins)
         // setup
-        .add_plugin(InputMapPlugin::default())
+        .add_plugin(KurinjiPlugin::default())
         .add_startup_system(setup.system())
         .add_system(action_active_events_system.system())
         .add_system(action_end_events_system.system())
         .run();
 }
 
-fn setup(mut input_map: ResMut<InputMap>) {
+fn setup(mut kurinji: ResMut<Kurinji>) {
     let binding_json = fs::read_to_string("example/config/binding.json")
         .expect("Error! could not open config file");
 
-    input_map.set_bindings_with_json(&binding_json);
+    kurinji.set_bindings_with_json(&binding_json);
 }
 
 fn action_end_events_system(

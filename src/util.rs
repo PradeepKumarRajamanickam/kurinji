@@ -1,18 +1,18 @@
-use crate::{GamepadAxis, InputMap, bindings::Bindings, serde::BindingsSerdeHelper};
+use crate::{GamepadAxis, Kurinji, bindings::Bindings, serde::BindingsSerdeHelper};
 
 use bevy::prelude::*;
 use std::{collections::HashMap, fs};
 
-impl InputMap {
+impl Kurinji {
     // publics
     pub fn get_bindings_from_json_file(path: &str) -> Bindings {
         let json = fs::read_to_string(path).expect("Error! could not open bindings file");
-        InputMap::get_bindings_from_json(&json)
+        Kurinji::get_bindings_from_json(&json)
     }
 
     pub fn get_bindings_from_ron_file(path: &str) -> Bindings {
         let ron = fs::read_to_string(path).expect("Error! could not open bindings file");
-        InputMap::get_bindings_from_ron(&ron)
+        Kurinji::get_bindings_from_ron(&ron)
     }
 
     pub fn get_bindings_from_json(json: &str) -> Bindings {

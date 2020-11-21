@@ -1,7 +1,7 @@
 // publics
 pub use self::
 {
-    input_map::InputMap,
+    kurinji::Kurinji,
 
     axis::MouseAxis,
     axis::GamepadAxis,
@@ -21,7 +21,7 @@ mod axis;
 mod util;
 mod stack;
 mod bindings;
-mod input_map;
+mod kurinji;
 mod event_phase;
 mod action_event;
 
@@ -36,38 +36,38 @@ use bevy::ecs::IntoQuerySystem;
 
 /// Adds input mapping (via code or json/ron) to an App
 #[derive(Default)]
-pub struct InputMapPlugin;
+pub struct KurinjiPlugin;
 
-impl Plugin for InputMapPlugin {
+impl Plugin for KurinjiPlugin {
     fn build(&self, app: &mut AppBuilder) {
         app
             // input map
-            .init_resource::<InputMap>()
+            .init_resource::<Kurinji>()
             // events
             .add_event::<OnActionActive>()
             .add_event::<OnActionBegin>()
             .add_event::<OnActionProgress>()
             .add_event::<OnActionEnd>()
-            .add_system_to_stage(stage::EVENT, InputMap::action_event_producer.system())
+            .add_system_to_stage(stage::EVENT, Kurinji::action_event_producer.system())
             // reset
-            .add_system_to_stage(stage::PRE_UPDATE, InputMap::action_reset_system.system())
+            .add_system_to_stage(stage::PRE_UPDATE, Kurinji::action_reset_system.system())
             // joystick
             .add_system_to_stage(
                 stage::UPDATE,
-                InputMap::gamepad_connection_event_system.system(),
+                Kurinji::gamepad_connection_event_system.system(),
             )
             .add_system_to_stage(
                 stage::UPDATE,
-                InputMap::gamepad_button_press_input_system.system(),
+                Kurinji::gamepad_button_press_input_system.system(),
             )
-            .add_system_to_stage(stage::UPDATE, InputMap::gamepad_axis_system.system())
+            .add_system_to_stage(stage::UPDATE, Kurinji::gamepad_axis_system.system())
             // keyboard
-            .add_system_to_stage(stage::UPDATE, InputMap::kb_key_press_input_system.system())
+            .add_system_to_stage(stage::UPDATE, Kurinji::kb_key_press_input_system.system())
             // mouse
             .add_system_to_stage(
                 stage::UPDATE,
-                InputMap::mouse_button_press_input_system.system(),
+                Kurinji::mouse_button_press_input_system.system(),
             )
-            .add_system_to_stage(stage::UPDATE, InputMap::mouse_move_event_system.system());
+            .add_system_to_stage(stage::UPDATE, Kurinji::mouse_move_event_system.system());
     }
 }

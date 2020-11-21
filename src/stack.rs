@@ -1,6 +1,6 @@
-use crate::{Bindings, InputMap};
+use crate::{Bindings, Kurinji};
 
-impl InputMap {
+impl Kurinji {
     /// Push bindings to stack
     pub fn push(&mut self, bindings: Bindings) {
         // store current in stack
