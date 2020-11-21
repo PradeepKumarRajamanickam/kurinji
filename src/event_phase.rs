@@ -1,4 +1,4 @@
-use crate::InputMap;
+use crate::Kurinji;
 
 use serde::{Deserialize, Serialize};
 
@@ -15,7 +15,7 @@ impl Default for EventPhase {
     }
 }
 
-impl InputMap {
+impl Kurinji {
     // publics
     /// Returns in which event phase this action active will be true
     pub fn get_event_phase(&self, action: &str) -> &EventPhase {
@@ -27,7 +27,7 @@ impl InputMap {
     }
     /// Set on which event phase should action will be true.
     /// By default will be Phase::OnProgress
-    pub fn set_event_phase(&mut self, action: &str, phase: EventPhase) -> &mut InputMap {
+    pub fn set_event_phase(&mut self, action: &str, phase: EventPhase) -> &mut Kurinji {
         self.action_phase.insert(action.to_string(), phase);
         self
     }

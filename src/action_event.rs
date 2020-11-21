@@ -1,4 +1,4 @@
-use crate::InputMap;
+use crate::Kurinji;
 
 use bevy::app::Events;
 use bevy::ecs::{Res, ResMut};
@@ -20,7 +20,7 @@ pub struct OnActionBegin
     pub strength: f32
 }
 
-/// Event that gets fired at during
+/// Event that gets fired during
 /// an action
 pub struct OnActionProgress
 {
@@ -35,10 +35,10 @@ pub struct OnActionEnd
     pub action: String
 }
 
-impl InputMap {
+impl Kurinji {
     
     pub(crate) fn action_event_producer(
-        input_map: Res<InputMap>,
+        input_map: Res<Kurinji>,
         mut on_active_event: ResMut<Events<OnActionActive>>,
         mut on_begin_event: ResMut<Events<OnActionBegin>>,
         mut on_progress_event: ResMut<Events<OnActionProgress>>,

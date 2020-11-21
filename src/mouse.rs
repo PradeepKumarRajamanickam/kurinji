@@ -1,4 +1,4 @@
-use crate::{MouseAxis, InputMap, util::clamp_vec2};
+use crate::{MouseAxis, Kurinji, util::clamp_vec2};
 
 use bevy::{math::Vec2, prelude::MouseButton};
 use bevy::app::{EventReader, Events};
@@ -10,24 +10,24 @@ pub struct MouseMoveState {
     reader: EventReader<MouseMotion>,
 }
 
-impl InputMap {
+impl Kurinji {
     // publics
-    pub fn bind_mouse_button_pressed(&mut self, code: MouseButton, action: &str) -> &mut InputMap {
+    pub fn bind_mouse_button_pressed(&mut self, code: MouseButton, action: &str) -> &mut Kurinji {
         self.mouse_button_binding.insert(code, action.to_string());
         self
     }
 
-    pub fn unbind_mouse_button_pressed(&mut self, button: MouseButton) -> &mut InputMap {
+    pub fn unbind_mouse_button_pressed(&mut self, button: MouseButton) -> &mut Kurinji {
         self.mouse_button_binding.remove(&button);
         self
     }
 
-    pub fn bind_mouse_motion(&mut self, axis: MouseAxis, action: &str) -> &mut InputMap {
+    pub fn bind_mouse_motion(&mut self, axis: MouseAxis, action: &str) -> &mut Kurinji {
         self.mouse_move_binding.insert(axis, action.to_string());
         self
     }
 
-    pub fn unbind_mouse_motion(&mut self, axis: MouseAxis) -> &mut InputMap {
+    pub fn unbind_mouse_motion(&mut self, axis: MouseAxis) -> &mut Kurinji {
         self.mouse_move_binding.remove(&axis);
         self
     }
@@ -35,7 +35,7 @@ impl InputMap {
     // crates
     // systems
     pub(crate) fn mouse_button_press_input_system(
-        mut input_map: ResMut<InputMap>,
+        mut input_map: ResMut<Kurinji>,
         mouse_button_input: Res<Input<MouseButton>>,
     ) {
         let button_bindings_iter = input_map.mouse_button_binding.clone();
@@ -47,7 +47,7 @@ impl InputMap {
     }
 
     pub(crate) fn mouse_move_event_system(
-        mut input_map: ResMut<InputMap>,
+        mut input_map: ResMut<Kurinji>,
         mut state: Local<MouseMoveState>,
         move_events: Res<Events<MouseMotion>>,
     ) {

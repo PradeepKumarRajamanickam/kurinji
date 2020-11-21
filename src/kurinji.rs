@@ -3,15 +3,15 @@ use crate::{axis::MouseAxis, bindings::Bindings, EventPhase, GamepadAxis};
 use bevy::prelude::*;
 use std::collections::{HashMap, HashSet};
 
-impl InputMap {
+impl Kurinji {
     // constants
     /// Max number of players that can be connected using gamepads
     pub const MAX_PLAYER_HANDLES: usize = 8;
 }
 
-/// Resource to access all Input Map APIs
+/// Resource to access all Kurinji APIs
 #[derive(Default, Clone)]
-pub struct InputMap {
+pub struct Kurinji {
     // crates
     // actions
     pub(crate) action_strength_curve: HashMap<String, fn(f32) -> f32>,

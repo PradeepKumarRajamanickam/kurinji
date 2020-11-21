@@ -1,12 +1,11 @@
 [package]
-name = "bevy_prototype_input_map"
-version = "0.1.5"
+name = "kurinji"
+version = "1.0.0"
 edition = "2018"
 authors = ["Pradeep Kumar Rajamanickam <raj.pradeep.kumar@gmail.com>"]
-description = "Adds support for input mapping"
+description = "Input map for bevy "
 readme = "README.md"
-example = "example/input_map.rs"
-repository = "https://github.com/PradeepKumarRajamanickam/bevy_input_map"
+repository = "https://github.com/PradeepKumarRajamanickam/kurinji"
 license = "MIT"
 keywords = ["gamedev", "bevy", "inputmap","actionmapping"]
 

@@ -1,8 +1,8 @@
-use crate::{EventPhase, InputMap, util};
+use crate::{EventPhase, Kurinji, util};
 
 use bevy::ecs::ResMut;
 
-impl InputMap {
+impl Kurinji {
     // publics
     /// Provides strength of action in range 0.0 - 1.0. Useful
     /// when working actions that mapped to analog input eg. joystick
@@ -11,7 +11,7 @@ impl InputMap {
             Some(raw_strength) => match self.action_deadzone.get(&action.to_string()) {
                 Some(d) => {
                     let strength =
-                        InputMap::get_strength_after_applying_deadzone(*d, *raw_strength);
+                        Kurinji::get_strength_after_applying_deadzone(*d, *raw_strength);
                     if let Some(curve_func) = self.action_strength_curve.get(&action.to_string()) {
                         return curve_func(strength);
                     }
@@ -39,7 +39,7 @@ impl InputMap {
     ///
     /// Note* meaningful only for analog inputs like joystick,
     /// mouse move delta...etc
-    pub fn set_dead_zone(&mut self, action: &str, value: f32) -> &mut InputMap {
+    pub fn set_dead_zone(&mut self, action: &str, value: f32) -> &mut Kurinji {
         self.action_deadzone.insert(action.to_string(), value);
         self
     }
@@ -50,7 +50,7 @@ impl InputMap {
         &mut self,
         action: &str,
         function: fn(f32) -> f32,
-    ) -> &mut InputMap {
+    ) -> &mut Kurinji {
         self.action_strength_curve
             .insert(action.to_string(), function);
         self
@@ -74,7 +74,7 @@ impl InputMap {
     }
 
     // systems
-    pub(crate) fn action_reset_system(mut input_map: ResMut<InputMap>) {
+    pub(crate) fn action_reset_system(mut input_map: ResMut<Kurinji>) {
         // cache prev frame
         input_map.action_prev_strength.clear();
         for (k, _phase) in input_map.action_phase.clone() {

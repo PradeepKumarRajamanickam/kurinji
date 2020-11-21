@@ -1,18 +1,18 @@
-use crate::input_map::InputMap;
+use crate::kurinji::Kurinji;
 
 use bevy::prelude::KeyCode;
 use bevy::ecs::{Res, ResMut};
 use bevy::input::Input;
 
-impl InputMap {
+impl Kurinji {
     // publics
-    pub fn bind_keyboard_pressed(&mut self, code: KeyCode, action: &str) -> &mut InputMap {
+    pub fn bind_keyboard_pressed(&mut self, code: KeyCode, action: &str) -> &mut Kurinji {
         self.keyboard_action_binding
             .insert(code, action.to_string());
         self
     }
 
-    pub fn unbind_keyboard_pressed(&mut self, code: KeyCode) -> &mut InputMap {
+    pub fn unbind_keyboard_pressed(&mut self, code: KeyCode) -> &mut Kurinji {
         self.keyboard_action_binding.remove(&code);
         self
     }
@@ -20,7 +20,7 @@ impl InputMap {
     // crates
     // system
     pub(crate) fn kb_key_press_input_system(
-        mut input_map: ResMut<InputMap>,
+        mut input_map: ResMut<Kurinji>,
         key_input: Res<Input<KeyCode>>,
     ) {
         // let map = &mut input_map;

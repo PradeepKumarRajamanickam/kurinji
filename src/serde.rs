@@ -1,10 +1,10 @@
-use crate::{MouseAxis, Bindings, EventPhase, InputMap, axis::GamepadAxis};
+use crate::{MouseAxis, Bindings, EventPhase, Kurinji, axis::GamepadAxis};
 
 use bevy::prelude::*;
 use serde::{Deserialize, Deserializer, Serialize};
 use std::collections::HashMap;
 
-impl InputMap {
+impl Kurinji {
     // publics
     // ron
     pub fn get_bindings_as_ron(&self) -> Result<String, String> {
@@ -18,8 +18,8 @@ impl InputMap {
             Err(e) => Err(format!("Failed to generate ron {}", e)),
         }
     }
-    pub fn set_bindings_with_ron(&mut self, ron: &str) -> &mut InputMap  {
-        let bindings: Bindings = InputMap::get_bindings_from_ron(ron);
+    pub fn set_bindings_with_ron(&mut self, ron: &str) -> &mut Kurinji  {
+        let bindings: Bindings = Kurinji::get_bindings_from_ron(ron);
         self.set_bindings(bindings);
 
         self.action_strength_curve.clear();
@@ -35,8 +35,8 @@ impl InputMap {
             Err(e) => Err(format!("Failed to generate json {}", e)),
         }
     }
-    pub fn set_bindings_with_json(&mut self, json: &str)  -> &mut InputMap {
-        let bindings: Bindings = InputMap::get_bindings_from_json(json);
+    pub fn set_bindings_with_json(&mut self, json: &str)  -> &mut Kurinji {
+        let bindings: Bindings = Kurinji::get_bindings_from_json(json);
         self.set_bindings(bindings);
 
         self.action_strength_curve.clear();
