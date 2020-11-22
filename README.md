@@ -10,7 +10,7 @@ Input map plugin for bevy. It decouples gameplay code from device specific input
 *Add to Cargo.toml dependencies*
 ```
 [dependencies]
-kurinji = "0.1"
+kurinji = "1"
 ```
 
 ```rust
