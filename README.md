@@ -65,16 +65,13 @@ For Action Events Usage
 > cargo run --example with_action_events
 
 ## Features
-- Mouse Mapping
-- Keyboard Mapping
-- Joystick Mapping
-- Action Strength
-- Action Deadzone
-- Custom Strength Curve
+- Supports: Keyboard, Mouse and Joystick inputs
+- Action Events: OnActionBegin, OnActionProgress, OnActionEnd
+- Event Phase: Ability to set at which event phase an action is active
 - JSON/RON Support: Ability to use serialised string to setup bindings
 - Binding Stack: Ability to Push, Additive Push and Pop bindings
-- Event Phase: Ability to set at which event phase an action is active
-- Action Events: OnActionBegin, OnActionProgress, OnActionEnd
+- Action Strength & Deadzone
+- Custom Strength Curve
 
 Note* Latest commit on master branch might be unstable. Use the release tags if you are looking for stable commits 
 or grab crate from https://crates.io/crates/kurinji
