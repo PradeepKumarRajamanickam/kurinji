@@ -10,7 +10,7 @@ Input map plugin for bevy. It decouples gameplay code from device specific input
 *Add to Cargo.toml dependencies*
 ```
 [dependencies]
-kurinji = "1"
+kurinji = "*"
 ```
 
 ```rust
@@ -83,7 +83,7 @@ or grab crate from https://crates.io/crates/kurinji
 https://github.com/PradeepKumarRajamanickam/kurinji/issues
 
 # Release Notes
-## v1.0.0/1 (21 Nov, 2020)
+## v1.0.0/1/2 (21 Nov, 2020)
 - rebranded* as Kurinji
   
 ## v0.1.5 (18 Nov, 2020)
