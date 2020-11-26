@@ -43,18 +43,22 @@ impl Kurinji {
         mut on_begin_event: ResMut<Events<OnActionBegin>>,
         mut on_progress_event: ResMut<Events<OnActionProgress>>,
         mut on_end_event: ResMut<Events<OnActionEnd>>,
-    )
-    {
-        for (action, strength) in input_map.action_raw_strength.clone()
-        {
-            if input_map.is_action_active(&action)
-            {
-                on_active_event.send(OnActionActive{ action: action.clone(), strength: strength});
+    ) {
+        // merge keys, required for action end to be fired properly.
+        // Since released actions won't be part of raw strength
+        let mut _actions = input_map.action_raw_strength.clone();
+        for (a, s) in input_map.action_prev_strength.iter() {
+            if !_actions.contains_key(a) {
+                _actions.insert(a.clone(), s.clone());
             }
+        }
 
-            if input_map.did_action_just_began(&action)
-            {
-                on_begin_event.send(OnActionBegin{ action: action.clone(), strength: strength});
+        for (action, strength) in _actions {
+            if input_map.is_action_active(&action) {
+                on_active_event.send(OnActionActive {
+                    action: action.clone(),
+                    strength: strength,
+                });
             }
 
             if input_map.is_action_in_progress(&action)
