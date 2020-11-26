@@ -1,4 +1,4 @@
-# Kurinji
+# Kurinji Input Map
 *Note** *Previously called bevy_prototype_input_map*
 
 ![kurinji](https://github.com/PradeepKumarRajamanickam/kurinji/blob/master/img_kurinji.png?raw=true)
