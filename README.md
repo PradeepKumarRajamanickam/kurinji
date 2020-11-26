@@ -1,9 +1,11 @@
 # Kurinji Input Map
-*Note** *Previously called bevy_prototype_input_map*
+Input map plugin for bevy
+
+(*Note** *Previously called bevy_prototype_input_map*)
 
 ![kurinji](https://github.com/PradeepKumarRajamanickam/kurinji/blob/master/img_kurinji.png?raw=true)
 
-Input map plugin for bevy. It decouples gameplay code from device specific input api. Converts user inputs from different input hardware into game specific actions, eg. *keyboard "Space" or joystick "A" can be mapped to "Jump" Action*.
+Decouples gameplay code from device specific input api. Converts user inputs from different input hardware into game specific actions, eg. *keyboard "Space" or joystick "A" can be mapped to "Jump" Action*.
 
 ## Usage
 
