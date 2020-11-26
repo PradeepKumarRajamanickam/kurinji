@@ -34,7 +34,7 @@ impl Kurinji {
 
     // crates
     pub(crate) fn did_action_just_began(&self, action: &str) -> bool {
-        self.get_prev_strength(action) == 0. && self.get_action_strength(action) > 0.0
+        self.get_prev_strength(action) == 0.0 && self.get_action_strength(action) > 0.0
     }
 
     /// Is this action happening.
@@ -45,6 +45,6 @@ impl Kurinji {
     }
 
     pub(crate) fn did_action_just_end(&self, action: &str) -> bool {
-        self.get_prev_strength(action) > 0. && self.get_action_strength(action) == 0.0
+        self.get_prev_strength(action) > 0.0 && self.get_action_strength(action) == 0.0
     }
 }
