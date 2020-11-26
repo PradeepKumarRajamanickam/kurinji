@@ -77,7 +77,7 @@ impl Kurinji {
     pub(crate) fn action_reset_system(mut input_map: ResMut<Kurinji>) {
         // cache prev frame
         input_map.action_prev_strength.clear();
-        for (k, _phase) in input_map.action_phase.clone() {
+        for k in input_map.action_raw_strength.clone().keys() {
             let strength = input_map.get_action_strength(&k);
             input_map.action_prev_strength.insert(k.clone(), strength);
         }
