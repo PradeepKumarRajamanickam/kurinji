@@ -1,4 +1,4 @@
-use crate::{GamepadAxis, Kurinji};
+use crate::{GamepadAxis, Kurinji, Actionable};
 
 use bevy::prelude::*;
 use bevy::app::{EventReader, Events};
@@ -10,45 +10,45 @@ pub struct GamepadState {
     reader: EventReader<GamepadEvent>,
 }
 
-impl Kurinji {
+impl<T: Actionable> Kurinji<T> {
     // publics
     // buttons
     pub fn bind_gamepad_button_pressed(
         &mut self,
         pad_button: GamepadButtonType,
-        action: &str,
-    ) -> &mut Kurinji {
+        action: T,
+    ) -> &mut Kurinji<T> {
         self.bind_gamepad_button_pressed_for_player(0, pad_button, action)
     }
     pub fn bind_gamepad_button_pressed_for_player(
         &mut self,
         player: usize,
         pad_button: GamepadButtonType,
-        action: &str,
-    ) -> &mut Kurinji {
+        action: T,
+    ) -> &mut Kurinji<T> {
         *self
             .joystick_button_binding
             .entry((player, pad_button))
-            .or_default() = action.to_string();
+            .or_default() = action;
         self
     }
     pub fn unbind_gamepad_button_pressed(
         &mut self,
         pad_button: GamepadButtonType,
-    ) -> &mut Kurinji {
+    ) -> &mut Kurinji<T> {
         self.unbind_gamepad_button_pressed_for_player(0, pad_button)
     }
     pub fn unbind_gamepad_button_pressed_for_player(
         &mut self,
         player: usize,
         pad_button: GamepadButtonType,
-    ) -> &mut Kurinji {
+    ) -> &mut Kurinji<T> {
         self.joystick_button_binding.remove(&(player, pad_button));
         self
     }
 
     // axis
-    pub fn bind_gamepad_axis(&mut self, axis: GamepadAxis, action: &str) -> &mut Kurinji {
+    pub fn bind_gamepad_axis(&mut self, axis: GamepadAxis, action: T) -> &mut Kurinji<T> {
         self.bind_gamepad_axis_for_player(0, axis, action)
     }
 
@@ -56,16 +56,16 @@ impl Kurinji {
         &mut self,
         player: usize,
         axis: GamepadAxis,
-        action: &str,
-    ) -> &mut Kurinji {
+        action: T,
+    ) -> &mut Kurinji<T> {
         *self
             .joystick_axis_binding
             .entry((player, axis))
-            .or_default() = action.to_string();
+            .or_default() = action;
         self
     }
 
-    pub fn unbind_gamepad_axis(&mut self, pad_axis: GamepadAxis) -> &mut Kurinji {
+    pub fn unbind_gamepad_axis(&mut self, pad_axis: GamepadAxis) -> &mut Kurinji<T> {
         self.unbind_gamepad_axis_for_player(0, pad_axis);
         self
     }
@@ -74,14 +74,14 @@ impl Kurinji {
         &mut self,
         player: usize,
         axis: GamepadAxis,
-    ) -> &mut Kurinji {
+    ) -> &mut Kurinji<T> {
         self.joystick_axis_binding.remove(&(player, axis));
         self
     }
 
     // crates
     pub(crate) fn get_available_player_handle(self) -> Option<usize> {
-        for i in 0..(Kurinji::MAX_PLAYER_HANDLES - 1) {
+        for i in 0..(Kurinji::<T>::MAX_PLAYER_HANDLES - 1) {
             if !self.player_handles_in_use.contains(&i) {
                 return Some(i);
             }
@@ -102,7 +102,7 @@ impl Kurinji {
     }
     // systems
     pub(crate) fn gamepad_button_press_input_system(
-        mut input_map: ResMut<Kurinji>,
+        mut input_map: ResMut<Kurinji<T>>,
         joystick_button_input: Res<Input<GamepadButton>>,
     ) {
         let button_bindings_iter = input_map.joystick_button_binding.clone();
@@ -111,12 +111,12 @@ impl Kurinji {
                 Gamepad(player_button_bind.0),
                 player_button_bind.1,
             )) {
-                input_map.set_raw_action_strength(action, 1.0);
+                input_map.set_raw_action_strength(*action, 1.0);
             }
         }
     }
     pub(crate) fn gamepad_connection_event_system(
-        mut input_map: ResMut<Kurinji>,
+        mut input_map: ResMut<Kurinji<T>>,
         gamepad_event: Res<Events<GamepadEvent>>,
         mut state: Local<GamepadState>,
     ) {
@@ -163,22 +163,22 @@ impl Kurinji {
     }
 
     pub(crate) fn gamepad_axis_system(
-        mut input_map: ResMut<Kurinji>,
+        mut input_map: ResMut<Kurinji<T>>,
         pad_axis: Res<bevy::input::Axis<bevy::input::gamepad::GamepadAxis>>,
     ) {
         for (k, v) in input_map.clone().joystick_axis_binding.iter() {
             let player = k.0;
             let axis = k.1.clone();
-            let is_positive = Kurinji::is_gamepad_axis_positive(axis.clone());
+            let is_positive = Kurinji::<T>::is_gamepad_axis_positive(axis.clone());
 
             if let Some(bevy_gamepad) = input_map.clone().get_gamepad_from_player_handle(player) {
-                let bevy_axis_type = Kurinji::get_bevy_gamepad_axis_type_from_pad_axis(axis);
+                let bevy_axis_type = Kurinji::<T>::get_bevy_gamepad_axis_type_from_pad_axis(axis);
                 let bevy_axis = bevy::input::gamepad::GamepadAxis(bevy_gamepad, bevy_axis_type);
 
                 let signed_str = pad_axis.get(bevy_axis).unwrap_or(0.);
 
                 if signed_str > 0. && is_positive || signed_str < 0. && !is_positive {
-                    input_map.set_raw_action_strength(&v.to_string(), signed_str.abs());
+                    input_map.set_raw_action_strength(*v, signed_str.abs());
                 }
             }
         }

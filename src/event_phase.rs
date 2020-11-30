@@ -1,4 +1,4 @@
-use crate::Kurinji;
+use crate::{Kurinji, Actionable};
 
 use serde::{Deserialize, Serialize};
 
@@ -15,11 +15,11 @@ impl Default for EventPhase {
     }
 }
 
-impl Kurinji {
+impl<T: Actionable> Kurinji<T> {
     // publics
     /// Returns in which event phase this action active will be true
-    pub fn get_event_phase(&self, action: &str) -> &EventPhase {
-        if let Some(v) = self.action_phase.get(action) {
+    pub fn get_event_phase(&self, action: T) -> &EventPhase {
+        if let Some(v) = self.action_phase.get(&action) {
             return v;
         }
 
@@ -27,24 +27,24 @@ impl Kurinji {
     }
     /// Set on which event phase should action will be true.
     /// By default will be Phase::OnProgress
-    pub fn set_event_phase(&mut self, action: &str, phase: EventPhase) -> &mut Kurinji {
-        self.action_phase.insert(action.to_string(), phase);
+    pub fn set_event_phase(&mut self, action: T, phase: EventPhase) -> &mut Kurinji<T> {
+        self.action_phase.insert(action, phase);
         self
     }
 
     // crates
-    pub(crate) fn did_action_just_began(&self, action: &str) -> bool {
+    pub(crate) fn did_action_just_began(&self, action: T) -> bool {
         self.get_prev_strength(action) == 0.0 && self.get_action_strength(action) > 0.0
     }
 
     /// Is this action happening.
     /// Note* this does not consider action event phase
     /// use is_action_active() in that case
-    pub(crate) fn is_action_in_progress(&self, action: &str) -> bool {
+    pub(crate) fn is_action_in_progress(&self, action: T) -> bool {
         self.get_action_strength(action) > 0.0
     }
 
-    pub(crate) fn did_action_just_end(&self, action: &str) -> bool {
+    pub(crate) fn did_action_just_end(&self, action: T) -> bool {
         self.get_prev_strength(action) > 0.0 && self.get_action_strength(action) == 0.0
     }
 }

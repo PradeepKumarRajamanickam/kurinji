@@ -1,10 +1,10 @@
-use crate::{MouseAxis, Bindings, EventPhase, Kurinji, axis::GamepadAxis};
+use crate::{MouseAxis, Bindings, EventPhase, Kurinji, axis::GamepadAxis, Actionable};
 
 use bevy::prelude::*;
 use serde::{Deserialize, Deserializer, Serialize};
 use std::collections::HashMap;
 
-impl Kurinji {
+impl<T: Actionable> Kurinji<T> {
     // publics
     // ron
     pub fn get_bindings_as_ron(&self) -> Result<String, String> {
@@ -18,8 +18,8 @@ impl Kurinji {
             Err(e) => Err(format!("Failed to generate ron {}", e)),
         }
     }
-    pub fn set_bindings_with_ron(&mut self, ron: &str) -> &mut Kurinji  {
-        let bindings: Bindings = Kurinji::get_bindings_from_ron(ron);
+    pub fn set_bindings_with_ron(&mut self, ron: &str) -> &mut Kurinji<T>  {
+        let bindings: Bindings<T> = Kurinji::<T>::get_bindings_from_ron(ron);
         self.set_bindings(bindings);
 
         self.action_strength_curve.clear();
@@ -35,8 +35,9 @@ impl Kurinji {
             Err(e) => Err(format!("Failed to generate json {}", e)),
         }
     }
-    pub fn set_bindings_with_json(&mut self, json: &str)  -> &mut Kurinji {
-        let bindings: Bindings = Kurinji::get_bindings_from_json(json);
+
+    pub fn set_bindings_with_json(&mut self, json: &str)  -> &mut Kurinji<T> {
+        let bindings: Bindings<T> = Kurinji::<T>::get_bindings_from_json(json);
         self.set_bindings(bindings);
 
         self.action_strength_curve.clear();
@@ -45,27 +46,27 @@ impl Kurinji {
 }
 
 #[derive(Default, Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
-pub struct BindingsSerdeHelper {
+pub struct BindingsSerdeHelper<T: std::hash::Hash + Eq + PartialEq> {
     #[serde(default, rename = "GamepadButtons")]
-    gamepad_button_bindings: HashMap<usize, HashMap<GamepadButtonType, String>>,
+    gamepad_button_bindings: HashMap<usize, HashMap<GamepadButtonType, T>>,
     #[serde(default, rename = "GamepadAxis")]
-    gamepad_axis_bindings: HashMap<usize, HashMap<GamepadAxis, String>>,
+    gamepad_axis_bindings: HashMap<usize, HashMap<GamepadAxis, T>>,
 
     #[serde(default, rename = "KeyboardKeys")]
-    keyboard_key_bindings: HashMap<KeyCode, String>,
+    keyboard_key_bindings: HashMap<KeyCode, T>,
     #[serde(default, rename = "MouseButtons")]
-    mouse_button_binding: HashMap<MouseButton, String>,
+    mouse_button_binding: HashMap<MouseButton, T>,
     #[serde(default, rename = "MouseMove")]
-    mouse_move_binding: HashMap<MouseAxis, String>,
+    mouse_move_binding: HashMap<MouseAxis, T>,
 
     #[serde(default, rename = "DeadZone")]
-    action_deadzone: HashMap<String, f32>,
+    action_deadzone: HashMap<T, f32>,
 
     #[serde(default, rename = "EventPhase")]
-    action_phase: HashMap<String, EventPhase>,
+    action_phase: HashMap<T, EventPhase>,
 }
 
-impl Serialize for Bindings {
+impl<T: Actionable> Serialize for Bindings<T> {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: serde::Serializer,
@@ -87,7 +88,7 @@ impl Serialize for Bindings {
     }
 }
 
-impl<'de> Deserialize<'de> for Bindings {
+impl<'de, T: Actionable> Deserialize<'de> for Bindings<T> {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,

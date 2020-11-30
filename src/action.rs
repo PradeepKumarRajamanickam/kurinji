@@ -1,18 +1,18 @@
-use crate::{EventPhase, Kurinji, util};
+use crate::{EventPhase, Kurinji, util, Actionable};
 
 use bevy::ecs::ResMut;
 
-impl Kurinji {
+impl<T: Actionable> Kurinji<T> {
     // publics
     /// Provides strength of action in range 0.0 - 1.0. Useful
     /// when working actions that mapped to analog input eg. joystick
-    pub fn get_action_strength(&self, action: &str) -> f32 {
-        match self.action_raw_strength.get(&action.to_string()) {
-            Some(raw_strength) => match self.action_deadzone.get(&action.to_string()) {
+    pub fn get_action_strength(&self, action: T) -> f32 {
+        match self.action_raw_strength.get(&action) {
+            Some(raw_strength) => match self.action_deadzone.get(&action) {
                 Some(d) => {
                     let strength =
-                        Kurinji::get_strength_after_applying_deadzone(*d, *raw_strength);
-                    if let Some(curve_func) = self.action_strength_curve.get(&action.to_string()) {
+                        Kurinji::<T>::get_strength_after_applying_deadzone(*d, *raw_strength);
+                    if let Some(curve_func) = self.action_strength_curve.get(&action) {
                         return curve_func(strength);
                     }
                     strength
@@ -25,7 +25,7 @@ impl Kurinji {
 
     /// Is this action happening.
     /// Note* this depends on action event phase
-    pub fn is_action_active(&self, action: &str) -> bool {
+    pub fn is_action_active(&self, action: T) -> bool {
         match self.get_event_phase(action) {
             EventPhase::OnBegin => self.did_action_just_began(action),
             EventPhase::OnProgress => self.is_action_in_progress(action),
@@ -39,8 +39,8 @@ impl Kurinji {
     ///
     /// Note* meaningful only for analog inputs like joystick,
     /// mouse move delta...etc
-    pub fn set_dead_zone(&mut self, action: &str, value: f32) -> &mut Kurinji {
-        self.action_deadzone.insert(action.to_string(), value);
+    pub fn set_dead_zone(&mut self, action: T, value: f32) -> &mut Kurinji<T> {
+        self.action_deadzone.insert(action, value);
         self
     }
 
@@ -48,25 +48,25 @@ impl Kurinji {
     /// actions strength.
     pub fn set_strength_curve_function(
         &mut self,
-        action: &str,
+        action: T,
         function: fn(f32) -> f32,
-    ) -> &mut Kurinji {
+    ) -> &mut Kurinji<T> {
         self.action_strength_curve
-            .insert(action.to_string(), function);
+            .insert(action, function);
         self
     }
 
     // crates
-    pub(crate) fn get_prev_strength(&self, action: &str) -> f32 {
-        if let Some(v) = self.action_prev_strength.get(action) {
+    pub(crate) fn get_prev_strength(&self, action: T) -> f32 {
+        if let Some(v) = self.action_prev_strength.get(&action) {
             return *v;
         }
 
         0.
     }
-    pub(crate) fn set_raw_action_strength(&mut self, action: &str, strength: f32) {
+    pub(crate) fn set_raw_action_strength(&mut self, action: T, strength: f32) {
         self.action_raw_strength
-            .insert(action.to_string(), strength);
+            .insert(action, strength);
     }
 
     pub(crate) fn reset_all_raw_strength(&mut self) {
@@ -74,11 +74,11 @@ impl Kurinji {
     }
 
     // systems
-    pub(crate) fn action_reset_system(mut input_map: ResMut<Kurinji>) {
+    pub(crate) fn action_reset_system(mut input_map: ResMut<Kurinji<T>>) {
         // cache prev frame
         input_map.action_prev_strength.clear();
         for k in input_map.action_raw_strength.clone().keys() {
-            let strength = input_map.get_action_strength(&k);
+            let strength = input_map.get_action_strength(*k);
             input_map.action_prev_strength.insert(k.clone(), strength);
         }
 

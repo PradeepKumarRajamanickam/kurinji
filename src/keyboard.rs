@@ -1,18 +1,21 @@
-use crate::kurinji::Kurinji;
+use crate::{
+    kurinji::Kurinji,
+    Actionable,
+};
 
 use bevy::prelude::KeyCode;
 use bevy::ecs::{Res, ResMut};
 use bevy::input::Input;
 
-impl Kurinji {
+impl<T: Actionable> Kurinji<T> {
     // publics
-    pub fn bind_keyboard_pressed(&mut self, code: KeyCode, action: &str) -> &mut Kurinji {
+    pub fn bind_keyboard_pressed(&mut self, code: KeyCode, action: T) -> &mut Kurinji<T> {
         self.keyboard_action_binding
-            .insert(code, action.to_string());
+            .insert(code, action);
         self
     }
 
-    pub fn unbind_keyboard_pressed(&mut self, code: KeyCode) -> &mut Kurinji {
+    pub fn unbind_keyboard_pressed(&mut self, code: KeyCode) -> &mut Kurinji<T> {
         self.keyboard_action_binding.remove(&code);
         self
     }
@@ -20,7 +23,7 @@ impl Kurinji {
     // crates
     // system
     pub(crate) fn kb_key_press_input_system(
-        mut input_map: ResMut<Kurinji>,
+        mut input_map: ResMut<Kurinji<T>>,
         key_input: Res<Input<KeyCode>>,
     ) {
         // let map = &mut input_map;
@@ -28,7 +31,7 @@ impl Kurinji {
 
         for (keycode, action) in bindings_iter.iter() {
             if key_input.pressed(*keycode) {
-                input_map.set_raw_action_strength(action, 1.0);
+                input_map.set_raw_action_strength(*action, 1.0);
             }
         }
     }
