@@ -27,12 +27,16 @@ impl<T: Actionable> Kurinji<T> {
         key_input: Res<Input<KeyCode>>,
     ) {
         // let map = &mut input_map;
-        let bindings_iter = input_map.keyboard_action_binding.clone();
+        let mut action_strengths = Vec::new();
 
-        for (keycode, action) in bindings_iter.iter() {
+        for (keycode, action) in input_map.keyboard_action_binding.iter() {
             if key_input.pressed(*keycode) {
-                input_map.set_raw_action_strength(*action, 1.0);
+                action_strengths.push(*action);
             }
+        }
+
+        for action in action_strengths.drain(..){
+            input_map.set_raw_action_strength(action, 1.0);
         }
     }
 }

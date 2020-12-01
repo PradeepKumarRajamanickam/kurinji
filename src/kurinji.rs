@@ -10,7 +10,7 @@ impl<T: Actionable> Kurinji<T> {
 }
 
 /// Resource to access all Kurinji APIs
-#[derive(Default, Clone)]
+#[derive(Default)]
 pub struct Kurinji<T: Actionable> {
     // crates
     // actions

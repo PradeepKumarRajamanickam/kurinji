@@ -80,7 +80,7 @@ impl<T: Actionable> Kurinji<T> {
     }
 
     // crates
-    pub(crate) fn get_available_player_handle(self) -> Option<usize> {
+    pub(crate) fn get_available_player_handle(&self) -> Option<usize> {
         for i in 0..(Kurinji::<T>::MAX_PLAYER_HANDLES - 1) {
             if !self.player_handles_in_use.contains(&i) {
                 return Some(i);
@@ -88,13 +88,13 @@ impl<T: Actionable> Kurinji<T> {
         }
         None
     }
-    pub(crate) fn get_player_handle_for_gamepad(self, pad: Gamepad) -> Option<usize> {
+    pub(crate) fn get_player_handle_for_gamepad(&self, pad: Gamepad) -> Option<usize> {
         return match self.joystick_to_player_map.get(&pad) {
             Some(a) => Some(*a),
             _ => None,
         };
     }
-    pub(crate) fn get_gamepad_from_player_handle(self, player: usize) -> Option<Gamepad> {
+    pub(crate) fn get_gamepad_from_player_handle(&self, player: usize) -> Option<Gamepad> {
         return match self.player_to_joystick_map.get(&player) {
             Some(a) => Some(*a),
             _ => None,
@@ -124,7 +124,7 @@ impl<T: Actionable> Kurinji<T> {
             let pad_handle = value.0;
             match value.1 {
                 bevy::prelude::GamepadEventType::Connected => {
-                    let res_player_handle = input_map.clone().get_available_player_handle();
+                    let res_player_handle = input_map.get_available_player_handle();
                     match res_player_handle {
                         Some(player_handle) => {
                             println!(
@@ -146,7 +146,7 @@ impl<T: Actionable> Kurinji<T> {
                 }
                 bevy::prelude::GamepadEventType::Disconnected => {
                     let opt_player_handle =
-                        input_map.clone().get_player_handle_for_gamepad(pad_handle);
+                        input_map.get_player_handle_for_gamepad(pad_handle);
                     if let Some(player_handle) = opt_player_handle {
                         println!(
                             "InputMap: Gamepad Disconnected {:?} for player {}",
@@ -166,21 +166,26 @@ impl<T: Actionable> Kurinji<T> {
         mut input_map: ResMut<Kurinji<T>>,
         pad_axis: Res<bevy::input::Axis<bevy::input::gamepad::GamepadAxis>>,
     ) {
-        for (k, v) in input_map.clone().joystick_axis_binding.iter() {
+        let mut action_strengths = Vec::new();
+        for (k, v) in input_map.joystick_axis_binding.iter() {
             let player = k.0;
-            let axis = k.1.clone();
-            let is_positive = Kurinji::<T>::is_gamepad_axis_positive(axis.clone());
+            let axis = k.1;
+            let is_positive = Kurinji::<T>::is_gamepad_axis_positive(axis);
 
-            if let Some(bevy_gamepad) = input_map.clone().get_gamepad_from_player_handle(player) {
+            if let Some(bevy_gamepad) = input_map.get_gamepad_from_player_handle(player) {
                 let bevy_axis_type = Kurinji::<T>::get_bevy_gamepad_axis_type_from_pad_axis(axis);
                 let bevy_axis = bevy::input::gamepad::GamepadAxis(bevy_gamepad, bevy_axis_type);
 
                 let signed_str = pad_axis.get(bevy_axis).unwrap_or(0.);
 
                 if signed_str > 0. && is_positive || signed_str < 0. && !is_positive {
-                    input_map.set_raw_action_strength(*v, signed_str.abs());
+                    action_strengths.push((*v, signed_str.abs()));
                 }
             }
+        }
+
+        for (v, signed_str) in action_strengths.drain(..){
+            input_map.set_raw_action_strength(v, signed_str.abs());
         }
     }
 }

@@ -11,7 +11,7 @@ pub enum MouseAxis {
 }
 
 /// Axis of gamepad analog
-#[derive(Clone, Debug, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
 pub enum GamepadAxis {
     LeftStickXPositive,
     LeftStickXNegative,
