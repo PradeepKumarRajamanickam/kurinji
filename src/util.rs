@@ -1,24 +1,24 @@
-use crate::{GamepadAxis, Kurinji, bindings::Bindings, serde::BindingsSerdeHelper};
+use crate::{GamepadAxis, Kurinji, bindings::Bindings, serde::BindingsSerdeHelper, Actionable};
 
 use bevy::prelude::*;
 use std::{collections::HashMap, fs};
 
-impl Kurinji {
+impl<T: Actionable> Kurinji<T> {
     // publics
-    pub fn get_bindings_from_json_file(path: &str) -> Bindings {
+    pub fn get_bindings_from_json_file(path: &str) -> Bindings<T> {
         let json = fs::read_to_string(path).expect("Error! could not open bindings file");
         Kurinji::get_bindings_from_json(&json)
     }
 
-    pub fn get_bindings_from_ron_file(path: &str) -> Bindings {
+    pub fn get_bindings_from_ron_file(path: &str) -> Bindings<T> {
         let ron = fs::read_to_string(path).expect("Error! could not open bindings file");
         Kurinji::get_bindings_from_ron(&ron)
     }
 
-    pub fn get_bindings_from_json(json: &str) -> Bindings {
+    pub fn get_bindings_from_json(json: &str) -> Bindings<T> {
         serde_json::from_str(json).expect("Failed to deserialise bindings json")
     }
-    pub fn get_bindings_from_ron(ron: &str) -> Bindings {
+    pub fn get_bindings_from_ron(ron: &str) -> Bindings<T> {
         ron::de::from_str(ron).expect("Failed to deserialise bindings ron")
     }
 
@@ -66,12 +66,12 @@ impl Kurinji {
     } 
 }
 
-impl BindingsSerdeHelper {
+impl<T: Actionable> BindingsSerdeHelper<T> {
     // utils
     pub fn get_gamepad_button_hash_map_from_json_friendly_map(
-        json_map: HashMap<usize, HashMap<GamepadButtonType, String>>,
-    ) -> HashMap<(usize, GamepadButtonType), String> {
-        let mut result: HashMap<(usize, GamepadButtonType), String>  = HashMap::new();
+        json_map: HashMap<usize, HashMap<GamepadButtonType, T>>,
+    ) -> HashMap<(usize, GamepadButtonType), T> {
+        let mut result: HashMap<(usize, GamepadButtonType), T>  = HashMap::new();
         for (player, h_map) in json_map {
             for (btn_type, action) in h_map {
                 result
@@ -82,9 +82,9 @@ impl BindingsSerdeHelper {
         result
     }
     pub fn get_gamepad_axis_hash_map_from_json_friendly_map(
-        json_map: HashMap<usize, HashMap<GamepadAxis, String>>,
-    ) -> HashMap<(usize, GamepadAxis), String> {
-        let mut result: HashMap<(usize, GamepadAxis), String> = HashMap::new();
+        json_map: HashMap<usize, HashMap<GamepadAxis, T>>,
+    ) -> HashMap<(usize, GamepadAxis), T> {
+        let mut result: HashMap<(usize, GamepadAxis), T> = HashMap::new();
         for (pad_handle, h_map) in json_map {
             for (g_axis, action) in h_map {
                 result.entry((pad_handle, g_axis)).or_insert(action);
@@ -93,9 +93,9 @@ impl BindingsSerdeHelper {
         result
     }
     pub fn get_json_friendly_gamepad_button_hash_map(
-        binding: HashMap<(usize, GamepadButtonType), String>,
-    ) -> HashMap<usize, HashMap<GamepadButtonType, String>> {
-        let mut result: HashMap<usize, HashMap<GamepadButtonType, String>> = HashMap::new();
+        binding: HashMap<(usize, GamepadButtonType), T>,
+    ) -> HashMap<usize, HashMap<GamepadButtonType, T>> {
+        let mut result: HashMap<usize, HashMap<GamepadButtonType, T>> = HashMap::new();
 
         for (k, v) in binding {
             let id: usize = k.0;
@@ -108,9 +108,9 @@ impl BindingsSerdeHelper {
         result
     }
     pub fn get_json_friendly_gamepad_axis_hash_map(
-        binding: HashMap<(usize, GamepadAxis), String>,
-    ) -> HashMap<usize, HashMap<GamepadAxis, String>> {
-        let mut result: HashMap<usize, HashMap<GamepadAxis, String>> = HashMap::new();
+        binding: HashMap<(usize, GamepadAxis), T>,
+    ) -> HashMap<usize, HashMap<GamepadAxis, T>> {
+        let mut result: HashMap<usize, HashMap<GamepadAxis, T>> = HashMap::new();
 
         for (k, action) in binding {
             let id = k.0;

@@ -1,44 +1,44 @@
-use crate::{EventPhase, Kurinji, axis::MouseAxis, axis::GamepadAxis};
+use crate::{EventPhase, Kurinji, axis::MouseAxis, axis::GamepadAxis, Actionable};
 
 use bevy::prelude::*;
 use std::{collections::HashMap, hash::Hash};
 
 /// Data structure to hold bindings.
 #[derive(Default, Clone, Debug)]
-pub struct Bindings {
-    pub(crate) gamepad_button_bindings: HashMap<(usize, GamepadButtonType), String>,
-    pub(crate) gamepad_axis_bindings: HashMap<(usize, GamepadAxis), String>,
-    pub(crate) keyboard_key_bindings: HashMap<KeyCode, String>,
-    pub(crate) mouse_button_binding: HashMap<MouseButton, String>,
-    pub(crate) mouse_move_binding: HashMap<MouseAxis, String>,
-    pub(crate) action_deadzone: HashMap<String, f32>,
-    pub(crate) action_phase: HashMap<String, EventPhase>,
+pub struct Bindings<T: Actionable> {
+    pub(crate) gamepad_button_bindings: HashMap<(usize, GamepadButtonType), T>,
+    pub(crate) gamepad_axis_bindings: HashMap<(usize, GamepadAxis), T>,
+    pub(crate) keyboard_key_bindings: HashMap<KeyCode, T>,
+    pub(crate) mouse_button_binding: HashMap<MouseButton, T>,
+    pub(crate) mouse_move_binding: HashMap<MouseAxis, T>,
+    pub(crate) action_deadzone: HashMap<T, f32>,
+    pub(crate) action_phase: HashMap<T, EventPhase>,
 }
 
-impl Bindings {
+impl<T: Actionable> Bindings<T> {
     // publics
-    pub fn merge(&mut self, bindings: Bindings) {
+    pub fn merge(&mut self, bindings: Bindings<T>) {
         // keyboard
-        self.keyboard_key_bindings = Bindings::get_merged_hashmaps(
+        self.keyboard_key_bindings = Bindings::<T>::get_merged_hashmaps(
             self.keyboard_key_bindings.clone(),
             bindings.keyboard_key_bindings,
         );
 
         // mouse
-        self.mouse_button_binding = Bindings::get_merged_hashmaps(
+        self.mouse_button_binding = Bindings::<T>::get_merged_hashmaps(
             self.mouse_button_binding.clone(),
             bindings.mouse_button_binding,
         );
-        self.mouse_move_binding = Bindings::get_merged_hashmaps(
+        self.mouse_move_binding = Bindings::<T>::get_merged_hashmaps(
             self.mouse_move_binding.clone(),
             bindings.mouse_move_binding,
         );
 
         // actions
         self.action_deadzone =
-            Bindings::get_merged_hashmaps(self.action_deadzone.clone(), bindings.action_deadzone);
+            Bindings::<T>::get_merged_hashmaps(self.action_deadzone.clone(), bindings.action_deadzone);
         self.action_phase =
-            Bindings::get_merged_hashmaps(self.action_phase.clone(), bindings.action_phase);
+            Bindings::<T>::get_merged_hashmaps(self.action_phase.clone(), bindings.action_phase);
     }
 
     // private
@@ -51,9 +51,9 @@ impl Bindings {
     }
 }
 
-impl Kurinji {
+impl<T: Actionable> Kurinji<T> {
     // public
-    pub fn get_bindings(&self) -> Bindings {
+    pub fn get_bindings(&self) -> Bindings<T> {
         Bindings {
             gamepad_button_bindings: self.joystick_button_binding.clone(),
             gamepad_axis_bindings: self.joystick_axis_binding.clone(),
@@ -65,7 +65,7 @@ impl Kurinji {
             action_phase: self.action_phase.clone(),
         }
     }
-    pub fn set_bindings(&mut self, bindings: Bindings) {
+    pub fn set_bindings(&mut self, bindings: Bindings<T>) {
         self.joystick_button_binding = bindings.gamepad_button_bindings;
         self.joystick_axis_binding = bindings.gamepad_axis_bindings;
         self.keyboard_action_binding = bindings.keyboard_key_bindings;

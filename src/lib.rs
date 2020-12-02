@@ -16,6 +16,8 @@ pub use self::
     action_event::OnActionEnd,
 };
 
+use ::serde::{Serialize, de::DeserializeOwned};
+
 // crates
 mod axis;
 mod util;
@@ -34,40 +36,46 @@ mod serde;
 use bevy::app::prelude::*;
 use bevy::ecs::IntoQuerySystem;
 
+
+// Using this like a trait alias
+pub trait Actionable: 'static + Send + Sync + Default + Copy + Clone + Eq + PartialEq + std::hash::Hash + Serialize + DeserializeOwned{}
+
 /// Adds input mapping (via code or json/ron) to an App
 #[derive(Default)]
-pub struct KurinjiPlugin;
+pub struct KurinjiPlugin<T: Actionable>{
+    phantom: std::marker::PhantomData<T>
+}
 
-impl Plugin for KurinjiPlugin {
+impl<T:Actionable> Plugin for KurinjiPlugin<T> {
     fn build(&self, app: &mut AppBuilder) {
         app
             // input map
-            .init_resource::<Kurinji>()
+            .init_resource::<Kurinji<T>>()
             // events
-            .add_event::<OnActionActive>()
-            .add_event::<OnActionBegin>()
-            .add_event::<OnActionProgress>()
-            .add_event::<OnActionEnd>()
-            .add_system_to_stage(stage::EVENT, Kurinji::action_event_producer.system())
+            .add_event::<OnActionActive<T>>()
+            .add_event::<OnActionBegin<T>>()
+            .add_event::<OnActionProgress<T>>()
+            .add_event::<OnActionEnd<T>>()
+            .add_system_to_stage(stage::EVENT, Kurinji::<T>::action_event_producer.system())
             // reset
-            .add_system_to_stage(stage::PRE_UPDATE, Kurinji::action_reset_system.system())
+            .add_system_to_stage(stage::PRE_UPDATE, Kurinji::<T>::action_reset_system.system())
             // joystick
             .add_system_to_stage(
                 stage::UPDATE,
-                Kurinji::gamepad_connection_event_system.system(),
+                Kurinji::<T>::gamepad_connection_event_system.system(),
             )
             .add_system_to_stage(
                 stage::UPDATE,
-                Kurinji::gamepad_button_press_input_system.system(),
+                Kurinji::<T>::gamepad_button_press_input_system.system(),
             )
-            .add_system_to_stage(stage::UPDATE, Kurinji::gamepad_axis_system.system())
+            .add_system_to_stage(stage::UPDATE, Kurinji::<T>::gamepad_axis_system.system())
             // keyboard
-            .add_system_to_stage(stage::UPDATE, Kurinji::kb_key_press_input_system.system())
+            .add_system_to_stage(stage::UPDATE, Kurinji::<T>::kb_key_press_input_system.system())
             // mouse
             .add_system_to_stage(
                 stage::UPDATE,
-                Kurinji::mouse_button_press_input_system.system(),
+                Kurinji::<T>::mouse_button_press_input_system.system(),
             )
-            .add_system_to_stage(stage::UPDATE, Kurinji::mouse_move_event_system.system());
+            .add_system_to_stage(stage::UPDATE, Kurinji::<T>::mouse_move_event_system.system());
     }
 }
