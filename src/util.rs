@@ -35,6 +35,120 @@ impl Kurinji {
         || axis == GamepadAxis::DPadYPositive;
     }
 
+    pub(crate) fn get_pad_axis_from_bevy_gamepad_axis_type(
+        axis_type: bevy::input::gamepad::GamepadAxisType,
+        str: f32
+    ) -> Option<GamepadAxis> {
+        match axis_type {
+            bevy::input::gamepad::GamepadAxisType::LeftStickX =>
+            { 
+                if str > 0.0 
+                {
+                    return Some(GamepadAxis::LeftStickXPositive);
+                }
+                if str < 0.0
+                {
+                    return Some(GamepadAxis::LeftStickXNegative);
+                }
+
+                None
+            }
+            bevy::input::gamepad::GamepadAxisType::LeftStickY =>
+            { 
+                if str > 0.0 
+                {
+                    return Some(GamepadAxis::LeftStickYPositive);
+                }
+                if str < 0.0
+                {
+                    return Some(GamepadAxis::LeftStickXNegative);
+                }
+
+                None
+            }
+            bevy::input::gamepad::GamepadAxisType::LeftZ =>
+            { 
+                if str > 0.0 
+                {
+                    return Some(GamepadAxis::LeftZPositive);
+                }
+                if str < 0.0
+                {
+                    return Some(GamepadAxis::LeftZNegative);
+                }
+
+                None
+            }
+
+            bevy::input::gamepad::GamepadAxisType::RightStickX =>
+            { 
+                if str > 0.0 
+                {
+                    return Some(GamepadAxis::RightStickXPositive);
+                }
+                if str < 0.0
+                {
+                    return Some(GamepadAxis::RightStickXNegative);
+                }
+
+                None
+            }
+
+            bevy::input::gamepad::GamepadAxisType::RightStickY =>
+            { 
+                if str > 0.0 
+                {
+                    return Some(GamepadAxis::RightStickYPositive);
+                }
+                if str < 0.0
+                {
+                    return Some(GamepadAxis::RightStickYNegative);
+                }
+
+                None
+            }
+            bevy::input::gamepad::GamepadAxisType::RightZ =>
+            { 
+                if str > 0.0 
+                {
+                    return Some(GamepadAxis::RightZPositive);
+                }
+                if str < 0.0
+                {
+                    return Some(GamepadAxis::RightZNegative);
+                }
+
+                None
+            }
+            bevy::input::gamepad::GamepadAxisType::DPadX =>
+            { 
+                if str > 0.0 
+                {
+                    return Some(GamepadAxis::DPadXPositive);
+                }
+                if str < 0.0
+                {
+                    return Some(GamepadAxis::DPadXNegative);
+                }
+
+                None
+            }
+            bevy::input::gamepad::GamepadAxisType::DPadY =>
+            { 
+                if str > 0.0 
+                {
+                    return Some(GamepadAxis::DPadYPositive);
+                }
+                if str < 0.0
+                {
+                    return Some(GamepadAxis::DPadYNegative);
+                }
+
+                None
+            }
+        }
+    }
+
     pub(crate) fn get_bevy_gamepad_axis_type_from_pad_axis(
         axis: GamepadAxis,
     ) -> bevy::input::gamepad::GamepadAxisType {
