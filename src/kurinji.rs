@@ -31,6 +31,7 @@ pub struct Kurinji {
     pub(crate) player_handles_in_use: HashSet<usize>,
     pub(crate) joystick_to_player_map: HashMap<Gamepad, usize>,
     pub(crate) player_to_joystick_map: HashMap<usize, Gamepad>,
+    pub(crate) joystick_last_action_data: HashMap<String, f32>,
 
     pub(crate) joystick_button_binding: HashMap<(usize, GamepadButtonType), String>,
     pub(crate) joystick_axis_binding: HashMap<(usize, GamepadAxis), String>,

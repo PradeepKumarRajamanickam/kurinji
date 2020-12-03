@@ -124,18 +124,18 @@ impl Kurinji {
             let pad_handle = value.0;
             let pad_event_type = value.clone().1;
             match pad_event_type {
-                bevy::prelude::GamepadEventType::AxisChanged (axis_type, axis_str) => {
-                    if let Some(axis_type) = Kurinji::get_pad_axis_from_bevy_gamepad_axis_type(
-                        axis_type,
-                        axis_str)
+                bevy::prelude::GamepadEventType::AxisChanged(axis_type, axis_str) => {
+                    if let Some(axis_type) =
+                        Kurinji::get_pad_axis_from_bevy_gamepad_axis_type(axis_type, axis_str)
                     {
-                        if let Some(action) = input_map.clone()
-                        .joystick_axis_binding
-                        .get(&(pad_handle.0, axis_type))
+                        if let Some(action) = input_map
+                            .clone()
+                            .joystick_axis_binding
+                            .get(&(pad_handle.0, axis_type))
                         {
-                            input_map.set_raw_action_strength(
-                                &action.to_string(), 
-                                axis_str.abs());
+                            input_map
+                                .joystick_last_action_data
+                                .insert(action.to_string(), axis_str.abs());
                         }
                     }
                 }
@@ -175,6 +175,15 @@ impl Kurinji {
                 }
                 _ => (),
             }
+        }
+
+        // converting events into continuous input
+        for (a, s) in input_map
+        .joystick_last_action_data
+        .clone() {
+            input_map.set_raw_action_strength(
+                &a.to_string(),
+                s.abs());
         }
     }
 }
