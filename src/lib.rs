@@ -54,13 +54,12 @@ impl Plugin for KurinjiPlugin {
             // joystick
             .add_system_to_stage(
                 stage::UPDATE,
-                Kurinji::gamepad_connection_event_system.system(),
+                Kurinji::gamepad_event_system.system(),
             )
             .add_system_to_stage(
                 stage::UPDATE,
                 Kurinji::gamepad_button_press_input_system.system(),
             )
-            .add_system_to_stage(stage::UPDATE, Kurinji::gamepad_axis_system.system())
             // keyboard
             .add_system_to_stage(stage::UPDATE, Kurinji::kb_key_press_input_system.system())
             // mouse
