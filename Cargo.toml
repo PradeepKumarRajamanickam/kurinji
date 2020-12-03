@@ -1,6 +1,6 @@
 [package]
 name = "kurinji"
-version = "1.0.3"
+version = "1.0.4"
 edition = "2018"
 authors = ["Pradeep Kumar Rajamanickam <raj.pradeep.kumar@gmail.com>"]
 description = "Input map for bevy "
