@@ -61,7 +61,7 @@ impl Kurinji {
                 }
                 if str < 0.0
                 {
-                    return Some(GamepadAxis::LeftStickXNegative);
+                    return Some(GamepadAxis::LeftStickYNegative);
                 }
 
                 None
