@@ -32,7 +32,7 @@ mod mouse;
 mod serde;
 
 use bevy::app::prelude::*;
-use bevy::ecs::IntoQuerySystem;
+use bevy::ecs::IntoSystem;
 
 /// Adds input mapping (via code or json/ron) to an App
 #[derive(Default)]
