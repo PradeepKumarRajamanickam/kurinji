@@ -44,7 +44,7 @@ impl Kurinji {
         let mut _actions = input_map.action_raw_strength.clone();
         for (a, s) in input_map.action_prev_strength.iter() {
             if !_actions.contains_key(a) {
-                _actions.insert(a.clone(), s.clone());
+                _actions.insert(a.clone(), *s);
             }
         }
 
@@ -52,21 +52,21 @@ impl Kurinji {
             if input_map.is_action_active(&action) {
                 on_active_event.send(OnActionActive {
                     action: action.clone(),
-                    strength: strength,
+                    strength,
                 });
             }
 
             if input_map.did_action_just_began(&action) {
                 on_begin_event.send(OnActionBegin {
                     action: action.clone(),
-                    strength: strength,
+                    strength,
                 });
             }
 
             if input_map.is_action_in_progress(&action) {
                 on_progress_event.send(OnActionProgress {
                     action: action.clone(),
-                    strength: strength,
+                    strength,
                 });
             }
 
