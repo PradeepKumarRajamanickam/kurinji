@@ -82,6 +82,9 @@ or grab crate from https://crates.io/crates/kurinji
 https://github.com/PradeepKumarRajamanickam/kurinji/issues
 
 # Release Notes
+## v1.0.4 (3 dec, 2020)
+- fixed* Joystick axis inputs not detected
+
 ## v1.0.3 (26 Nov, 2020)
 - fixed* Events not behaving as expected #36 
   

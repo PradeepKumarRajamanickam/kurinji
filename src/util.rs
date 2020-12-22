@@ -256,7 +256,7 @@ pub(crate) fn clamp(min: f32, max: f32, value: f32) -> f32 {
 
 pub(crate) fn clamp_vec2(min: Vec2, max: Vec2, value: Vec2) -> Vec2 {
     Vec2::new(
-        clamp(min.x(), max.x(), value.x()),
-        clamp(min.y(), max.y(), value.y()),
+        clamp(min.x, max.x, value.x),
+        clamp(min.y, max.y, value.y),
     )
 }

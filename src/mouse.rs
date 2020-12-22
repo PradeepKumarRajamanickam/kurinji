@@ -58,8 +58,8 @@ impl Kurinji {
             let max = Vec2::one();
             let normalised_vec = clamp_vec2(min, max, value.delta * 0.1);
 
-            let x = normalised_vec.x();
-            let y = normalised_vec.y();
+            let x = normalised_vec.x;
+            let y = normalised_vec.y;
 
             // horizontal
             if x > 0.0 {
