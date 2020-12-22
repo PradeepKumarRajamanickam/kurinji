@@ -1,0 +1,16 @@
+blank_lines_lower_bound = 1
+brace_style = "AlwaysNextLine"
+combine_control_expr = false
+control_brace_style = "AlwaysNextLine"
+enum_discrim_align_threshold = 20
+fn_params_layout = "Vertical"
+force_multiline_blocks = true
+format_code_in_doc_comments = true
+format_strings = true
+imports_layout = "Vertical"
+indent_style = "Visual"
+max_width = 80
+merge_derives = false
+merge_imports = true
+
+ignore = ['./Cargo.toml']
