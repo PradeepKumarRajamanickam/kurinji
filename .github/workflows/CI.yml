@@ -22,6 +22,12 @@ jobs:
         toolchain: nightly-2020-12-07
         components: rustfmt, clippy
         override: true
+     
+    - name: Install alsa
+      run: sudo apt-get update; sudo apt-get install --no-install-recommends libasound2-dev
+
+    - name: Install udev
+      run: sudo apt-get update; sudo apt-get install --no-install-recommends libudev-dev
         
     - name: Build
       run: cargo build --verbose
