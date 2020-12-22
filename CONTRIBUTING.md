@@ -7,11 +7,11 @@
 6. Push to the branch: git push origin my-new-feature
 7. Submit a pull request
 
-## Know Issue
+## Know Issues
 Q. ```error[internal]: left behind trailing whitespace ``` when running
 ```cargo +nightly fmt```
 
-A. run ```$ cargo fmt``` once before running the above command. This will remove trailing whitespaces
+A. Run ```$ cargo fmt``` once before running the above command. This will remove trailing whitespaces
 for you. Note* You need nightly installed on you machine. 
 You can use the below commands.
 
