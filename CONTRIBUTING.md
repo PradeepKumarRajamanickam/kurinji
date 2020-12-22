@@ -9,7 +9,7 @@
 
 ## Know Issues
 Q. ```error[internal]: left behind trailing whitespace ``` when running
-```cargo +nightly fmt```
+```$ cargo +nightly fmt```
 
 A. Run ```$ cargo fmt``` once before running the above command. This will remove trailing whitespaces
 for you. Note* You need nightly installed on you machine. 
