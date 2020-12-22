@@ -119,17 +119,6 @@ impl Kurinji
         };
     }
 
-    pub(crate) fn get_gamepad_from_player_handle(self,
-                                                 player: usize)
-                                                 -> Option<Gamepad>
-    {
-        return match self.player_to_joystick_map.get(&player)
-        {
-            Some(a) => Some(*a),
-            _ => None,
-        };
-    }
-
     // systems
     pub(crate) fn gamepad_button_press_input_system(mut input_map: ResMut<Kurinji>,
                                                     joystick_button_input: Res<Input<GamepadButton>>)
