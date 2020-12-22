@@ -1,6 +1,7 @@
 use crate::{GamepadAxis, Kurinji, bindings::Bindings, serde::BindingsSerdeHelper};
 
 use bevy::prelude::*;
+
 use std::{collections::HashMap, fs};
 
 impl Kurinji {
