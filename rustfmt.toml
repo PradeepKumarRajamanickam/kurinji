@@ -1,4 +1,4 @@
-blank_lines_lower_bound = 1
+blank_lines_upper_bound = 0
 brace_style = "AlwaysNextLine"
 combine_control_expr = false
 control_brace_style = "AlwaysNextLine"
@@ -12,5 +12,10 @@ indent_style = "Visual"
 max_width = 80
 merge_derives = false
 merge_imports = true
-
-ignore = ['./Cargo.toml']
+newline_style = "Unix"
+reorder_impl_items = true
+reorder_imports = false
+reorder_modules = false
+struct_field_align_threshold = 20
+unstable_features = true
+wrap_comments = true
