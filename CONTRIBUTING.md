@@ -1,17 +1,18 @@
 # Code Contributions
-## Code Formatting
-Code needs to be formatted according to the rules in rustfmt.toml. Easiest way to achieve this is to 
+1. Fork it!
+2. Create your feature branch: git checkout -b my-new-feature
+3. Test it: cargo test
+4. Format it: cargo +nightly fmt
+5. Commit your changes: git commit -am 'Add some feature'
+6. Push to the branch: git push origin my-new-feature
+7. Submit a pull request
 
-run ```$ cargo +nightly fmt```
+## Know Issue
+Q. ```error[internal]: left behind trailing whitespace ``` when running
+```cargo +nightly fmt```
 
-If you run into this error ```error[internal]: left behind trailing whitespace ``` 
-
-run ```$ cargo fmt``` 
-
-once before running the above command. This will remove trailing whitespaces
-for you.
-
-Note* You need nightly installed on you machine. 
+A. run ```$ cargo fmt``` once before running the above command. This will remove trailing whitespaces
+for you. Note* You need nightly installed on you machine. 
 You can use the below commands.
 
 ```$ rustup toolchain install nightly```
