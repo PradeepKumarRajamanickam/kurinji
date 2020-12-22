@@ -82,6 +82,11 @@ or grab crate from https://crates.io/crates/kurinji
 https://github.com/PradeepKumarRajamanickam/kurinji/issues
 
 # Release Notes
+## v1.0.5 (22 dec, 2020)
+- Upgrade to Bevy 0.4.0  
+  - *author: @Nolan Darilek*
+- fixed* clippy warnings
+  
 ## v1.0.4 (3 dec, 2020)
 - fixed* Joystick axis inputs not detected
 
