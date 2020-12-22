@@ -20,4 +20,4 @@ You can use the below commands.
 ```$ rustup component add rustfmt --toolchain nightly ```
 
 
-Credit: copied jist from [https://github.com/rust-lang/rustup/blob/master/CONTRIBUTING.md] :)
+Credit: copied gist from [https://github.com/rust-lang/rustup/blob/master/CONTRIBUTING.md] :)
