@@ -18,3 +18,6 @@ You can use the below commands.
 ```$ rustup toolchain install nightly```
 
 ```$ rustup component add rustfmt --toolchain nightly ```
+
+
+Credit: copied jist from [https://github.com/rust-lang/rustup/blob/master/CONTRIBUTING.md] :)
