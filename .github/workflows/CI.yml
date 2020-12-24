@@ -22,7 +22,10 @@ jobs:
         toolchain: nightly-2020-12-07
         components: rustfmt, clippy
         override: true
-     
+        
+    - name: Run clippy
+      run: cargo clippy -- -D warnings -A clippy::redundant-field-names
+  
     - name: Install alsa
       run: sudo apt-get update; sudo apt-get install --no-install-recommends libasound2-dev
 
@@ -37,6 +40,3 @@ jobs:
       
     - name: Formatting Check
       run: cargo +nightly-2020-12-07 fmt -- --check
-    
-    - name: Run clippy
-      run: cargo clippy -- -D warnings
