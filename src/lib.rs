@@ -1,13 +1,8 @@
 // publics
 pub use self::{
-    kurinji::Kurinji,
-    axis::MouseAxis,
-    axis::GamepadAxis,
-    bindings::Bindings,
-    event_phase::EventPhase,
-    action_event::OnActionBegin,
-    action_event::OnActionActive,
-    action_event::OnActionProgress,
+    kurinji::Kurinji, axis::MouseAxis, axis::GamepadAxis, bindings::Bindings,
+    event_phase::EventPhase, action_event::OnActionBegin,
+    action_event::OnActionActive, action_event::OnActionProgress,
     action_event::OnActionEnd,
 };
 // crates
@@ -27,10 +22,8 @@ use bevy::prelude::*;
 /// Adds input mapping (via code or json/ron) to an App
 #[derive(Default)]
 pub struct KurinjiPlugin;
-impl Plugin for KurinjiPlugin
-{
-    fn build(&self, app: &mut AppBuilder)
-    {
+impl Plugin for KurinjiPlugin {
+    fn build(&self, app: &mut AppBuilder) {
         app
             // input map
             .init_resource::<Kurinji>()

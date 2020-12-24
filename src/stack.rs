@@ -1,12 +1,7 @@
-use crate::{
-    Bindings,
-    Kurinji,
-};
-impl Kurinji
-{
+use crate::{Bindings, Kurinji};
+impl Kurinji {
     /// Push bindings to stack
-    pub fn push(&mut self, bindings: Bindings)
-    {
+    pub fn push(&mut self, bindings: Bindings) {
         // store current in stack
         let current = self.get_bindings();
         self.stack.push(current);
@@ -16,8 +11,7 @@ impl Kurinji
 
     /// Clones current bindings and pushes it with the new
     /// changes
-    pub fn push_additive(&mut self, bindings: Bindings)
-    {
+    pub fn push_additive(&mut self, bindings: Bindings) {
         // store current in stack
         let current = self.get_bindings();
         self.stack.push(current);
@@ -29,10 +23,8 @@ impl Kurinji
     }
 
     /// Pop the current binding from stack
-    pub fn pop(&mut self)
-    {
-        if let Some(next) = self.stack.pop()
-        {
+    pub fn pop(&mut self) {
+        if let Some(next) = self.stack.pop() {
             self.set_bindings(next);
         }
     }
