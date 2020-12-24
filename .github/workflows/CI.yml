@@ -8,6 +8,7 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
+  
 
 jobs:
   build:
@@ -18,7 +19,7 @@ jobs:
 
       - uses: actions-rs/toolchain@v1
         with:
-          #toolchain: nightly-2020-12-07
+          toolchain: stable
           components: rustfmt, clippy
           override: true
 
@@ -38,4 +39,4 @@ jobs:
         run: cargo fmt -- --check
 
       - name: Run clippy
-        run: cargo clippy -- -D warnings
+        run: cargo clippy -- -D warnings -A clippy::clone-on-copy
