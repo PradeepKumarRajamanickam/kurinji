@@ -37,4 +37,7 @@ jobs:
       
     - name: Formatting Check
       run: cargo +nightly-2020-12-07 fmt -- --check
+    
+    - name: Run clippy
+      run: cargo clippy --all-targets --all-features -- -D warnings -A clippy::type_complexity -A clippy::manual-strip
 
