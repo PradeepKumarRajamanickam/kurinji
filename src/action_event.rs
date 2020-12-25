@@ -38,7 +38,7 @@ impl Kurinji {
         let mut _actions = input_map.action_raw_strength.clone();
         for (a, s) in input_map.action_prev_strength.iter() {
             if !_actions.contains_key(a) {
-                _actions.insert(a.clone(), s.clone());
+                _actions.insert(a.clone(), *s);
             }
         }
         for (action, strength) in _actions {
