@@ -7,24 +7,22 @@ impl Kurinji {
     pub fn get_action_strength<'a, T: Into<&'a str>>(&self, action: T) -> f32 {
         let action = action.into();
         match self.action_raw_strength.get(action) {
-            Some(raw_strength) => {
-                match self.action_deadzone.get(action) {
-                    Some(d) => {
-                        let strength =
-                            Kurinji::get_strength_after_applying_deadzone(
-                                *d,
-                                *raw_strength,
-                            );
-                        if let Some(curve_func) =
-                            self.action_strength_curve.get(action)
-                        {
-                            return curve_func(strength);
-                        }
-                        strength
+            Some(raw_strength) => match self.action_deadzone.get(action) {
+                Some(d) => {
+                    let strength =
+                        Kurinji::get_strength_after_applying_deadzone(
+                            *d,
+                            *raw_strength,
+                        );
+                    if let Some(curve_func) =
+                        self.action_strength_curve.get(action)
+                    {
+                        return curve_func(strength);
                     }
-                    None => *raw_strength,
+                    strength
                 }
-            }
+                None => *raw_strength,
+            },
             None => 0.,
         }
     }
@@ -46,8 +44,13 @@ impl Kurinji {
     ///
     /// Note* meaningful only for analog inputs like joystick,
     /// mouse move delta...etc
-    pub fn set_dead_zone<'a, T: Into<&'a str>>(&mut self, action: T, value: f32) -> &mut Kurinji {
-        self.action_deadzone.insert(action.into().to_string(), value);
+    pub fn set_dead_zone<'a, T: Into<&'a str>>(
+        &mut self,
+        action: T,
+        value: f32,
+    ) -> &mut Kurinji {
+        self.action_deadzone
+            .insert(action.into().to_string(), value);
         self
     }
 

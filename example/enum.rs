@@ -4,7 +4,6 @@ use bevy::app::Events;
 use bevy::ecs::ResMut;
 use kurinji::{EventPhase, Kurinji, KurinjiPlugin, MouseAxis, OnActionActive};
 use strum::{IntoStaticStr, EnumString};
-
 #[derive(IntoStaticStr, EnumString, PartialEq, Eq)]
 enum Action {
     JUMP,
@@ -19,7 +18,6 @@ enum Action {
     AimLeft,
     AimRight,
 }
-
 fn main() {
     println!("Kurinji Binding In Code Example");
     App::build()
@@ -116,11 +114,10 @@ fn action_system(
         app_exit_events.send(AppExit);
     }
 }
-
 fn action_active_events_system(
     action_active_event: Res<Events<OnActionActive>>,
 ) {
-    for value in  action_active_event.iter_current_update_events() {
+    for value in action_active_event.iter_current_update_events() {
         if value.action() == Some(Action::JUMP) {
             println!("Jumping...");
         }

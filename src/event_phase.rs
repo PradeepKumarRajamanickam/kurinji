@@ -26,7 +26,10 @@ impl Default for EventPhase {
 impl Kurinji {
     // publics
     /// Returns in which event phase this action active will be true
-    pub fn get_event_phase<'a, T: Into<&'a str>>(&self, action: T) -> &EventPhase {
+    pub fn get_event_phase<'a, T: Into<&'a str>>(
+        &self,
+        action: T,
+    ) -> &EventPhase {
         if let Some(v) = self.action_phase.get(action.into()) {
             return v;
         }

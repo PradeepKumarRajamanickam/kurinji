@@ -14,7 +14,8 @@ impl Kurinji {
         code: MouseButton,
         action: T,
     ) -> &mut Kurinji {
-        self.mouse_button_binding.insert(code, action.into().to_string());
+        self.mouse_button_binding
+            .insert(code, action.into().to_string());
         self
     }
 
@@ -31,7 +32,8 @@ impl Kurinji {
         axis: MouseAxis,
         action: T,
     ) -> &mut Kurinji {
-        self.mouse_move_binding.insert(axis, action.into().to_string());
+        self.mouse_move_binding
+            .insert(axis, action.into().to_string());
         self
     }
 
