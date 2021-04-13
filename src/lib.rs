@@ -19,6 +19,14 @@ mod keyboard;
 mod mouse;
 mod serde;
 use bevy::prelude::*;
+
+#[derive(Debug, Hash, PartialEq, Eq, Clone, SystemLabel)]
+enum UpdateSet {
+    Event,
+    PreUpdate,
+    Update,
+}
+
 /// Adds input mapping (via code or json/ron) to an App
 #[derive(Default)]
 pub struct KurinjiPlugin;
@@ -32,37 +40,30 @@ impl Plugin for KurinjiPlugin {
             .add_event::<OnActionBegin>()
             .add_event::<OnActionProgress>()
             .add_event::<OnActionEnd>()
-            .add_system_to_stage(
-                stage::EVENT,
-                Kurinji::action_event_producer.system(),
+            .add_system(
+                Kurinji::action_event_producer
+                    .system()
+                    .label(UpdateSet::Event),
             )
-            // reset
-            .add_system_to_stage(
-                stage::PRE_UPDATE,
-                Kurinji::action_reset_system.system(),
+            .add_system(
+                Kurinji::action_reset_system
+                    .system()
+                    .label(UpdateSet::PreUpdate)
+                    .after(UpdateSet::Event),
             )
-            // joystick
-            .add_system_to_stage(
-                stage::UPDATE,
-                Kurinji::gamepad_event_system.system(),
-            )
-            .add_system_to_stage(
-                stage::UPDATE,
-                Kurinji::gamepad_button_press_input_system.system(),
-            )
-            // keyboard
-            .add_system_to_stage(
-                stage::UPDATE,
-                Kurinji::kb_key_press_input_system.system(),
-            )
-            // mouse
-            .add_system_to_stage(
-                stage::UPDATE,
-                Kurinji::mouse_button_press_input_system.system(),
-            )
-            .add_system_to_stage(
-                stage::UPDATE,
-                Kurinji::mouse_move_event_system.system(),
+            .add_system_set(
+                SystemSet::new()
+                    .label(UpdateSet::Update)
+                    .after(UpdateSet::PreUpdate)
+                    .with_system(Kurinji::gamepad_event_system.system())
+                    .with_system(
+                        Kurinji::gamepad_button_press_input_system.system(),
+                    )
+                    .with_system(Kurinji::kb_key_press_input_system.system())
+                    .with_system(
+                        Kurinji::mouse_button_press_input_system.system(),
+                    )
+                    .with_system(Kurinji::mouse_move_event_system.system()),
             );
     }
 }

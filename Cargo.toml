@@ -11,7 +11,7 @@ keywords = ["gamedev", "bevy", "inputmap","actionmapping"]
 
 [dependencies]
 # bevy
-bevy = { version="0.4", features = ["serialize"]}
+bevy = { version="0.5", features = ["serialize"]}
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 ron = "0.6.2"

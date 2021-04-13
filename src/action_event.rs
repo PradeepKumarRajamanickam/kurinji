@@ -1,6 +1,6 @@
 use crate::Kurinji;
 use bevy::app::Events;
-use bevy::ecs::{Res, ResMut};
+use bevy::ecs::system::{Res, ResMut};
 /// Event that is fired when action is active.
 /// This depends on what event phase is set to
 /// the action by default it will be OnProgress.

@@ -2,7 +2,7 @@ use std::fs;
 use bevy::prelude::*;
 use bevy::app::AppExit;
 use bevy::app::Events;
-use bevy::ecs::ResMut;
+use bevy::ecs::system::ResMut;
 use kurinji::{Kurinji, KurinjiPlugin};
 fn main() {
     println!("Kurinji Binding From Json Example");

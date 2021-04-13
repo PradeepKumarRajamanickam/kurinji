@@ -2,13 +2,8 @@ use std::fs;
 use bevy::prelude::*;
 use bevy::app::AppExit;
 use bevy::app::Events;
-use bevy::ecs::ResMut;
+use bevy::ecs::system::ResMut;
 use kurinji::{OnActionActive, OnActionEnd, Kurinji, KurinjiPlugin};
-#[derive(Default)]
-pub struct ActionState {
-    active_reader: EventReader<OnActionActive>,
-    end_reader: EventReader<OnActionEnd>,
-}
 fn main() {
     println!("Kurinji Action Events");
     App::build()
@@ -26,22 +21,18 @@ fn setup(mut kurinji: ResMut<Kurinji>) {
     kurinji.set_bindings_with_json(&binding_json);
 }
 fn action_end_events_system(
-    mut state: Local<ActionState>,
+    mut state: EventReader<OnActionEnd>,
     mut app_exit_events: ResMut<Events<AppExit>>,
-    action_end_event: Res<Events<OnActionEnd>>,
 ) {
-    if let Some(value) = state.end_reader.latest(&action_end_event) {
+    for value in state.iter() {
         if value.action == "QUIT_APP" {
             println!("Quiting...");
             app_exit_events.send(AppExit);
         }
     }
 }
-fn action_active_events_system(
-    mut state: Local<ActionState>,
-    action_active_event: Res<Events<OnActionActive>>,
-) {
-    if let Some(value) = state.active_reader.latest(&action_active_event) {
+fn action_active_events_system(mut state: EventReader<OnActionActive>) {
+    for value in state.iter() {
         if value.action == "JUMP" {
             println!("Jumping...");
         }
