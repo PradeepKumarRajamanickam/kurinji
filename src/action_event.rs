@@ -1,6 +1,7 @@
 use crate::Kurinji;
-use bevy::app::Events;
-use bevy::ecs::{Res, ResMut};
+use bevy::ecs::system::Res;
+use bevy::prelude::EventWriter;
+
 /// Event that is fired when action is active.
 /// This depends on what event phase is set to
 /// the action by default it will be OnProgress.
@@ -28,10 +29,10 @@ pub struct OnActionEnd {
 impl Kurinji {
     pub(crate) fn action_event_producer(
         input_map: Res<Kurinji>,
-        mut on_active_event: ResMut<Events<OnActionActive>>,
-        mut on_begin_event: ResMut<Events<OnActionBegin>>,
-        mut on_progress_event: ResMut<Events<OnActionProgress>>,
-        mut on_end_event: ResMut<Events<OnActionEnd>>,
+        mut on_active_event: EventWriter<OnActionActive>,
+        mut on_begin_event: EventWriter<OnActionBegin>,
+        mut on_progress_event: EventWriter<OnActionProgress>,
+        mut on_end_event: EventWriter<OnActionEnd>,
     ) {
         // merge keys, required for action end to be fired properly.
         // Since released actions won't be part of raw strength

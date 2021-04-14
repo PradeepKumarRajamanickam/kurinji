@@ -1,12 +1,8 @@
 use crate::{GamepadAxis, Kurinji};
 use bevy::prelude::*;
-use bevy::app::{EventReader, Events};
-use bevy::ecs::{Local, Res, ResMut};
-use bevy::input::Input;
-#[derive(Default)]
-pub struct GamepadState {
-    reader: EventReader<GamepadEvent>,
-}
+use bevy::app::EventReader;
+use bevy::ecs::system::ResMut;
+
 impl Kurinji {
     // publics
     // buttons
@@ -124,12 +120,11 @@ impl Kurinji {
 
     pub(crate) fn gamepad_event_system(
         mut input_map: ResMut<Kurinji>,
-        gamepad_event: Res<Events<GamepadEvent>>,
-        mut state: Local<GamepadState>,
+        mut reader: EventReader<GamepadEvent>,
     ) {
-        if let Some(value) = state.reader.latest(&gamepad_event) {
-            let pad_handle = value.0;
-            let pad_event_type = value.clone().1;
+        for event in reader.iter() {
+            let pad_handle = event.0;
+            let pad_event_type = event.clone().1;
             match pad_event_type {
                 bevy::prelude::GamepadEventType::AxisChanged(
                     axis_type,

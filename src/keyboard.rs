@@ -1,6 +1,6 @@
 use crate::kurinji::Kurinji;
 use bevy::prelude::KeyCode;
-use bevy::ecs::{Res, ResMut};
+use bevy::ecs::system::{Res, ResMut};
 use bevy::input::Input;
 impl Kurinji {
     // publics
