@@ -1,3 +1,7 @@
+### NOTE* Kurinji is not being actively maintained/developed. Please try other plugins for newer Bevy versions. Reason for discontinuing is Bevy is still in its infacy and not very mature i.e. lot of breaking API change between releases requiring more time and effort. Combined with the lack of motivation on my part to continously update. I have decided to pause any development on Bevy plugins for the time being.
+
+### Thank you
+
 # Kurinji Input Map
 Input map plugin for bevy
 
