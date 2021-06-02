@@ -1,12 +1,8 @@
 use crate::{MouseAxis, Kurinji, util::clamp_vec2};
 use bevy::{math::Vec2, prelude::MouseButton};
-use bevy::app::{EventReader, Events};
-use bevy::ecs::{Local, Res, ResMut};
+use bevy::app::EventReader;
+use bevy::ecs::system::{Res, ResMut};
 use bevy::input::{mouse::MouseMotion, Input};
-#[derive(Default)]
-pub struct MouseMoveState {
-    reader: EventReader<MouseMotion>,
-}
 impl Kurinji {
     // publics
     pub fn bind_mouse_button_pressed(
@@ -56,15 +52,14 @@ impl Kurinji {
 
     pub(crate) fn mouse_move_event_system(
         mut input_map: ResMut<Kurinji>,
-        mut state: Local<MouseMoveState>,
-        move_events: Res<Events<MouseMotion>>,
+        mut reader: EventReader<MouseMotion>,
     ) {
-        if let Some(value) = state.reader.latest(&move_events) {
+        for event in reader.iter() {
             // normalises strength (with 10 px as max strength)
             // i.e. -10 px = -1.0 and 10 px = 1.0
-            let min = -1. * Vec2::one();
-            let max = Vec2::one();
-            let normalised_vec = clamp_vec2(min, max, value.delta * 0.1);
+            let min = -1. * Vec2::ONE;
+            let max = Vec2::ONE;
+            let normalised_vec = clamp_vec2(min, max, event.delta * 0.1);
             let x = normalised_vec.x;
             let y = normalised_vec.y;
             // horizontal

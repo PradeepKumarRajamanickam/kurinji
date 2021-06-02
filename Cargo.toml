@@ -11,27 +11,27 @@ keywords = ["gamedev", "bevy", "inputmap","actionmapping"]
 
 [dependencies]
 # bevy
-bevy = { version="0.4", features = ["serialize"]}
+bevy = { version="0.5", features = ["serialize"]}
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 ron = "0.6.2"
 
 [[example]]
 name = "keyboard_mouse_with_code"
-path = "example/binding_in_code.rs"
+path = "example/keyboard_mouse_with_code.rs"
 
 [[example]]
 name = "keyboard_mouse_with_json"
-path = "example/binding_from_json.rs"
+path = "example/keyboard_mouse_with_json.rs"
 
 [[example]]
 name = "gamepad_with_code"
-path = "example/binding_gamepad_in_code.rs"
+path = "example/gamepad_with_code.rs"
 
 [[example]]
 name = "gamepad_with_ron"
-path = "example/binding_gamepad_from_ron.rs"
+path = "example/gamepad_with_ron.rs"
 
 [[example]]
 name = "with_action_events"
-path = "example/example_action_events.rs"
+path = "example/with_action_events.rs"

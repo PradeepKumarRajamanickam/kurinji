@@ -1,5 +1,6 @@
 use crate::{EventPhase, Kurinji, util};
-use bevy::ecs::ResMut;
+use bevy::ecs::system::ResMut;
+
 impl Kurinji {
     // publics
     /// Provides strength of action in range 0.0 - 1.0. Useful
