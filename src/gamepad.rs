@@ -10,24 +10,24 @@ pub struct GamepadState {
 impl Kurinji {
     // publics
     // buttons
-    pub fn bind_gamepad_button_pressed(
+    pub fn bind_gamepad_button_pressed<'a, T: Into<&'a str>>(
         &mut self,
         pad_button: GamepadButtonType,
-        action: &str,
+        action: T,
     ) -> &mut Kurinji {
         self.bind_gamepad_button_pressed_for_player(0, pad_button, action)
     }
 
-    pub fn bind_gamepad_button_pressed_for_player(
+    pub fn bind_gamepad_button_pressed_for_player<'a, T: Into<&'a str>>(
         &mut self,
         player: usize,
         pad_button: GamepadButtonType,
-        action: &str,
+        action: T,
     ) -> &mut Kurinji {
         *self
             .joystick_button_binding
             .entry((player, pad_button))
-            .or_default() = action.to_string();
+            .or_default() = action.into().to_string();
         self
     }
 
@@ -48,24 +48,24 @@ impl Kurinji {
     }
 
     // axis
-    pub fn bind_gamepad_axis(
+    pub fn bind_gamepad_axis<'a, T: Into<&'a str>>(
         &mut self,
         axis: GamepadAxis,
-        action: &str,
+        action: T,
     ) -> &mut Kurinji {
         self.bind_gamepad_axis_for_player(0, axis, action)
     }
 
-    pub fn bind_gamepad_axis_for_player(
+    pub fn bind_gamepad_axis_for_player<'a, T: Into<&'a str>>(
         &mut self,
         player: usize,
         axis: GamepadAxis,
-        action: &str,
+        action: T,
     ) -> &mut Kurinji {
         *self
             .joystick_axis_binding
             .entry((player, axis))
-            .or_default() = action.to_string();
+            .or_default() = action.into().to_string();
         self
     }
 

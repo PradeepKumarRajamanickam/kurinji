@@ -9,12 +9,13 @@ pub struct MouseMoveState {
 }
 impl Kurinji {
     // publics
-    pub fn bind_mouse_button_pressed(
+    pub fn bind_mouse_button_pressed<'a, T: Into<&'a str>>(
         &mut self,
         code: MouseButton,
-        action: &str,
+        action: T,
     ) -> &mut Kurinji {
-        self.mouse_button_binding.insert(code, action.to_string());
+        self.mouse_button_binding
+            .insert(code, action.into().to_string());
         self
     }
 
@@ -26,12 +27,13 @@ impl Kurinji {
         self
     }
 
-    pub fn bind_mouse_motion(
+    pub fn bind_mouse_motion<'a, T: Into<&'a str>>(
         &mut self,
         axis: MouseAxis,
-        action: &str,
+        action: T,
     ) -> &mut Kurinji {
-        self.mouse_move_binding.insert(axis, action.to_string());
+        self.mouse_move_binding
+            .insert(axis, action.into().to_string());
         self
     }
 

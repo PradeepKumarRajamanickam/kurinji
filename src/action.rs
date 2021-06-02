@@ -4,33 +4,33 @@ impl Kurinji {
     // publics
     /// Provides strength of action in range 0.0 - 1.0. Useful
     /// when working actions that mapped to analog input eg. joystick
-    pub fn get_action_strength(&self, action: &str) -> f32 {
-        match self.action_raw_strength.get(&action.to_string()) {
-            Some(raw_strength) => {
-                match self.action_deadzone.get(&action.to_string()) {
-                    Some(d) => {
-                        let strength =
-                            Kurinji::get_strength_after_applying_deadzone(
-                                *d,
-                                *raw_strength,
-                            );
-                        if let Some(curve_func) =
-                            self.action_strength_curve.get(&action.to_string())
-                        {
-                            return curve_func(strength);
-                        }
-                        strength
+    pub fn get_action_strength<'a, T: Into<&'a str>>(&self, action: T) -> f32 {
+        let action = action.into();
+        match self.action_raw_strength.get(action) {
+            Some(raw_strength) => match self.action_deadzone.get(action) {
+                Some(d) => {
+                    let strength =
+                        Kurinji::get_strength_after_applying_deadzone(
+                            *d,
+                            *raw_strength,
+                        );
+                    if let Some(curve_func) =
+                        self.action_strength_curve.get(action)
+                    {
+                        return curve_func(strength);
                     }
-                    None => *raw_strength,
+                    strength
                 }
-            }
+                None => *raw_strength,
+            },
             None => 0.,
         }
     }
 
     /// Is this action happening.
     /// Note* this depends on action event phase
-    pub fn is_action_active(&self, action: &str) -> bool {
+    pub fn is_action_active<'a, T: Into<&'a str>>(&self, action: T) -> bool {
+        let action = action.into();
         match self.get_event_phase(action) {
             EventPhase::OnBegin => self.did_action_just_began(action),
             EventPhase::OnProgress => self.is_action_in_progress(action),
@@ -44,20 +44,25 @@ impl Kurinji {
     ///
     /// Note* meaningful only for analog inputs like joystick,
     /// mouse move delta...etc
-    pub fn set_dead_zone(&mut self, action: &str, value: f32) -> &mut Kurinji {
-        self.action_deadzone.insert(action.to_string(), value);
+    pub fn set_dead_zone<'a, T: Into<&'a str>>(
+        &mut self,
+        action: T,
+        value: f32,
+    ) -> &mut Kurinji {
+        self.action_deadzone
+            .insert(action.into().to_string(), value);
         self
     }
 
     /// Set a custom curve function that will be applied to
     /// actions strength.
-    pub fn set_strength_curve_function(
+    pub fn set_strength_curve_function<'a, T: Into<&'a str>>(
         &mut self,
-        action: &str,
+        action: T,
         function: fn(f32) -> f32,
     ) -> &mut Kurinji {
         self.action_strength_curve
-            .insert(action.to_string(), function);
+            .insert(action.into().to_string(), function);
         self
     }
 
@@ -87,7 +92,7 @@ impl Kurinji {
         // cache prev frame
         input_map.action_prev_strength.clear();
         for k in input_map.action_raw_strength.clone().keys() {
-            let strength = input_map.get_action_strength(&k);
+            let strength = input_map.get_action_strength(k.as_str());
             input_map.action_prev_strength.insert(k.clone(), strength);
         }
         input_map.reset_all_raw_strength();

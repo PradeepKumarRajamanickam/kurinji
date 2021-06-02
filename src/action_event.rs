@@ -1,3 +1,4 @@
+use std::str::FromStr;
 use crate::Kurinji;
 use bevy::app::Events;
 use bevy::ecs::{Res, ResMut};
@@ -25,6 +26,26 @@ pub struct OnActionProgress {
 pub struct OnActionEnd {
     pub action: String,
 }
+impl OnActionActive {
+    pub fn action<T: FromStr>(&self) -> Option<T> {
+        T::from_str(&self.action).ok()
+    }
+}
+impl OnActionBegin {
+    pub fn action<T: FromStr>(&self) -> Option<T> {
+        T::from_str(&self.action).ok()
+    }
+}
+impl OnActionProgress {
+    pub fn action<T: FromStr>(&self) -> Option<T> {
+        T::from_str(&self.action).ok()
+    }
+}
+impl OnActionEnd {
+    pub fn action<T: FromStr>(&self) -> Option<T> {
+        T::from_str(&self.action).ok()
+    }
+}
 impl Kurinji {
     pub(crate) fn action_event_producer(
         input_map: Res<Kurinji>,
@@ -42,7 +63,7 @@ impl Kurinji {
             }
         }
         for (action, strength) in _actions {
-            if input_map.is_action_active(&action) {
+            if input_map.is_action_active(action.as_str()) {
                 on_active_event.send(OnActionActive {
                     action: action.clone(),
                     strength,

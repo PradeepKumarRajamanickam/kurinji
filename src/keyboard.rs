@@ -4,13 +4,13 @@ use bevy::ecs::{Res, ResMut};
 use bevy::input::Input;
 impl Kurinji {
     // publics
-    pub fn bind_keyboard_pressed(
+    pub fn bind_keyboard_pressed<'a, T: Into<&'a str>>(
         &mut self,
         code: KeyCode,
-        action: &str,
+        action: T,
     ) -> &mut Kurinji {
         self.keyboard_action_binding
-            .insert(code, action.to_string());
+            .insert(code, action.into().to_string());
         self
     }
 

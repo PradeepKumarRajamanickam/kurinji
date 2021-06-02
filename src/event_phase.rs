@@ -26,8 +26,11 @@ impl Default for EventPhase {
 impl Kurinji {
     // publics
     /// Returns in which event phase this action active will be true
-    pub fn get_event_phase(&self, action: &str) -> &EventPhase {
-        if let Some(v) = self.action_phase.get(action) {
+    pub fn get_event_phase<'a, T: Into<&'a str>>(
+        &self,
+        action: T,
+    ) -> &EventPhase {
+        if let Some(v) = self.action_phase.get(action.into()) {
             return v;
         }
         &EventPhase::OnProgress
@@ -35,12 +38,12 @@ impl Kurinji {
 
     /// Set on which event phase should action will be true.
     /// By default will be Phase::OnProgress
-    pub fn set_event_phase(
+    pub fn set_event_phase<'a, T: Into<&'a str>>(
         &mut self,
-        action: &str,
+        action: T,
         phase: EventPhase,
     ) -> &mut Kurinji {
-        self.action_phase.insert(action.to_string(), phase);
+        self.action_phase.insert(action.into().to_string(), phase);
         self
     }
 
